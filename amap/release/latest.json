@@ -1,0 +1,11 @@
+{
+  "appId": "amap",
+  "versionCode": 21000360,
+  "versionName": "7.5.0.360",
+  "apkUrl": "https://api.atomgit.com/api/v5/repos/qq_40150691/carmon-release/releases/amap-v7.5.0.360-21000360/attach_files/AMap-7.5.0.360-21000360.apk/download",
+  "sizeBytes": 150992614,
+  "md5": "7d778ca708a656783529ba34b68d5c70",
+  "sha256": "625aa73393721824bafbbd9e0f6b2cf5201a9e9534ce8a7ee143637f51a96669",
+  "force": false,
+  "releaseNotes": "AMap 7.5.0.360（21000360）AtomGit Release 升级包。"
+}

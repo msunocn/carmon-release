@@ -1,0 +1,11 @@
+{
+  "appId": "dm",
+  "versionCode": 301169,
+  "versionName": "3.0.169",
+  "apkUrl": "https://api.atomgit.com/api/v5/repos/qq_40150691/carmon-release/releases/dm-v3.0.169-301169/attach_files/DMApp-3.0.169-301169.apk/download",
+  "sizeBytes": 134329000,
+  "md5": "701acab5192b2871c5d03b738411daa1",
+  "sha256": "a3aad48c7fb741498707efe1ced0e0ee118db073847f973145a0c2d2f5f877c8",
+  "force": false,
+  "releaseNotes": "DMApp 3.0.169（301169）AtomGit Release 升级包。"
+}
