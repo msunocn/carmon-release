@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301188,
-  "versionName": "3.0.188",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.188-301188/DMApp-3.0.188-301188.apk",
-  "sizeBytes": 145892270,
-  "md5": "004afb52d61b4a8836e08d8664d80598",
-  "sha256": "35527f31e6a6ba381ef913b2a07285b6e750f72ac16bdac82a8f1bdf14afa710",
+  "versionCode": 301189,
+  "versionName": "3.0.189",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.189-301189/DMApp-3.0.189-301189.apk",
+  "sizeBytes": 145896366,
+  "md5": "ac1addcf7a3eb9c2a78e166ddce62adb",
+  "sha256": "1f3be04add57a25e68c8c4567d641e11cdcd49db85519f2a9aed3c075cd7e26e",
   "force": false,
-  "releaseNotes": "DMApp 3.0.188（301188）GitHub Release 升级包。"
+  "releaseNotes": "DMApp 3.0.189（301189）GitHub Release 升级包。"
 }
