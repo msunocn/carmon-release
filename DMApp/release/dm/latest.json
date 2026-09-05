@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301223,
-  "versionName": "3.0.223",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.223-301223/DMApp-3.0.223-301223.apk",
-  "sizeBytes": 146150318,
-  "md5": "fef91a6ae11d5cd03ccaacc1366732ca",
-  "sha256": "d824094b96c94cdb4ce3e17ea9e53f5838939a63f6a2207faf759aff099ec933",
+  "versionCode": 301224,
+  "versionName": "3.0.224",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.224-301224/DMApp-3.0.224-301224.apk",
+  "sizeBytes": 146166702,
+  "md5": "35f0ee6a3920dd1700342df6136f17b8",
+  "sha256": "8556553123cb86ed0066c627f803cb398b269e7e408e34a408c9dbc3eb757d10",
   "force": false,
-  "releaseNotes": "# DM 3.0.223 / 301223：熄火哨兵远程资源开关\n\n## 配置与页面\n\n- 哨兵配置新增 USB 存储、SD 存储、Wi-Fi 开启三个紧凑开关，沿用现有保存和回读流程。\n- d_service 是唯一配置源。USB/SD 新字段缺失时为 true，保留原本允许外置存储的行为；Wi-Fi 主动开启沿用已有独立配置（默认 false），不覆盖已保存值。WifiLock 与 Wi-Fi 主动开启仍然分离。\n- 关闭哨兵总开关仍可保存子开关，只有实际 ACC_OFF 哨兵会话允许后续资源操作；没有增加第二份服务器配置或独立守护进程。\n- 旧车机没有声明完整开关能力时网页不显示、不发送新字段；旧网页省略字段时新车机保留原值，不能误报保存失败。显式 false 必须准确回读。\n- Binder 在既有 version 2 尾部追加 USB/SD 字段，旧尾部按原行为读取，所有配置复制与持久化路径保持开关。\n\n## 执行与安全\n\n- USB 关闭后新录像跳过 USB，按 SD → 内部存储选择；SD 关闭后跳过 SD；两者关闭只选内部存储。只读存储列表、已有回放与磁盘选择偏好不隐藏、不删除。\n- 后台挂载恢复和健康写盘检测同样跳过已关闭介质，执行前再次检查最新开关和有效会话，迟到的调用不得开始下一次副作用。\n- 手动关闭磁盘不会被当成掉盘持续重试；重新开启后按新状态重新验证可写。\n- 已持有的事件录像正常封盘，不因开关、ACC ON 或配置更新丢弃。关闭开关不卸载用户卷，也不主动关闭已有 Wi-Fi。\n- 远程开关更新不重启录像或 MCU；Wi-Fi 由当前 d_service 配置决定，旧诊断 property 不再覆盖远程关闭值。\n- USB 存储不等于物理 5V 供电承诺。已确认不支持的 DiLink3.0/665 USB VBUS 与 Special 接口继续保持熔断，USB 开关不能绕过能力限制。\n- 保留电池安全门槛、只使用 PARTIAL_WAKE_LOCK、MP4 封盘屏障及最新日志上传/异常堆栈策略。\n\n## 服务器与验收\n\n- Go/H5 与 APK 同版本部署；最低兼容 APK 仍为 301215，不强制排除尚未升级的在线设备。\n- 服务器构建新增 CGO 前置检查，拒绝会在 SQLite 初始化时退出的无 CGO stub 程序。Linux 候选在 VPS 原生编译，用独立数据库和端口预检后才替换生产服务；先备份程序、配置、服务文件和 SQLite，保留原始数据。\n- Android 全量检查和 APK staging 构建、Go 全量测试/vet、前端 Node 行为测试，以及手机 UID 2000 实际 APK 的 195 项 JSON/双向 Parcel/旧尾部检查通过。\n- 手机验证使用隔离 app_process，不修改现有配置、不打开相机、不切换 Wi-Fi、不挂载/卸载磁盘。它不代表实车物理保电或熄火十分钟测试已经通过；当前车机 ADB offline，仍需升级后实车验证恢复与录像。"
+  "releaseNotes": "DMApp 3.0.224（301224）GitHub Release 升级包。"
 }
