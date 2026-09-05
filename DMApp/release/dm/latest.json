@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301219,
-  "versionName": "3.0.219",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.219-301219/DMApp-3.0.219-301219.apk",
-  "sizeBytes": 146117550,
-  "md5": "ac3e59a1b52f207ce30bec0a26a12ea3",
-  "sha256": "750f3516e9f4ff5002d6eadb648a9a12520a4e1248f749d4cdfda30eff43dcc6",
+  "versionCode": 301220,
+  "versionName": "3.0.220",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.220-301220/DMApp-3.0.220-301220.apk",
+  "sizeBytes": 146125742,
+  "md5": "b803bf5191f319a74cf830f037294b51",
+  "sha256": "cf338bb217ff1c8620e8418e84d1eeaac1e350aed0f41be4a1b04a58c4c3f0a5",
   "force": false,
-  "releaseNotes": "# DM 3.0.219 / 301219：修复授权后后台无法就绪\n\n## 首因与修复\n\n3.0.218 把后台初始化移到普通 Executor 线程后，`ActivityThread.systemMain()` 在没有 Looper 的线程中创建 Handler，导致 shell Context 初始化失败，后台停在 BASE_AGENT，App 无法完成授权连接。\n\n- 在真实 app_process 主 Looper 上创建 Framework Application/Context；工作线程只做有界等待，主线程卡住时保留单个请求，不持锁等待、不堆积替代请求。\n- OEM 初始化使用真正运行消息循环的 HandlerThread，保证 SDK 默认 Handler 的回调可执行，仍与主线程/健康调度器隔离。\n- OEM Context 重试复用已建立的 ActivityThread，不再反复调用旧入口创建新的 Framework 实例。\n- 启动调用异常保留完整堆栈。\n\n保留 3.0.218 的独立熄火保活、USB→SD→内部降级、日志上传重试及私有配置保护；不撤回 UID 权限校验，不增加第二个后台进程。\n\n## 验证\n\n- 在手机 UID 2000 上直接加载 3.0.218 正式包复现：普通工作线程创建 Context 失败；同包主线程创建成功。日志明确出现 `Can't create handler ... has not called Looper.prepare()`。\n- 修复后，原工作线程条件下 Context 验证通过。\n- 经真实 `CoreService.main` 入口启动，Agent 运行、Binder 存活、Framework Handler 绑定主线程、OEM 回调 Looper 存活、重试期间 Framework 实例稳定的检查通过。\n- 新增 10 项线程边界契约检查；全量 Java、发布策略检查、APK 构建/16 KiB 对齐通过。\n- 前一版仅加载类/构造 Binder 的 13 项 smoke 不能证明后台启动成功，本次用真实入口检查补齐该缺口。\n\n本次不修改服务器接口或 H5，已部署的 VPS 3.0.218 / dm-remote-v2 兼容本版。手机 mock 不代替真实 BYD 车机的 OEM 视频、供电及熄火录像验收。\n\n如从 3.0.217 或更早版本升级，沿用 3.0.218 的配置提示：哨兵配置首次使用内部私有路径时按默认值初始化，不迁移旧共享配置，请重新确认参数。既有录像不删除。"
+  "releaseNotes": "# DM 3.0.220 / 301220：最新日志上传修复与白屏取证\n\n## 修复\n\n- 分开传递服务器签发的 `request_id` 与 WebSocket `command_id`。修复旧处理覆盖上传授权编号、导致 409 或 Nginx 502 的问题；ZIP 清单、HTTP 请求和持久化重试队列保留两个独立编号。\n- 修复成功回执解析：接受实际 Go 服务返回的归档元数据和数字大小字段；仍严格拒绝重复字段、无效 JSON、非 ready 状态或 SHA-256 不匹配。不是收到任意 2xx 就认定成功。\n- 待传队列升级为明确包含两个编号的格式；旧版缺少身份信息的包不猜测、不重新赋权上传。原有配额、过期清理、文件所有权和单上传锁继续有效。\n- 一键日志只选择每类当前最新源，优先 App 异常、d_service 异常与最新运行日志，不再同时打包多份历史轮转。当前源为空或缺失时，最多选择一份近期轮转作为回退；有时间戳的轮转窗口为 30 分钟。当前日志内容按有界尾部截取，不宣称所有条目都来自同一 PID 或同一时间窗口。\n- 保留多行异常栈；若受到字节上限影响、原文件已经不完整或写入期间改变，清单明确记录，不伪称完整。JSON 快照整体读取并验证，不生成截断 JSON。\n- 增加当前采集进程主线程、初始化工作线程的只读堆栈。范围明确为 `self_process_only`，不把后台快照冒充桌面进程主线程证据。\n- 源日志预算进一步限制为 9 MiB，保留生成诊断与清单预算。慢源单独有界跳过，记录缺失原因，避免把已取得的诊断一并丢弃；最终哈希具有独立有界期限。\n\n## 验证\n\n- Java 全量回归、正式签名策略、正式发布预检与 apktool/注入 DEX 构建通过。\n- 实际生产 Java 上传/暂存代码连接 Go HTTP 接收端：独立编号校验、ZIP/SHA 校验、落盘、重新启动上传进程后的重试，以及同一包只存一份均通过。不是仅使用固定 200 回执的模拟服务器。\n- 手机 UID 2000 隔离执行 Android 真实 JSON、生产请求映射与 ZIP 写入：当前源被收集、历史轮转被排除、异常栈内容保留、清单与实际 ZIP 条目数一致。测试不启动新的业务 Agent、不重启现有后台、不切换桌面。\n- Go 全量测试及 vet 通过。服务端生产接口本次未修改，VPS 3.0.218 的上传授权与回执格式兼容本包，无须为本补丁重启 VPS。\n- 正式 APK 由新 tag 的流水线使用原签名生成，发布后独立核对版本、签名、16 KiB 对齐及升级清单。\n\n## 验证边界\n\n本版修复日志上传并补充取证，**不宣称已修复首次启动白屏**。没有改动桌面首屏、无障碍恢复模式、d_service 启动/重启策略或哨兵检测算法。车机安装后取得的新日志将用于继续定位白屏。请保留 App 数据和既有录像；测试包和手机结果不代替实车验收。"
 }
