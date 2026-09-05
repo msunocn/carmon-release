@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301217,
-  "versionName": "3.0.217",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.217-301217/DMApp-3.0.217-301217.apk",
-  "sizeBytes": 146084782,
-  "md5": "3e98f345f40c91b275e6c6acf40f69d8",
-  "sha256": "b3147cb6061c9d7f1cc2154f8cc2088d24bbce2d6ef9134a14bef7c629c213e6",
+  "versionCode": 301218,
+  "versionName": "3.0.218",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.218-301218/DMApp-3.0.218-301218.apk",
+  "sizeBytes": 146117550,
+  "md5": "55c19eaf7f00a81c69e226297b9cf775",
+  "sha256": "86d92d24065b735281b7b1ea52bcf6e0bb56b8acfcc619166149d30cc437ce51",
   "force": false,
-  "releaseNotes": "DMApp 3.0.217（301217）GitHub Release 升级包。"
+  "releaseNotes": "# DM 3.0.218 / 301218：独立熄火保活与日志上传修复\n\n## 升级提示\n\n哨兵配置改为 d_service 的内部私有文件；不迁移旧共享存储配置，首次升级会按默认值初始化。升级后请重新确认哨兵开关、录制参数及 USB/SD/内部存储配额。既有录像和旧配置文件不会删除。\n\n## 修复\n\n- 修复诊断 ZIP 的总大小预算遗漏：源日志、生成 JSON 和 manifest 全部计入未压缩字节数，避免服务器以超过 16 MiB 拒绝上传。\n- 完整日志包失败后有界暂存和重试，只有合法上传 ID 与相同 SHA-256 的回执才确认成功。服务端增加限时授权及幂等校验，避免重试重复存档，并修正失败 ACK 的审计状态。\n- 熄火保活由既有 d_service 独立维护，不依赖其他 App；校正系统唤醒/Special 调用，增加 Wi-Fi 锁及 USB 状态读回。停止哨兵不主动关闭 Wi-Fi 或 USB VBUS。\n- 写入优先级固定为 USB → SD → 内部；单个存储根的发现、读写或录像预留超时后，可以继续尝试其他存储，不无限堆积线程。未接管的迟到请求不创建额外录像。\n- 基础远程 Agent、Binder 发布与 OEM 初始化分步执行；OEM 异常不会阻止基础网络、日志诊断，早到的 App callback 待 OEM 接入后再处理。\n- WebSocket 写入增加队列及截止时间，网络获取与租约续期分离；分别报告系统网络、端点、远程连接证据。\n- 配置和日志暂存检查真实 UID、私有权限及符号链接；本地资源清理不再错误等待策略禁止的全局电源关闭。\n\n本版不更换识别模型、权重或无障碍模式。保留原有低电量门、统一 AVM 管理、事件 MP4 保护和实时视频封面修复。\n\n## 验证及部署\n\n- Java 全量检查、正式签名策略和 CI 发布预检通过；Go 全量测试及 vet 通过。\n- apktool 与注入 DEX 构建、16 KiB 页对齐通过；手机 UID 2000 的最终 APK 运行时检查 13/13 通过。\n- APK 由 immutable tag 流水线使用原正式签名构建并发布 GitHub/OTA；未签名本地测试包不分发。\n- 服务端/H5 配套版本为 3.0.218，`dm-remote-v2` 协议不变，最低兼容 APK 保持 301215。先部署服务端可支持旧客户端，同时为新客户端日志重试准备授权状态。\n- 部署前备份线上二进制与 SQLite，使用隔离测试数据库验证新服务，再替换实际服务并检查版本及健康状态。\n\n软件回归和手机检查不等于车机熄火硬件验收；USB/SD 供电、Wi-Fi 持续可用和实车录像仍需目标车机验证。详见 `docs/validation/2026-09-05-independent-keepalive-log-upload.md`。"
 }
