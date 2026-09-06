@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301230,
-  "versionName": "3.0.230",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.230-301230/DMApp-3.0.230-301230.apk",
-  "sizeBytes": 146199568,
-  "md5": "8d4b7ab9e12d3bec1346cf05b8995201",
-  "sha256": "eb98c9a686c702e844a5299f970213afb7739e062bb056507129494b47833b04",
+  "versionCode": 301231,
+  "versionName": "3.0.231",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.231-301231/DMApp-3.0.231-301231.apk",
+  "sizeBytes": 146207760,
+  "md5": "fe36402fffd2c5ddaead780f60c79075",
+  "sha256": "009480173508d485ebd945edee14a5d054e0bcf68a2a0a40666bad16a62ad754",
   "force": false,
-  "releaseNotes": "# DM 3.0.230 / 301230：远程回放列表大文件兼容\n\n## 本次修复\n\n- 修复任一历史 MP4 超过 512 MiB 时，整页远程回放刷新失败的问题。\n- 512 MiB 仅作为单次目录请求的累计解析读取预算，不再被误用为单个录像文件的大小上限。\n- MP4 仍执行盒结构、视频轨道、时长、首个同步样本等完整性校验；解析过程跳过媒体负载，不会整文件上传或读入内存。\n- 个别文件暂时无法验证时，只跳过该条并返回 `partial` 目录，不再让其他已验证录像一起报错。\n\n## 同批实车验证\n\n- 熄火 60 秒后系统域唤醒与背光关闭回读成功。\n- USB、SD 重新枚举并由 UID 2000 完成实际读写/fsync，d_service PID 未变化。\n- 180 秒 MCU/CAN 有限租约按独立定时器准时续租。\n- 事件 MP4 与保护性检查点逐个重新按 USB → SD → 内部选盘；本次事件实际写入 USB，前后各 15 秒完整并通过 MediaExtractor、fsync 和原子发布。"
+  "releaseNotes": "# DM 3.0.231 / 301231：熄火哨兵单目标存储与点火亮屏恢复\n\n## 本次修复\n\n- 熄火哨兵改为一个精确存储目标：选择 USB、SD 或内部存储后，只向该目标写入。\n- 外置目标处于 `EJECTING`、`CHECKING` 或 `UNMOUNTED` 时按 5/15/30/60 秒有界恢复；只有新鲜系统清单确认目标完全消失且明确开启兜底，才写入内部存储。\n- 主目标和内部兜底分别配置录像上限，范围统一为 512 MiB 至 8 TiB；车机写入端再按目标真实总容量的 90% 限制。\n- 每次事件打开 MP4 写入器前重新校验目标、挂载、可写和空间。未检测到事件时不创建 `.mp4.part`。\n- 内部兜底录像携带精确目标标记；外置盘恢复后只迁移已完整发布、且标记与当前目标一致的 MP4。\n- ACC OFF 60 秒恢复外置盘时若本哨兵会话触及显示域，ACC ON 会优先恢复屏幕并读回状态；首次失败会在录像封盘后再有界重试一次。\n- 推理能力探测不再随 d_service 启动自动运行，避免低配置车机启动时同时初始化多套模型。\n- 远程配置改为稀疏字段直达 d_service，并以 d_service 回读确认；VPS 与 Launcher 不保存第二份哨兵配置。\n- 移除远程协议中的按 USB/SD 分层开关、分层配额、小时录像别名和独立 AVM 探测入口。\n\n## 验证\n\n- Android `canfeature` 全量检查通过，覆盖事件窗口、MP4 原子发布、存储恢复、双配额、迁移标记、模型/轨迹规则和 Binder 配置协议。\n- Go 服务全量测试与静态检查通过；H5 单目标配置和稀疏提交测试通过。\n- 3.0.231 / 301231 的 apktool + 注入 DEX + 16 KiB 对齐候选构建通过。\n- 本地 API 34 虚拟机完成先卸载后安装、普通 App UID 与 UID 2000 `app_process` 分离、d_service 配置加载、VPS WebSocket、网络保持、存储探测、ACC OFF 以及 60 秒准时启动录像链路验证。\n\n本机只有 x86_64 可运行 AVD，而正式 OpenCV 仅随目标 `armeabi-v7a`/`arm64-v8a` 打包，因此虚拟机不能冒充 665 完成 OpenCV 命中与最终 MP4 实测。USB/SD 实际重挂载、点火亮屏和 ARM 识别录像仍需正式包在目标车机复核。"
 }
