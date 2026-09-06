@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301226,
-  "versionName": "3.0.226",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.226-301226/DMApp-3.0.226-301226.apk",
-  "sizeBytes": 146183184,
-  "md5": "b9c311d54b4299ab3379abc23ec4141e",
-  "sha256": "acf57aabf061808d5bb4cff314984c7add0b35f5be70b0f8efe3a48a0af270cb",
+  "versionCode": 301227,
+  "versionName": "3.0.227",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.227-301227/DMApp-3.0.227-301227.apk",
+  "sizeBytes": 146191376,
+  "md5": "1d7b49c2a173d82939fc6c59872412b1",
+  "sha256": "46a410cec6f619907c748bcbb0c62976888279ccb46f4b4863be0caa0de24035",
   "force": false,
-  "releaseNotes": "DMApp 3.0.226（301226）GitHub Release 升级包。"
+  "releaseNotes": "# DM 3.0.227 / 301227：熄火 USB/SD 恢复与配置直达车机\n\n## USB / SD 熄火恢复\n\n- 对齐“车停哪了”的 BYD MCU 唤醒协议：优先调用 `set(int[], BYDAutoEventValue)` 的 `-1442840502` 电源事件；明确读到 MCU 重新睡眠时按分钟恢复，不调用 Android 显示唤醒。\n- 保留 USB/SD 系统卷 5 秒、15 秒、30 秒复查与已知 public 卷挂载恢复；完整探测外层等待增至 8 秒，避免 USB 较慢时尚未轮到 SD/内部就被误判超时。\n- 录像目标每次仍按 USB → SD → 内部重新验证，首次失败不会锁死本次熄火会话。\n\n## 完整 MP4 自动迁移\n\n- USB 恢复并通过真实写入验证后，新录像立即恢复 USB 优先；此前落到 SD/内部的完整 MP4 后台逐个迁移到 USB。\n- USB 不可用而 SD 恢复时，内部成片迁移到 SD。\n- 仅迁移已封盘并通过 MP4 完整性检查的文件；流程为目标 `.part` 复制、fsync、完整性复验、原子发布、元数据同步，最后才删除源文件。活动录像、中间态和无效 MP4 不参与迁移。\n\n## 远程配置\n\n- VPS 不保存第二份哨兵配置，也不再用瞬时存储清单拒绝配置。远程配置直接下发 d_service，由车机唯一配置文件原子持久化并回读确认。\n- USB/SD 正在 `checking`、`ejecting` 或暂时未枚举时，原存储偏好可以继续保存；偏好只是不可执行路径的标识，实际写入仍由 d_service 对当前真实卷进行校验与回退。"
 }
