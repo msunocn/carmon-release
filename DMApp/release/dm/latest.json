@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301228,
-  "versionName": "3.0.228",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.228-301228/DMApp-3.0.228-301228.apk",
-  "sizeBytes": 146195472,
-  "md5": "b0a5749c9fe5774db38960aa7f72ef4e",
-  "sha256": "c5a8f8da4800c84e194144d21735e9d731cff7de74e1e1f2c376a1c06484d157",
+  "versionCode": 301229,
+  "versionName": "3.0.229",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.229-301229/DMApp-3.0.229-301229.apk",
+  "sizeBytes": 146199568,
+  "md5": "75ee431da1d95b351649cb2527621255",
+  "sha256": "ecca646d80bd86cc7122f54ab5ec102e6087b9b6c44179bc597418b23e35635b",
   "force": false,
-  "releaseNotes": "# DM 3.0.228 / 301228：BYD OEM MCU/CAN 有限租约\n\n## 熄火外置存储保活\n\n- 根据 DiLink 3.0 OTA 中的 OEM 实现，由 d_service 动态读取 `POWER_KEEP_MCU_WAKEUP_SET`，MCU 唤醒后发送 200 秒有限租约，每 180 秒续租。\n- 不使用非 VCP 永久唤醒码 `255`，不调用 Android 显示唤醒；ACC ON、哨兵停止或电池安全门槛触发后停止续租，已有租约最多 200 秒自然到期。\n- OEM 命令成功只记录为 MCU/CAN 租约已接受，不宣称 USB/SD 已恢复；外置存储仍必须通过系统卷枚举、挂载和 create/fsync/readback 检查。\n- 确定性不支持或非法参数会在当前会话熔断；busy/timeout 最多随一分钟心跳限频重试一次。\n\n## 诊断日志\n\n- 新增 `oem_mcu_keep_lease` 与 `oem_mcu_keep_lease_stop` 链路事件，记录运行时特征号、`ro.vehicle.type`、平台分类、返回码、接受次数、180 秒续租时间和停止后的最长剩余租约。\n- 后续实车日志可直接对齐 MCU 状态、USB/SD 设备枚举、public 卷状态和真实读写结果，判断 OEM 租约是否能间接保持外置存储电源域。"
+  "releaseNotes": "# DM 3.0.229 / 301229：熄火后外置存储恢复与录像保护\n\n## 本次修复\n\n- 对齐“车停哪了”的真实时序：ACC OFF 后等待 60 秒，再由 UID 2000 后台一次性唤醒系统/USB 电源域，并通过 BYD 背光接口与状态回读立即熄屏。\n- 熄火后的前 60 秒不启动 AVM 和录像，避免 OEM 卸载 USB/SD 时由 vold 中断 d_service。\n- 一分钟后先恢复系统/USB 电源域并启动外置盘探测，留出 10 秒枚举时间，再按 USB → SD → 内部选择实际录像位置并开始连续检测。\n- 每个事件 MP4 和保护性检查点 MP4 在真正打开前都重新按 USB → SD → 内部选盘，并验证当前挂载、空间以及 UID 2000 的真实打开/fsync；外置盘不可用才降级，恢复后下一个 MP4 自动回到更高优先级存储。\n- 已经开始写入的同一个 MP4 不跨盘切换；目标在打开前失效时丢弃空预留并重新选盘，编码内存环继续保留事件前缓冲，避免漏掉触发画面或产生损坏容器。\n- 200 秒 MCU/CAN 有限租约改由独立定时器在 180 秒续租，分钟心跳仅作兜底，消除心跳相位造成的租约空窗。\n\n## 真机问题证据\n\n- 熄火时 SD 与 USB 分别出现真实块设备移除，卷从 `StorageManager` 清单消失，不是普通 `unmounted`。\n- vold 检测到旧 d_service 持有 SD 上的 `.mp4.part` 后向进程发送 Interrupt，造成后台被替换。\n- `POWER_KEEP_MCU_WAKEUP_SET` 在本车返回成功，但不会单独保持 USB/SD 控制器；`POWER_OUTPUT_5V_SET=270022` 在本车型不受支持。\n\n## 验证要求\n\n- ACC OFF 前 60 秒不得启动 AVM 或创建任何录像 `.part`。\n- 60 秒后系统域唤醒一次、BYD 屏幕状态回读为关闭；USB/SD 开始重新枚举和 fsync 探测。\n- 约 70 秒时按 USB → SD → 内部选择当前可写目标，再启动连续哨兵录像。\n- d_service PID 在外置盘卸载窗口保持不变。\n- 每个新 MP4 的日志必须包含 `storage_validation=result=ok` 和本次实际 `target_kind`；USB 失效时同次选择 SD，再失效才选择内部。\n- 有事件时 MP4 必须完整封盘；外置盘恢复后，下一个新 MP4 直接恢复到 USB/SD，较低优先级存量文件再安全迁移。"
 }
