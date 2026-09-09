@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301237,
-  "versionName": "3.0.237",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.237-301237/DMApp-3.0.237-301237.apk",
-  "sizeBytes": 146215952,
-  "md5": "dc4aac32c3897a6cd78db2b0b3cc6715",
-  "sha256": "02f2ffdb0a07ad9e8748eb7ad63f69eaaccc7659ad5ee94533a4544a31a6b6f4",
+  "versionCode": 301238,
+  "versionName": "3.0.238",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.238-301238/DMApp-3.0.238-301238.apk",
+  "sizeBytes": 146220048,
+  "md5": "f69fcac04ccd61d793bb824a30d8930c",
+  "sha256": "bc345ee306b724e23215ee927d41e422931b8219080e290b25da6a32ad6d1c13",
   "force": false,
-  "releaseNotes": "# DM 3.0.237（301237）\n\n## 主页存储状态\n\n- 存储状态作为车辆信息表格的统一行展示，右侧显示当前已选存储盘。\n- 点击该行原地展开每个实际存储位置的容量、占用、额度和可写状态。\n- 当前已选存储置顶并高亮，其余位置按 USB、SD 卡、内部存储顺序展示。\n- 删除独立存储区和管理入口；配置统一从“车辆控制”Tab 进入。\n\n## 发布修正\n\n- 更新 Android 跨模块 H5 契约，使其验证新的逐位置展示和已选置顶规则。\n- 3.0.236 的 GitHub Actions 因旧契约断言失败且未发布正式 APK；3.0.237 取代该失败构建。"
+  "releaseNotes": "# DM 3.0.238（301238）：功能入口整理与车内温度隐藏链路\n\n## 功能入口\n\n- 通用设置只保留电子后视镜、熄火哨兵和高级功能三个正式入口。\n- 360 环视调试与副屏投放收纳到高级功能页；原有开关样式和“进入”按钮保持不变。\n- 鱼眼纠正不再在通用设置重复出现，只在 360 调试页配置；熄火哨兵继续使用原始四路画面。\n- 电子后视镜投放区域只在电子后视镜独立页面维护，360 调试页不再写入重复配置。\n- 正式入口从 `test` 包迁到 `features`，熄火哨兵页面使用正式 Settings 命名。\n\n## 车内温度\n\n- 根据 DiLink 3.0 OTA 中的 DiCarServer 3.4.0 增加过滤后隐藏属性\n  `AC_TEMP_INSIDE_FILTERING(0x4EB06010)`，保留旧属性 `0x3D800030`。\n- 读取顺序为 BYDAutoManager 两个属性、只读 autoservice Binder 两个属性、Sensor getter、\n  Sensor manager；成功值同时更新桌面车辆卡片和原状态栏 1039 通道。\n- `-10011` 明确按 DiCar `STATUS_UNAVAILABLE` 处理，并拒绝 BYDAuto failed/busy/timeout/invalid\n  等错误码，避免错误数字进入 UI。\n- Binder/可能的 shell fallback 读取不在车辆回调线程执行；失败日志按 60 秒合并，同时在\n  `cabin_temperature_probe=schema=v2` 保留每条候选链的原始结果。\n\n## 验证\n\n- Android `canfeature` 全量检查通过，共 109 个 Gradle 任务。\n- Go 服务全量测试通过，`git diff --check` 通过。\n- `3.0.238/301238` 候选 APK 构建及 16 KiB 对齐通过；最终 APK 已确认包含新的 Activity、入口类\n  和温度属性，不包含旧测试入口。\n\n当前验证证明代码、Binder 路径和封装正确，不证明目标车的两个隐藏属性一定有有效传感器值。\n目标车 ADB 当前为 offline；安装后需以状态栏/桌面实值和 `cabin_temperature_probe=schema=v2`\n日志确认该车型最终命中的来源。"
 }
