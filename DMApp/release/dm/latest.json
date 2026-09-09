@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301235,
-  "versionName": "3.0.235",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.235-301235/DMApp-3.0.235-301235.apk",
+  "versionCode": 301237,
+  "versionName": "3.0.237",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.237-301237/DMApp-3.0.237-301237.apk",
   "sizeBytes": 146215952,
-  "md5": "5f3f256fe507f4e86eccb026656eb1df",
-  "sha256": "c68c0fff5c802ade5d18aa9857afb363ecb641bfcfd3dead3e3f1b51d84f8233",
+  "md5": "dc4aac32c3897a6cd78db2b0b3cc6715",
+  "sha256": "02f2ffdb0a07ad9e8748eb7ad63f69eaaccc7659ad5ee94533a4544a31a6b6f4",
   "force": false,
-  "releaseNotes": "# DM 3.0.235（301235）\n\n## 移动端控制台\n\n- 主页“车辆信息”统一展示网络、360 全景、行车记录仪和后台服务状态，避免在“我的”重复。\n- “我的”仅保留当前账号、车机名称、VIN、最近同步、车机/后台版本、日志与操作记录。\n- 事件前后时长、最小移动时间、精确灵敏度和录像空间改为数字填写，避免移动端滑动误触。\n- 修复存储空状态提示的边框与间距，USB、SD 卡和内部存储仍保持紧凑用量展示。\n- 修复长操作详情撑开页面的问题；记录限制在卡片内滚动，默认两行并支持点击展开。\n- 调整日志、账号、窄屏录像列表和存储配置间距，保持现有深色/浅色视觉语言。\n\n## 验证\n\n- Node H5 契约测试覆盖数字输入、状态归属、空存储和操作记录溢出。\n- Go 嵌入式网页与服务端全包测试通过。\n- 本地 Mock Agent 下完成主页、车辆控制、高级配置、监控和“我的”逐页截图检查。\n- 数字参数填写、预设联动、配置保存与服务端回读验证通过。"
+  "releaseNotes": "# DM 3.0.237（301237）\n\n## 主页存储状态\n\n- 存储状态作为车辆信息表格的统一行展示，右侧显示当前已选存储盘。\n- 点击该行原地展开每个实际存储位置的容量、占用、额度和可写状态。\n- 当前已选存储置顶并高亮，其余位置按 USB、SD 卡、内部存储顺序展示。\n- 删除独立存储区和管理入口；配置统一从“车辆控制”Tab 进入。\n\n## 发布修正\n\n- 更新 Android 跨模块 H5 契约，使其验证新的逐位置展示和已选置顶规则。\n- 3.0.236 的 GitHub Actions 因旧契约断言失败且未发布正式 APK；3.0.237 取代该失败构建。"
 }
