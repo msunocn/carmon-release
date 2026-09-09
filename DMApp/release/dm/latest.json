@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301233,
-  "versionName": "3.0.233",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.233-301233/DMApp-3.0.233-301233.apk",
-  "sizeBytes": 146211856,
-  "md5": "c086234724ce4f4f26ffce2784f75f1a",
-  "sha256": "e70b77b566de27e2f08fa3321e312b15e5b34f85abf73015c344877d3fa79c19",
+  "versionCode": 301234,
+  "versionName": "3.0.234",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.234-301234/DMApp-3.0.234-301234.apk",
+  "sizeBytes": 146215952,
+  "md5": "b3f4f275ce862d8fb5e514f805388be7",
+  "sha256": "bf3855a12ada5f55cdeec14cf8081865a789612546761224e900d074ecb5a689",
   "force": false,
-  "releaseNotes": "# DM 3.0.233 / 301233：车控授权强制重启与通用设置防卡死\n\n## 本次修复\n\n- “车控权限授权”明确改为强制重启 d_service：先尝试 3 秒安全封盘，但无论 Binder、ACC 或封盘结果如何，手动授权都会继续重启。\n- 重启只匹配唯一、进程名为 `d_service`、UID 为 2000 的后台进程；先发送 TERM，5 秒未退出则发送 KILL，再确认旧 PID 消失后启动新实例。\n- 自动恢复不继承手动强制权限：ACC OFF 且录像未确认封盘时不会强杀，ACC ON 或封盘完成时才允许自动替换。\n- 通用设置中的熄火哨兵配置读取与写入移出主线程；旧 d_service 或 Binder 卡住时，页面保持响应，不再导致主进程 ANR/重启。\n- 哨兵开关在 d_service 返回真实配置前保持禁用，写入期间防止重复点击；失败时恢复原值。\n\n## 现场依据\n\n- VPS 当前车机会话仍上报 3.0.231，并持续返回旧版 `config/video` 资源 `busy`，证明 APK 更新后旧 app_process 未重载。\n- 原授权流程在 `prepareDaemonRestart` 超时后把 `WORKER_RESTART_BLOCKED` 置为 true，直接提示“录像尚未安全结束”并取消重启。\n- 通用设置创建哨兵开关时直接在主线程调用 d_service Binder，是页面卡死的直接代码路径。\n\n## 验证\n\n- `canfeature:check` 全量 108 个任务通过。\n- 授权重启策略 44 项断言通过，覆盖手动强制、自动 ACC OFF 保护、ACC ON 自动恢复、UID/进程名约束及 TERM/KILL 两级退出。\n- 通用设置契约 22 项通过，确认哨兵 Binder 读取和写入均位于后台线程。\n\n手机 Mock 与 JVM 回归不能代替车机验证。车机安装 3.0.233 后，必须点击一次“车控权限授权”，确认旧 3.0.231 d_service 被替换，再检查服务端会话版本、设置页、日志上传和 360。"
+  "releaseNotes": "# DMApp 3.0.234 (301234)\n\n- 修复熄火外置存储恢复曾关闭背光后，d_service 重启导致重新点火仍黑屏的问题：关闭前原子持久化恢复标记；正常 ACC ON 与新进程初始 ACC ON 都会执行有界背光恢复，且不再把 `isInteractive()` 当作物理背光已亮。\n- 修复远程回放目录为空：车机上线后立即、随后每 60 秒在独立 worker 异步同步 MP4 元数据；VPS 原子保存新增与删除，网页列表只读服务器快照并立即返回。\n- 修复一条历史录像元数据异常导致整批目录被拒绝；旧 sidecar 的封面时间会约束到视频范围，服务端跳过并记录单条异常，保留其他有效录像和上一份完整快照。\n- 回放 MP4 本体仍保留在车机，仅在播放时通过登录保护的 `mp4-range-v1` 读取；VPS 不落盘缓存完整视频。\n- 存储名称去重并简化为 `USB`、`SD卡`、`内部存储`，USB 型号仅在有区分价值时追加。\n- 哨兵录像空间改为最小 1 GB、步进 1 GB、只允许整数；d_service、Go 服务和 H5 使用相同边界，实际写入仍受目标磁盘总容量 90% 上限约束。"
 }
