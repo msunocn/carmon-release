@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301243,
-  "versionName": "3.0.243",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.243-301243/DMApp-3.0.243-301243.apk",
+  "versionCode": 301244,
+  "versionName": "3.0.244",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.244-301244/DMApp-3.0.244-301244.apk",
   "sizeBytes": 144929719,
-  "md5": "9ccde28414fdffb9579b26a3ce05ae4f",
-  "sha256": "cc49d22319a9da91b5d1e8ac17c1b0f293c7d7433535779ce81cfe337efe564d",
+  "md5": "555d4003fd4f418c78fb57aeb59a3942",
+  "sha256": "f5dee42719cc5ef54c24dd40d8e3523a70d2069d036d1defa65a57a4d0859424",
   "force": false,
-  "releaseNotes": "# DM 3.0.243（301243）：恢复 MinIO 流水线直传\n\n- 正式 tag 流水线固定通过 `https://byd.msuno.cn:9000` 的 TLS S3 入口上传同一份已签名\n  APK，并更新车机优先读取的 MinIO `latest.json`。\n- 继续使用既有 `carmon-ci` 对象发布密钥；权限只覆盖 `carmon-release/carmon/*`，不包含\n  MinIO 管理与对象删除。\n- MinIO 不再是可选阶段：密钥缺失、上传失败、清单不一致或 APK 公网回读大小、MD5、\n  SHA-256 任一不一致，整条流水线都会失败。\n- APK 功能延续 3.0.242 的桌面上下栏 Smali 校验修复；最低系统版本保持 API 28。\n\n发布前执行 Android 110 项检查、发布策略检查及 VPS HTTPS S3 最小权限读写验证。真车 UI、\n无障碍和熄火哨兵能力仍需安装后在目标车机验证。"
+  "releaseNotes": "# DM 3.0.244（301244）：手机摄像头与首次启动白屏修复\n\n## 手机 Mock 摄像头\n\n- 保留 Android 10+ Camera AppOps 快照的严格诊断语义，不再把只读快照误当成最终拒绝结果。\n- 小米/模拟器 Mock d_service 已作为 `dataSync|camera` 前台服务运行时，只要相机权限具备真实\n  探测条件，即允许 Camera2 执行实际打开；最终是否可用由 CameraManager 的真实回调确认。\n- 未启动相机前台服务、权限明确拒绝或上下文 UID 不匹配时仍然失败关闭；车机 NormalCamera、\n  BYD AVM 和正式双 UID Surface 委托路径不受该放宽影响。\n\n## 首次启动白屏\n\n- 修正桌面基础 Activity 的生命周期调用，先完整执行 AppCompat `onCreate`，再创建并挂载页面。\n- 避免安装后首次启动、横竖屏切换或系统窗口重建时，AppCompat 内容容器尚未初始化而触发\n  `ContentFrameLayout` 空指针和白屏。\n- 增加 Smali 生命周期回归门禁，禁止后续版本再次绕过 AppCompat 初始化。\n\n## 验证边界\n\n- 手机覆盖安装后的立即冷启动成功，主进程与 Mock d_service 均存活，首屏无白屏和崩溃。\n- 远程权限、WebRTC 和启动恢复相关 JVM 检查通过；正式 APK 仍由 tag 流水线完成签名、版本、\n  16 KiB 对齐、GitHub Release 与 MinIO 公网回读验证。\n- 手机 Camera2 首帧和真实车机摄像头/AVM 仍以对应设备的运行日志与实际画面为最终验收依据。"
 }
