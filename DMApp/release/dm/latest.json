@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301239,
-  "versionName": "3.0.239",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.239-301239/DMApp-3.0.239-301239.apk",
+  "versionCode": 301240,
+  "versionName": "3.0.240",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.240-301240/DMApp-3.0.240-301240.apk",
   "sizeBytes": 144929719,
-  "md5": "527e4bcf2875939a03bf3035ded96e81",
-  "sha256": "d8a54fccd690b2905b7acad5ccb5ab97102cb72e674f8b6b95242058a8e0033e",
+  "md5": "af76de8503906f017c5b81d65e9fc703",
+  "sha256": "48a454bc67101ad9aca8eaee7cbb806f9759a45a867ba12a498e0e7cadb70364",
   "force": false,
-  "releaseNotes": "# DM 3.0.239（301239）：熄火哨兵、后台恢复与远程链路收敛\n\n## 熄火哨兵与录像\n\n- 360 原始四路按实际映射拆分，使用 OpenCV 运动门控、EfficientDet-Lite0 INT8、可选\n  YOLOX-Tiny FP16 和轻量轨迹规则；移除不进入正式决策的 Nano 模型资产。\n- 已确认事件固定先完成 MP4 封盘、fsync、结构校验和原子发布；ACC ON、AVM 释放、执行器拒绝\n  或进程异常时保留可恢复证据，未确认中间态不进入回放。\n- 事件前后缓冲、编码 PTS 覆盖和 15 秒相邻事件合并均以成片时间线校验；最终文件、标签、封面、\n  轨迹和事件分组保持一致。\n- 录像只使用用户选择的精确 USB、SD 或内部目标；每个 MP4 打开前重新验证。外置目标只有确认\n  消失且显式开启时才临时回退内部，恢复后可迁回原目标。\n- 熄火期间不唤醒 Android 显示域；已确认不支持的 USB VBUS/Special Wake 能力熔断为可选降级，\n  ACC ON 只恢复历史遗留的背光恢复债务。\n\n## d_service 与远程可靠性\n\n- shell Binder 在线但 OEM 车控初始化长期未完成时，新增 15 秒只读健康握手；连续异常达到既有\n  两分钟门槛后复用安全封盘、15 分钟冷却和每小时三次上限的自动恢复流程。\n- ACC 关键读取、车内温度隐藏读取、MP4 封盘/恢复、成片模型分析、链路日志和 WebRTC 清理均使用\n  独立有界队列，避免 665 上慢 OEM、慢存储或事件突发拖垮整个后台进程。\n- 远程命令超时、WebSocket 控制帧、WebRTC 停止、录像目录增删同步、Range MP4 回放和最新日志上传\n  补齐竞态、取消、超时与可观测日志。\n- 顶部/底部系统菜单的悬浮根节点清理改为幂等附着检查；已附着空容器可原位恢复内容，避免重复\n  `removeView` 导致白屏或主进程崩溃。\n\n## 服务与发布\n\n- VPS 固定为 HTTPS/WSS，经 Nginx 转发到回环 Go 服务；补齐 Certbot 续期钩子、WebSocket 生命周期\n  日志和 TLS 反向代理边界。\n- GitHub 托管发布器禁止把 MinIO 凭据发送到公网明文 HTTP；CI 仅接受显式 HTTPS endpoint，VPS\n  本机同步可使用 `127.0.0.1` 回环地址。\n\n## 验证边界\n\n- Android `canfeature` 110 个校验任务通过；Go `-race` 与 `vet` 通过；H5 12 项移动端/播放器测试\n  通过；`3.0.239/301239` 完整 apktool 构建、版本注入和 16 KiB 对齐通过。\n- 当前没有在线 ADB 目标，也没有带人工标注的视频语料，因此以上证明代码、并发和封装门成立，\n  不替代目标 665 车机的 ACC-off、USB/SD、AVM 首帧、夜间准确率和漏录率验收。"
+  "releaseNotes": "# DM 3.0.240（301240）：发布镜像同步修复\n\n- 正式 APK 功能延续 3.0.239 的熄火哨兵、后台恢复、远程控制与 HTTPS/WSS 收敛。\n- MinIO 发布工具改用官方 GitHub Release 中与固定 SHA-256 匹配的 `mc` 资产；原官方下载\n  CDN 对旧版本返回 410 时不再阻断主更新清单。\n- VPS 已安装的 `mc` 只有哈希与固定版本完全一致时才可复用；公网 MinIO endpoint 仍强制 HTTPS，\n  回环 HTTP 只允许 VPS 本机同步。\n\n发布前继续执行 Android 110 项检查、Go race/vet、H5 测试、正式签名、版本和 16 KiB 对齐校验。\n真车 ACC-off、AVM、USB/SD 和识别准确率仍需安装后用目标 665 车机验证。"
 }
