@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301240,
-  "versionName": "3.0.240",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.240-301240/DMApp-3.0.240-301240.apk",
+  "versionCode": 301241,
+  "versionName": "3.0.241",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.241-301241/DMApp-3.0.241-301241.apk",
   "sizeBytes": 144929719,
-  "md5": "af76de8503906f017c5b81d65e9fc703",
-  "sha256": "48a454bc67101ad9aca8eaee7cbb806f9759a45a867ba12a498e0e7cadb70364",
+  "md5": "f761bb9ad2a23c41c05f229776f6c944",
+  "sha256": "a81f39cda923b2568e894cffdcaea2d0aa99c21cc2dd1d674b9878bbc9e3b0fb",
   "force": false,
-  "releaseNotes": "# DM 3.0.240（301240）：发布镜像同步修复\n\n- 正式 APK 功能延续 3.0.239 的熄火哨兵、后台恢复、远程控制与 HTTPS/WSS 收敛。\n- MinIO 发布工具改用官方 GitHub Release 中与固定 SHA-256 匹配的 `mc` 资产；原官方下载\n  CDN 对旧版本返回 410 时不再阻断主更新清单。\n- VPS 已安装的 `mc` 只有哈希与固定版本完全一致时才可复用；公网 MinIO endpoint 仍强制 HTTPS，\n  回环 HTTP 只允许 VPS 本机同步。\n\n发布前继续执行 Android 110 项检查、Go race/vet、H5 测试、正式签名、版本和 16 KiB 对齐校验。\n真车 ACC-off、AVM、USB/SD 和识别准确率仍需安装后用目标 665 车机验证。"
+  "releaseNotes": "# DM 3.0.241（301241）：MinIO 公网暴露收敛\n\n- 正式 APK 功能延续 3.0.239/240 的熄火哨兵、后台恢复、远程控制与 HTTPS/WSS 收敛。\n- MinIO S3 API 和管理台固定只监听 VPS 回环地址 `127.0.0.1:9000/9001`；公网只保留\n  Nginx TLS 下的只读 `/minio/` 下载路径，不再暴露明文 S3 API。\n- 发布工具继续使用固定哈希的官方 `mc`，在 VPS 回环链路写入，并校验对象与双清单哈希。\n\n发布前继续执行 Android 110 项检查、Go race/vet、H5 测试、正式签名、版本和 16 KiB 对齐校验。\n真车运行边界仍需安装后用目标 665 车机验证。"
 }
