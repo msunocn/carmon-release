@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301238,
-  "versionName": "3.0.238",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.238-301238/DMApp-3.0.238-301238.apk",
-  "sizeBytes": 146220048,
-  "md5": "f69fcac04ccd61d793bb824a30d8930c",
-  "sha256": "bc345ee306b724e23215ee927d41e422931b8219080e290b25da6a32ad6d1c13",
+  "versionCode": 301239,
+  "versionName": "3.0.239",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.239-301239/DMApp-3.0.239-301239.apk",
+  "sizeBytes": 144929719,
+  "md5": "527e4bcf2875939a03bf3035ded96e81",
+  "sha256": "d8a54fccd690b2905b7acad5ccb5ab97102cb72e674f8b6b95242058a8e0033e",
   "force": false,
-  "releaseNotes": "# DM 3.0.238（301238）：功能入口整理与车内温度隐藏链路\n\n## 功能入口\n\n- 通用设置只保留电子后视镜、熄火哨兵和高级功能三个正式入口。\n- 360 环视调试与副屏投放收纳到高级功能页；原有开关样式和“进入”按钮保持不变。\n- 鱼眼纠正不再在通用设置重复出现，只在 360 调试页配置；熄火哨兵继续使用原始四路画面。\n- 电子后视镜投放区域只在电子后视镜独立页面维护，360 调试页不再写入重复配置。\n- 正式入口从 `test` 包迁到 `features`，熄火哨兵页面使用正式 Settings 命名。\n\n## 车内温度\n\n- 根据 DiLink 3.0 OTA 中的 DiCarServer 3.4.0 增加过滤后隐藏属性\n  `AC_TEMP_INSIDE_FILTERING(0x4EB06010)`，保留旧属性 `0x3D800030`。\n- 读取顺序为 BYDAutoManager 两个属性、只读 autoservice Binder 两个属性、Sensor getter、\n  Sensor manager；成功值同时更新桌面车辆卡片和原状态栏 1039 通道。\n- `-10011` 明确按 DiCar `STATUS_UNAVAILABLE` 处理，并拒绝 BYDAuto failed/busy/timeout/invalid\n  等错误码，避免错误数字进入 UI。\n- Binder/可能的 shell fallback 读取不在车辆回调线程执行；失败日志按 60 秒合并，同时在\n  `cabin_temperature_probe=schema=v2` 保留每条候选链的原始结果。\n\n## 验证\n\n- Android `canfeature` 全量检查通过，共 109 个 Gradle 任务。\n- Go 服务全量测试通过，`git diff --check` 通过。\n- `3.0.238/301238` 候选 APK 构建及 16 KiB 对齐通过；最终 APK 已确认包含新的 Activity、入口类\n  和温度属性，不包含旧测试入口。\n\n当前验证证明代码、Binder 路径和封装正确，不证明目标车的两个隐藏属性一定有有效传感器值。\n目标车 ADB 当前为 offline；安装后需以状态栏/桌面实值和 `cabin_temperature_probe=schema=v2`\n日志确认该车型最终命中的来源。"
+  "releaseNotes": "# DM 3.0.239（301239）：熄火哨兵、后台恢复与远程链路收敛\n\n## 熄火哨兵与录像\n\n- 360 原始四路按实际映射拆分，使用 OpenCV 运动门控、EfficientDet-Lite0 INT8、可选\n  YOLOX-Tiny FP16 和轻量轨迹规则；移除不进入正式决策的 Nano 模型资产。\n- 已确认事件固定先完成 MP4 封盘、fsync、结构校验和原子发布；ACC ON、AVM 释放、执行器拒绝\n  或进程异常时保留可恢复证据，未确认中间态不进入回放。\n- 事件前后缓冲、编码 PTS 覆盖和 15 秒相邻事件合并均以成片时间线校验；最终文件、标签、封面、\n  轨迹和事件分组保持一致。\n- 录像只使用用户选择的精确 USB、SD 或内部目标；每个 MP4 打开前重新验证。外置目标只有确认\n  消失且显式开启时才临时回退内部，恢复后可迁回原目标。\n- 熄火期间不唤醒 Android 显示域；已确认不支持的 USB VBUS/Special Wake 能力熔断为可选降级，\n  ACC ON 只恢复历史遗留的背光恢复债务。\n\n## d_service 与远程可靠性\n\n- shell Binder 在线但 OEM 车控初始化长期未完成时，新增 15 秒只读健康握手；连续异常达到既有\n  两分钟门槛后复用安全封盘、15 分钟冷却和每小时三次上限的自动恢复流程。\n- ACC 关键读取、车内温度隐藏读取、MP4 封盘/恢复、成片模型分析、链路日志和 WebRTC 清理均使用\n  独立有界队列，避免 665 上慢 OEM、慢存储或事件突发拖垮整个后台进程。\n- 远程命令超时、WebSocket 控制帧、WebRTC 停止、录像目录增删同步、Range MP4 回放和最新日志上传\n  补齐竞态、取消、超时与可观测日志。\n- 顶部/底部系统菜单的悬浮根节点清理改为幂等附着检查；已附着空容器可原位恢复内容，避免重复\n  `removeView` 导致白屏或主进程崩溃。\n\n## 服务与发布\n\n- VPS 固定为 HTTPS/WSS，经 Nginx 转发到回环 Go 服务；补齐 Certbot 续期钩子、WebSocket 生命周期\n  日志和 TLS 反向代理边界。\n- GitHub 托管发布器禁止把 MinIO 凭据发送到公网明文 HTTP；CI 仅接受显式 HTTPS endpoint，VPS\n  本机同步可使用 `127.0.0.1` 回环地址。\n\n## 验证边界\n\n- Android `canfeature` 110 个校验任务通过；Go `-race` 与 `vet` 通过；H5 12 项移动端/播放器测试\n  通过；`3.0.239/301239` 完整 apktool 构建、版本注入和 16 KiB 对齐通过。\n- 当前没有在线 ADB 目标，也没有带人工标注的视频语料，因此以上证明代码、并发和封装门成立，\n  不替代目标 665 车机的 ACC-off、USB/SD、AVM 首帧、夜间准确率和漏录率验收。"
 }
