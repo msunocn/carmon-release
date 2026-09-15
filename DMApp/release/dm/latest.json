@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301247,
-  "versionName": "3.0.247",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.247-301247/DMApp-3.0.247-301247.apk",
-  "sizeBytes": 144946103,
-  "md5": "223b5dbb396b87b7e0613e91fb2f7926",
-  "sha256": "11f48a04610c1669917d4a5eefce6e2a7d4b6c427faf1a5c05395f403c6acdcf",
+  "versionCode": 301248,
+  "versionName": "3.0.248",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.248-301248/DMApp-3.0.248-301248.apk",
+  "sizeBytes": 144958391,
+  "md5": "b7afb6c8b8084d91351bf2b3e3b1676f",
+  "sha256": "fbed1b1f9b68c679802a13c075e4dbcf8d5ab48318fc34d0a4c3f074ff1ffab4",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.247\n\n## 低带宽远程回放\n\n- 哨兵录像的原始 MP4 分辨率、帧率、码率和文件内容保持不变，仍按车机录制配置完整落盘。\n- 仅在用户远程打开回放时，由 d_service 只读解码目标 MP4，并复用实时查看的 WebRTC H.264\n  带宽档位：360 回放为 `480x360`，行车记录仪回放为 `480x270`，均为 `8 fps / 256 kbps`。\n- 回放发布端先发送一个建轨首帧并暂停；浏览器确认已收到并开始显示该帧后，再单独请求车机继续解码，\n  避免 SDP、ICE 或弱网传输期间提前消耗录像开头而表现为快进。\n- 拖动进度条会校验录像 ID、时长和偏移，关闭旧会话并从目标时间重新解码；关键帧之前只用于解码，\n  不会发送到浏览器。VPS 仍只保存目录和封面，不保存完整录像。\n- 浏览器为实时查看与回放统一使用约 150 ms 抖动缓冲，在不提高车机上传带宽的前提下减少移动网络卡顿。\n\n## 熄火录像启动与点火背光\n\n- 熄火后 10 秒恢复外置存储系统域并立即关闭背光，再等待 10 秒首次检查用户选定的唯一存储目标。\n- 目标未就绪时每 5 秒复查，持续 1 分钟后才按远程配置选择内部兜底或结束本次录像启动；目标一旦\n  就绪立即启动 360 连续检测。每个事件 MP4 创建前仍重新验证精确目标。\n- 点火后延迟 1 秒恢复并回读背光，未恢复时每秒重试，最多 5 次；录像封盘和资源释放不等待背光恢复。\n\n## 验证边界\n\n- `:canfeature:check`：110 个任务通过；覆盖 MP4 事件窗口、存储目标、WebRTC 限帧、首帧门控和回放偏移。\n- Go 服务端、Mock Agent 与 H5 契约测试全部通过，JavaScript 语法检查通过；重建 APK 的 `classes3.dex`\n  已确认包含低带宽回放和新熄火启动策略。\n- 本地/JVM/手机 Mock 不能证明 665 车机的实际 USB/SD 供电、BYD 背光读回、硬件解码性能和公网链路；\n  安装后仍需用真实车机录像验证起播、拖动、连续播放及 ACC OFF/ON 时序。"
+  "releaseNotes": "# DMApp 3.0.248\n\n## 可拖动 MP4 事件回放\n\n- 远程回放不再使用 WebRTC：车机先生成低码率 MP4 副本，再用浏览器原生 MP4 Range 播放，保留完整总时长、播放进度和随机拖动。\n- 播放器从录像 catalog 立即显示总时长，媒体 metadata 到达后再以 MP4 真实时长校准，不再等待首帧才出现总进度。\n- 移动端拖动期间只更新预览时间，释放后只提交一次定位；优先调用浏览器 `fastSeek()` 跳到最近关键帧，\n  不支持时才回退 `currentTime`，并用 `seeking/seeked` 状态显示定位过程。\n- 车机 d_service 使用硬件 MediaCodec 解码/编码和 GLES 缩放限帧，生成 `480x360/270、8 FPS、256 kbps`\n  的私有缓存副本；1 秒关键帧间隔用于快速 Seek，原始录像只读不变。\n- 解码末帧必须由 SurfaceTexture/GLES 明确消费，Muxer 成功封盘、`fsync`、尺寸和时长误差校验全部通过后，\n  `.mp4.part` 才能原子发布；源片与副本时长最多允许相差两个目标帧（250 ms），实际平均码率也有硬上限。\n  正在 Range 读取的副本受文件租约保护，不参与删除和缓存淘汰。\n- 每次准备和 Range 均绑定登录会话、VIN、当前 Agent generation、稳定录像 ID、proxy ID、字节偏移、长度和时限；\n  VPS 仅保存副本元数据并以内存 pipe 中继当前区间，不保存视频，也不接受车机文件路径。\n- 原始哨兵 MP4 的分辨率、帧率、码率和文件内容均保持不变。\n\n## 带宽边界\n\n- 实时查看继续使用 `8 fps / 256 kbps` WebRTC；MP4 回放副本也在车机侧限制为 `8 FPS / 256 kbps`，\n  因此车机上行和 VPS 到手机两段都不传输原始高码率画面。\n- VPS 虽有 FFmpeg，但本链路不调用它；转码、128 MiB/12 文件缓存和最旧优先清理均在车机 d_service。\n- 本版不向 665 车机引入软件 FFmpeg 编码器，避免增加包体、CPU/功耗和许可证风险。\n\n## 验证边界\n\n- Go 服务端 Range、身份绑定、取消与超时测试，H5 播放/拖动契约和 JavaScript 语法检查通过。\n- Android 全量检查通过；小米 10 真机以 shell/app_process 运行完整硬件链路，确认选中\n  `OMX.qcom.video.encoder.avc`，6 秒 1280×720/30 FPS 输入生成 480×270、48 帧、6.03 秒、\n  平均约 7.96 FPS/242 kbps 的 H.264 MP4，关键帧位于 0/1/2/3/4/5 秒，第二次打开命中缓存。\n- 成品 DEX 重建通过后由正式 tag 流水线签名、校验并发布。\n- 小米真机不能替代目标 665 对 USB/SD 读取速度、蜂窝 Range 连续播放和长期功耗的实车验收；发布后仍需安装车机复测。"
 }
