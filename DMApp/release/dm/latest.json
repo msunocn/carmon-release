@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301246,
-  "versionName": "3.0.246",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.246-301246/DMApp-3.0.246-301246.apk",
-  "sizeBytes": 144937911,
-  "md5": "dd7d0e8eed8debdcfe0eb842c1696a76",
-  "sha256": "19a75fdedd2d8448b10602f856fb215497f15bfd16f54d6855ec18f34897a74f",
+  "versionCode": 301247,
+  "versionName": "3.0.247",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.247-301247/DMApp-3.0.247-301247.apk",
+  "sizeBytes": 144946103,
+  "md5": "223b5dbb396b87b7e0613e91fb2f7926",
+  "sha256": "11f48a04610c1669917d4a5eefce6e2a7d4b6c427faf1a5c05395f403c6acdcf",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.246\n\n## 点火背光恢复\n\n- 修复熄火哨兵为恢复 USB/SD 唤醒系统存储域后，点火瞬间 BYD 显示服务尚未就绪会导致背光保持关闭的问题。\n- 保留 ACC ON 清理开始和结束的两次快速恢复；若 OEM `getPowerScreenStatus()` 仍为关闭，永久 ACC 顺序线程会在物理 ACC 持续为 ON 时，于 2、5、10、20、30、60、90、120 秒继续有界重试。\n- 新 ACC OFF 会立即取消所有背光开启任务；任何一次 OEM 状态确认开启后都会停止重试并原子清除持久化恢复标记。\n- d_service 在恢复期间重启时，初始 ACC ON 会读取同一恢复标记并继续偿还，不依赖旧进程内存。\n- 延迟恢复不再阻塞 MP4 封盘、AVM 释放、存储或网络清理；资源清理完成与物理背光恢复状态分别记录。\n\n## 验证\n\n- `:canfeature:check`：110 个任务通过。\n- 车机日志 `log-1789478626827407629` 已确认原故障：两次 `wakeUp`/`TurnBacklightOn` 返回成功，但点火后约 0.8 秒内 OEM 状态仍为 0；后续 d_service 启动时状态已恢复为 1。\n- 手机及 JVM 无法证明 BYD 物理背光状态；正式包安装后需执行一次 ACC OFF 至少 30 秒再 ACC ON，确认 `acc_on_durable_display_restore` 最终为 `success` 且屏幕实际点亮。"
+  "releaseNotes": "# DMApp 3.0.247\n\n## 低带宽远程回放\n\n- 哨兵录像的原始 MP4 分辨率、帧率、码率和文件内容保持不变，仍按车机录制配置完整落盘。\n- 仅在用户远程打开回放时，由 d_service 只读解码目标 MP4，并复用实时查看的 WebRTC H.264\n  带宽档位：360 回放为 `480x360`，行车记录仪回放为 `480x270`，均为 `8 fps / 256 kbps`。\n- 回放发布端先发送一个建轨首帧并暂停；浏览器确认已收到并开始显示该帧后，再单独请求车机继续解码，\n  避免 SDP、ICE 或弱网传输期间提前消耗录像开头而表现为快进。\n- 拖动进度条会校验录像 ID、时长和偏移，关闭旧会话并从目标时间重新解码；关键帧之前只用于解码，\n  不会发送到浏览器。VPS 仍只保存目录和封面，不保存完整录像。\n- 浏览器为实时查看与回放统一使用约 150 ms 抖动缓冲，在不提高车机上传带宽的前提下减少移动网络卡顿。\n\n## 熄火录像启动与点火背光\n\n- 熄火后 10 秒恢复外置存储系统域并立即关闭背光，再等待 10 秒首次检查用户选定的唯一存储目标。\n- 目标未就绪时每 5 秒复查，持续 1 分钟后才按远程配置选择内部兜底或结束本次录像启动；目标一旦\n  就绪立即启动 360 连续检测。每个事件 MP4 创建前仍重新验证精确目标。\n- 点火后延迟 1 秒恢复并回读背光，未恢复时每秒重试，最多 5 次；录像封盘和资源释放不等待背光恢复。\n\n## 验证边界\n\n- `:canfeature:check`：110 个任务通过；覆盖 MP4 事件窗口、存储目标、WebRTC 限帧、首帧门控和回放偏移。\n- Go 服务端、Mock Agent 与 H5 契约测试全部通过，JavaScript 语法检查通过；重建 APK 的 `classes3.dex`\n  已确认包含低带宽回放和新熄火启动策略。\n- 本地/JVM/手机 Mock 不能证明 665 车机的实际 USB/SD 供电、BYD 背光读回、硬件解码性能和公网链路；\n  安装后仍需用真实车机录像验证起播、拖动、连续播放及 ACC OFF/ON 时序。"
 }
