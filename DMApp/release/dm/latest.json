@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301244,
-  "versionName": "3.0.244",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.244-301244/DMApp-3.0.244-301244.apk",
-  "sizeBytes": 144929719,
-  "md5": "555d4003fd4f418c78fb57aeb59a3942",
-  "sha256": "f5dee42719cc5ef54c24dd40d8e3523a70d2069d036d1defa65a57a4d0859424",
+  "versionCode": 301245,
+  "versionName": "3.0.245",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.245-301245/DMApp-3.0.245-301245.apk",
+  "sizeBytes": 144937911,
+  "md5": "9643d808eba8d5f3398376888b67b3c0",
+  "sha256": "74bd6b48050b00289356d80e243f568b820293e0f3a4985fce0cba5becaa6599",
   "force": false,
-  "releaseNotes": "# DM 3.0.244（301244）：手机摄像头与首次启动白屏修复\n\n## 手机 Mock 摄像头\n\n- 保留 Android 10+ Camera AppOps 快照的严格诊断语义，不再把只读快照误当成最终拒绝结果。\n- 小米/模拟器 Mock d_service 已作为 `dataSync|camera` 前台服务运行时，只要相机权限具备真实\n  探测条件，即允许 Camera2 执行实际打开；最终是否可用由 CameraManager 的真实回调确认。\n- 未启动相机前台服务、权限明确拒绝或上下文 UID 不匹配时仍然失败关闭；车机 NormalCamera、\n  BYD AVM 和正式双 UID Surface 委托路径不受该放宽影响。\n\n## 首次启动白屏\n\n- 修正桌面基础 Activity 的生命周期调用，先完整执行 AppCompat `onCreate`，再创建并挂载页面。\n- 避免安装后首次启动、横竖屏切换或系统窗口重建时，AppCompat 内容容器尚未初始化而触发\n  `ContentFrameLayout` 空指针和白屏。\n- 增加 Smali 生命周期回归门禁，禁止后续版本再次绕过 AppCompat 初始化。\n\n## 验证边界\n\n- 手机覆盖安装后的立即冷启动成功，主进程与 Mock d_service 均存活，首屏无白屏和崩溃。\n- 远程权限、WebRTC 和启动恢复相关 JVM 检查通过；正式 APK 仍由 tag 流水线完成签名、版本、\n  16 KiB 对齐、GitHub Release 与 MinIO 公网回读验证。\n- 手机 Camera2 首帧和真实车机摄像头/AVM 仍以对应设备的运行日志与实际画面为最终验收依据。"
+  "releaseNotes": "# DM 3.0.245（301245）：恢复熄火外置存储链路\n\n## USB/SD 与录像时序\n\n- 恢复 3.0.238 已在目标车机验证过的 CarFinder 链路：选中 USB 或 SD 时，熄火后延迟一次\n  唤醒 Android/外置存储系统域，并立即调用 BYD 背光关闭接口。\n- 系统域唤醒调整到熄火后 10 秒；UID 2000 的外置卷枚举、挂载与写入验证随后启动。\n- 360 连续取帧和事件录像调整到熄火后 30 秒，避免活动文件跨越 OEM 初始卸载窗口，同时给\n  USB/SD 预留 20 秒重新枚举时间。\n- 选中外置盘在第一次恢复清单中尚未出现时，使用 5/15/30/60 秒有界重查，不再直接进入\n  一分钟静默；每个 MP4 打开前仍重新验证精确目标。\n\n## 点火恢复与兜底录像迁移\n\n- 系统域唤醒前先持久化显示恢复标记；ACC ON 优先恢复 BYD 背光，失败时保留标记并由新进程\n  的初始 ACC ON 路径继续有界重试。\n- 内部兜底生成的完整 MP4 在点火后等待所选 USB/SD 恢复，按 5/15/30/60 秒节奏检查最多\n  10 分钟；每次只迁移一个文件。\n- 迁移仅处理带精确主目标标记的已完成 MP4，执行源文件校验、目标配额整理、临时文件写入、\n  fsync、MP4 复检和原子发布，成功后才删除内部源文件；活动录像和 `.part` 永不参与。\n- 新熄火会话、存储选择变化、内部兜底关闭或恢复窗口超时会立即取消旧迁移任务。\n\n## 验证边界\n\n- 最新 3.0.244 车机日志确认旧实现熄火后 USB/SD 从卷清单消失、60 秒录像回退内部，点火后\n  外置盘才恢复；本版针对该时间线恢复链路并收紧状态机。\n- JVM 状态机与架构检查覆盖 10/30 秒时序、单次系统域唤醒、ACC ON 显示恢复、首次空清单快速\n  重查和点火后安全迁移。正式包由 tag 流水线继续执行签名、版本、16 KiB 对齐及 MinIO 回读。\n- USB/SD 熄火持续可用和物理背光状态仍以目标 665 车机安装后的新日志与实测为最终验收。"
 }
