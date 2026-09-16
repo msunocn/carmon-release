@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301248,
-  "versionName": "3.0.248",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.248-301248/DMApp-3.0.248-301248.apk",
+  "versionCode": 301249,
+  "versionName": "3.0.249",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.249-301249/DMApp-3.0.249-301249.apk",
   "sizeBytes": 144958391,
-  "md5": "b7afb6c8b8084d91351bf2b3e3b1676f",
-  "sha256": "fbed1b1f9b68c679802a13c075e4dbcf8d5ab48318fc34d0a4c3f074ff1ffab4",
+  "md5": "3c48a09304bb6ff77523caca0be76b69",
+  "sha256": "02ffee8f0be8a7a6d546f07323915e563f2db305763df1c90f40a4f510550e0e",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.248\n\n## 可拖动 MP4 事件回放\n\n- 远程回放不再使用 WebRTC：车机先生成低码率 MP4 副本，再用浏览器原生 MP4 Range 播放，保留完整总时长、播放进度和随机拖动。\n- 播放器从录像 catalog 立即显示总时长，媒体 metadata 到达后再以 MP4 真实时长校准，不再等待首帧才出现总进度。\n- 移动端拖动期间只更新预览时间，释放后只提交一次定位；优先调用浏览器 `fastSeek()` 跳到最近关键帧，\n  不支持时才回退 `currentTime`，并用 `seeking/seeked` 状态显示定位过程。\n- 车机 d_service 使用硬件 MediaCodec 解码/编码和 GLES 缩放限帧，生成 `480x360/270、8 FPS、256 kbps`\n  的私有缓存副本；1 秒关键帧间隔用于快速 Seek，原始录像只读不变。\n- 解码末帧必须由 SurfaceTexture/GLES 明确消费，Muxer 成功封盘、`fsync`、尺寸和时长误差校验全部通过后，\n  `.mp4.part` 才能原子发布；源片与副本时长最多允许相差两个目标帧（250 ms），实际平均码率也有硬上限。\n  正在 Range 读取的副本受文件租约保护，不参与删除和缓存淘汰。\n- 每次准备和 Range 均绑定登录会话、VIN、当前 Agent generation、稳定录像 ID、proxy ID、字节偏移、长度和时限；\n  VPS 仅保存副本元数据并以内存 pipe 中继当前区间，不保存视频，也不接受车机文件路径。\n- 原始哨兵 MP4 的分辨率、帧率、码率和文件内容均保持不变。\n\n## 带宽边界\n\n- 实时查看继续使用 `8 fps / 256 kbps` WebRTC；MP4 回放副本也在车机侧限制为 `8 FPS / 256 kbps`，\n  因此车机上行和 VPS 到手机两段都不传输原始高码率画面。\n- VPS 虽有 FFmpeg，但本链路不调用它；转码、128 MiB/12 文件缓存和最旧优先清理均在车机 d_service。\n- 本版不向 665 车机引入软件 FFmpeg 编码器，避免增加包体、CPU/功耗和许可证风险。\n\n## 验证边界\n\n- Go 服务端 Range、身份绑定、取消与超时测试，H5 播放/拖动契约和 JavaScript 语法检查通过。\n- Android 全量检查通过；小米 10 真机以 shell/app_process 运行完整硬件链路，确认选中\n  `OMX.qcom.video.encoder.avc`，6 秒 1280×720/30 FPS 输入生成 480×270、48 帧、6.03 秒、\n  平均约 7.96 FPS/242 kbps 的 H.264 MP4，关键帧位于 0/1/2/3/4/5 秒，第二次打开命中缓存。\n- 成品 DEX 重建通过后由正式 tag 流水线签名、校验并发布。\n- 小米真机不能替代目标 665 对 USB/SD 读取速度、蜂窝 Range 连续播放和长期功耗的实车验收；发布后仍需安装车机复测。"
+  "releaseNotes": "# DMApp 3.0.249\n\n## 修复远程回放画面倒置\n\n- 修复车机端 MediaCodec 解码录像经 GLES 转码后上下翻转的问题。\n- Y 轴纹理校正只应用于 MP4 文件回放代理；实时 Camera2/WebRTC 继续使用原有纹理坐标、时间戳和传输链路。\n- 提升车机回放缓存修订号，升级后不会继续命中 3.0.248 生成的倒置代理文件。\n- 原始哨兵 MP4 不修改；VPS 仍只以内存管道转发 MP4 Range，不转码、不保存视频。\n\n## 验证\n\n- 使用“上红、下蓝”非对称视频在小米 10 的高通硬件 MediaCodec/GLES 链路复现 3.0.248：输出变为上蓝、下红。\n- 修复后同一视频恢复为上红、下蓝；3 秒输入生成 24 帧、3.03 秒、约 8 FPS 的 480×270 H.264 MP4。\n- 四象限视频验证左上红、右上绿、左下蓝、右下黄，排除左右镜像和 180° 旋转。\n- JVM 纹理坐标、远程协议契约和 Android 全量回归通过；目标 665 仍需安装后复测真实哨兵录像。"
 }
