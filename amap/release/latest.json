@@ -1,11 +1,11 @@
 {
   "appId": "amap",
-  "versionCode": 21000381,
-  "versionName": "7.5.0.381",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v7.5.0.381-21000381/AMap-7.5.0.381-21000381.apk",
+  "versionCode": 21000382,
+  "versionName": "7.5.0.382",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v7.5.0.382-21000382/AMap-7.5.0.382-21000382.apk",
   "sizeBytes": 151037802,
-  "md5": "25e0381781440cdedadb41ffd2c887ae",
-  "sha256": "c695a0cc04ec8e0b0ac62ebf32e6e597d9578a124da036d1795e0d7433338280",
+  "md5": "15d2f36502774f56156cc013a48f96d0",
+  "sha256": "0fa76989ef8b76904ba110ed53a2809bc7df9448203d524f7d69511a74afe96b",
   "force": false,
-  "releaseNotes": "AMap 7.5.0.381（21000381）GitHub Release 升级包。"
+  "releaseNotes": "AMap 7.5.0.382（21000382）GitHub Release 升级包。"
 }
