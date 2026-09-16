@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301249,
-  "versionName": "3.0.249",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.249-301249/DMApp-3.0.249-301249.apk",
+  "versionCode": 301250,
+  "versionName": "3.0.250",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.250-301250/DMApp-3.0.250-301250.apk",
   "sizeBytes": 144958391,
-  "md5": "3c48a09304bb6ff77523caca0be76b69",
-  "sha256": "02ffee8f0be8a7a6d546f07323915e563f2db305763df1c90f40a4f510550e0e",
+  "md5": "212325ecdf3ce8fedb04d40e81094ceb",
+  "sha256": "3ce06be66905d06fcb2d61b0339321f8521e9b6416964663c497f2ff57e419d0",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.249\n\n## 修复远程回放画面倒置\n\n- 修复车机端 MediaCodec 解码录像经 GLES 转码后上下翻转的问题。\n- Y 轴纹理校正只应用于 MP4 文件回放代理；实时 Camera2/WebRTC 继续使用原有纹理坐标、时间戳和传输链路。\n- 提升车机回放缓存修订号，升级后不会继续命中 3.0.248 生成的倒置代理文件。\n- 原始哨兵 MP4 不修改；VPS 仍只以内存管道转发 MP4 Range，不转码、不保存视频。\n\n## 验证\n\n- 使用“上红、下蓝”非对称视频在小米 10 的高通硬件 MediaCodec/GLES 链路复现 3.0.248：输出变为上蓝、下红。\n- 修复后同一视频恢复为上红、下蓝；3 秒输入生成 24 帧、3.03 秒、约 8 FPS 的 480×270 H.264 MP4。\n- 四象限视频验证左上红、右上绿、左下蓝、右下黄，排除左右镜像和 180° 旋转。\n- JVM 纹理坐标、远程协议契约和 Android 全量回归通过；目标 665 仍需安装后复测真实哨兵录像。"
+  "releaseNotes": "# DMApp 3.0.250\n\n## 加速远程录像回放\n\n- 保持“用户点击后按需转换”，不在哨兵录像封盘后后台预生成，避免常驻转码影响录像稳定性。\n- 车机硬件解码转换由 2 倍实时提升至 4 倍实时；在解码器出口先按 8 FPS 筛帧，再进入 Surface/GLES 和 H.264 编码器，降低无效 GPU 处理。\n- 原始哨兵 MP4 始终只读；输出仍为可显示完整时长、可拖动定位的 480 宽、8 FPS、256 kbps H.264 MP4。\n- 按需代理缓存由 128 MiB/12 个收紧到 32 MiB/4 个，并在后续访问时淘汰超过 30 分钟的未占用代理；不改变哨兵录像存储目录和配额。\n- 保留 3.0.249 的解码画面方向修复；实时 Camera2/WebRTC 链路不变，VPS 继续只转发 MP4 Range，不转码、不保存视频。\n\n## 验证\n\n- 小米 10 高通硬件 MediaCodec/GLES 实测：4096×768、15 FPS、约 5.15 Mbps、12 秒原片，冷转换 3.56 秒，完整探针调用 4.80 秒；缓存命中调用 1.23 秒。\n- 输出为 480×270、96 帧、约 7.96 FPS、251 kbps、12.07 秒，时长和帧数完整。\n- 远程视频时序、协议契约及 canfeature 全量 111 个 Gradle 检查任务通过；调试签名 APK 在小米 10 安装启动，无启动崩溃。\n- 骁龙 665 的真实转码时延与并发录像资源占用仍以升级后的车机日志为最终验收依据。"
 }
