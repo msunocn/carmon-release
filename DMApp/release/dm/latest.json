@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301252,
-  "versionName": "3.0.252",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.252-301252/DMApp-3.0.252-301252.apk",
+  "versionCode": 301253,
+  "versionName": "3.0.253",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.253-301253/DMApp-3.0.253-301253.apk",
   "sizeBytes": 144962487,
-  "md5": "6e5e2b70a259412d672a3dc3a0c4be3b",
-  "sha256": "79d42510e2154bcfe87c9c0d1dd5c541be9908ad8e9e755d1d3237495fc16637",
+  "md5": "b1bd332f44524002b1bc8b49cae1b098",
+  "sha256": "69d608577dbf44b1e83ec52f52923eb2c76317de653d5771a60cb6c56e459520",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.252\n\n## 修复远程回放画面上下颠倒\n\n- WebRTC MP4 回放不再对 `SurfaceTextureHelper` 已定向的帧重复执行 Y 轴翻转；原始录像文件、实时摄像头和旧 MP4 代理路径均不改动。\n- 去掉每帧额外的 I420 分配与拷贝，降低回放时的 CPU 和内存开销。\n\n## 验证\n\n- 小米 10 手机模拟链路使用固定四象限 MP4 实测：修复前左上/右上显示为原片下半部蓝/黄，修复后恢复为原片左上红、右上绿、左下蓝、右下黄。\n- 8 秒录像按正常速度播放，网页显示 `00:08 / 00:08` 并正常结束；`canfeature` 构建及方向/协议回归检查通过。\n- 车机 665 的真实录像画面需在安装此版本后复核；此次手机测试不替代车机验收。"
+  "releaseNotes": "# DMApp 3.0.253\n\n## 点火后背光恢复\n\n- 修复 ACC ON 背光备用调用少传 `tag`、始终返回 `method_missing` 的问题。参照车停哪了 2.3.0 的实际调用顺序，先读取固件屏幕状态，必要时执行 `TurnBacklightOn`，再次未亮则执行双参数 `TurnBacklightOnWithLock(null, tag)`，每步均回读结果。\n- OEM 路径仍未点亮时，才尝试 Android 应用唤醒、重新开背光、系统活跃通知和带令牌的固件兜底；不把返回 `void` 当作背光恢复成功。\n- 若仅靠带令牌的兜底保持亮屏，保留跨进程恢复标记。下一次物理 ACC OFF 时即使哨兵已关闭，也释放应用持有的令牌，避免屏幕被持续持有。\n- 日志区分直接恢复、OEM Binder 恢复、带令牌临时恢复及未恢复，并记录各阶段的固件背光读数。\n\n## 验证边界\n\n- `:canfeature:check` 与 APK 回编译通过；升级包必须由 tag 流水线正式签名并核验。\n- 当前只有小米手机接入，不能代替比亚迪 665 的物理背光验收。安装后请在不触摸屏幕的情况下完成熄火、点火循环，确认点火后背光读数为 `1`、画面实际亮起；同时验证关闭哨兵后的下一次熄火不会持续亮屏。"
 }
