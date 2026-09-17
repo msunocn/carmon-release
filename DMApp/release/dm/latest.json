@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301251,
-  "versionName": "3.0.251",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.251-301251/DMApp-3.0.251-301251.apk",
-  "sizeBytes": 144966583,
-  "md5": "42238b11f5a9ec46f78afb33c628b8e7",
-  "sha256": "32ad33ce56069e96a407de6a7c00730b014b451729dc4ce5c077bb0da823437a",
+  "versionCode": 301252,
+  "versionName": "3.0.252",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.252-301252/DMApp-3.0.252-301252.apk",
+  "sizeBytes": 144962487,
+  "md5": "6e5e2b70a259412d672a3dc3a0c4be3b",
+  "sha256": "79d42510e2154bcfe87c9c0d1dd5c541be9908ad8e9e755d1d3237495fc16637",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.251\n\n## 远程视频\n\n- 事件录像改为按需 WebRTC 回放：车机只读解码原始 MP4，以约 8 FPS、256 kbps 实时推送；不预生成低码率副本，不占用额外录像空间。VPS 只转发信令和媒体。\n- 实时 360、行车记录仪与事件回放沿用同一套按需 WebRTC 通道，切换来源时释放旧媒体资源；SDP 后增量交换 ICE 候选地址，缩短连接等待。\n- 回放显示录像总时长和当前播放时间，不提供拖动；片段末帧到达但 WebRTC 连接暂未关闭时，按录像时长正常结束，不误报卡顿。\n\n## 验证与边界\n\n- 小米 10 手机模拟 Agent、浏览器和本地控制台端到端验证：远程目录同步、12 秒 MP4 非黑色视频帧、按源时间戳播放、`00:12 / 00:12` 结束状态通过；前后摄像头 WebRTC 连接与帧发送通过。\n- 手机原生相机前后预览同样接近全黑，因此此次环境无法验收真实画面内容；比亚迪 665 的 AVM/道路前摄及熄火并发录制仍需车机升级后验证。\n- Android `canfeature` 构建、Go 全量测试与关键模块竞态测试、`go vet`、网页脚本语法和协议契约检查通过。"
+  "releaseNotes": "# DMApp 3.0.252\n\n## 修复远程回放画面上下颠倒\n\n- WebRTC MP4 回放不再对 `SurfaceTextureHelper` 已定向的帧重复执行 Y 轴翻转；原始录像文件、实时摄像头和旧 MP4 代理路径均不改动。\n- 去掉每帧额外的 I420 分配与拷贝，降低回放时的 CPU 和内存开销。\n\n## 验证\n\n- 小米 10 手机模拟链路使用固定四象限 MP4 实测：修复前左上/右上显示为原片下半部蓝/黄，修复后恢复为原片左上红、右上绿、左下蓝、右下黄。\n- 8 秒录像按正常速度播放，网页显示 `00:08 / 00:08` 并正常结束；`canfeature` 构建及方向/协议回归检查通过。\n- 车机 665 的真实录像画面需在安装此版本后复核；此次手机测试不替代车机验收。"
 }
