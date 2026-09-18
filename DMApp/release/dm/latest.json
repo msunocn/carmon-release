@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301253,
-  "versionName": "3.0.253",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.253-301253/DMApp-3.0.253-301253.apk",
-  "sizeBytes": 144962487,
-  "md5": "b1bd332f44524002b1bc8b49cae1b098",
-  "sha256": "69d608577dbf44b1e83ec52f52923eb2c76317de653d5771a60cb6c56e459520",
+  "versionCode": 301254,
+  "versionName": "3.0.254",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.254-301254/DMApp-3.0.254-301254.apk",
+  "sizeBytes": 144970679,
+  "md5": "433c3f684ddf1f778fe439f21fa75948",
+  "sha256": "6685cdb303ee6475a0398de3b1150de7422245008252d50e322e91a4c0c066ab",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.253\n\n## 点火后背光恢复\n\n- 修复 ACC ON 背光备用调用少传 `tag`、始终返回 `method_missing` 的问题。参照车停哪了 2.3.0 的实际调用顺序，先读取固件屏幕状态，必要时执行 `TurnBacklightOn`，再次未亮则执行双参数 `TurnBacklightOnWithLock(null, tag)`，每步均回读结果。\n- OEM 路径仍未点亮时，才尝试 Android 应用唤醒、重新开背光、系统活跃通知和带令牌的固件兜底；不把返回 `void` 当作背光恢复成功。\n- 若仅靠带令牌的兜底保持亮屏，保留跨进程恢复标记。下一次物理 ACC OFF 时即使哨兵已关闭，也释放应用持有的令牌，避免屏幕被持续持有。\n- 日志区分直接恢复、OEM Binder 恢复、带令牌临时恢复及未恢复，并记录各阶段的固件背光读数。\n\n## 验证边界\n\n- `:canfeature:check` 与 APK 回编译通过；升级包必须由 tag 流水线正式签名并核验。\n- 当前只有小米手机接入，不能代替比亚迪 665 的物理背光验收。安装后请在不触摸屏幕的情况下完成熄火、点火循环，确认点火后背光读数为 `1`、画面实际亮起；同时验证关闭哨兵后的下一次熄火不会持续亮屏。"
+  "releaseNotes": "# DMApp 3.0.254\n\n## 熄火网络与桌面稳定性\n\n- 远程控制连接在 Wi-Fi/蜂窝切换时优先使用当前 Android 网络的 DNS 和 Socket；网络路由不可用时仍保留系统默认连接路径与持续重试。网络从未验证转为已验证时立即唤醒待重试连接，日志同时记录网络类型、验证状态和传输失败阶段。\n- 项目端点的诊断超时从 2 秒延长至有界的 5 秒，减少蜂窝刚切换时的误判；真实连接是否成功仍由 WebSocket 握手判定。\n- 开机主屏任务和七个画中画自动启动入口先等待 d_service Binder、已启用的无障碍及上下栏稳定，保留用户配置的延迟并错峰启动。手动打开应用的入口不受此门槛影响。\n- 修复列表创建时依赖可能为空的全局 Activity 导致的 `LayoutInflater.from(null)` 崩溃；无障碍同一轮持续故障最多执行一次软重绑，只有连续稳定恢复后才解除限制。\n\n## 验证边界\n\n- `:canfeature:check`、目标版本 APK 回编译及 16 KiB 对齐检查通过；正式包由 tag 流水线签名、发布并回读校验。\n- 小米手机上调试签名覆盖安装后桌面正常显示；双 UID mock 的 UID 2000 后台通过当前网络完成 TLS/远程握手，Wi-Fi 断开后恢复连接。手机移动数据处于关闭状态，无法据此验证蜂窝切换。\n- 新车机日志证实原有 ACC ON 背光恢复路径已成功：普通 OEM 调用后固件读数仍为 0，双参数 `TurnBacklightOnWithLock` 后读数变为 1；本版保留该成功路径。比亚迪实车熄火蜂窝切换、开机自启动和无障碍稳定性仍需升级后实测。"
 }
