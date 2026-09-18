@@ -1,11 +1,11 @@
 {
   "appId": "amap",
-  "versionCode": 21000384,
-  "versionName": "7.5.0.384",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v7.5.0.384-21000384/AMap-7.5.0.384-21000384.apk",
-  "sizeBytes": 151037802,
-  "md5": "0625cc392efe431b3584bfa0ebd5017e",
-  "sha256": "5f6307430716f2f24bd965d061df8f01fa18b99fee73767345057c69c30d2773",
+  "versionCode": 26000001,
+  "versionName": "9.5.0.600013",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000001/AMap-9.5.0.600013-26000001.apk",
+  "sizeBytes": 155189296,
+  "md5": "747834aeb37c294cd1057d75ed7948b9",
+  "sha256": "8eec4f1e85ff9f9e6c38c104ed5a6417f7fd5f4b6a0525a14ab43bd7cb21127f",
   "force": false,
-  "releaseNotes": "AMap 7.5.0.384（21000384）GitHub Release 升级包。"
+  "releaseNotes": "高德地图车机版 9.5.0.600013：迁移独立飞屏地图和副屏导航提示，按宋 PLUS 异形仪表调整提示位置，并启用飞屏上电启动配置。保留原 amap 更新入口，升级包使用与 7.5 正式版相同的签名证书。"
 }
