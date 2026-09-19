@@ -1,11 +1,11 @@
 {
   "appId": "amap",
-  "versionCode": 26000007,
+  "versionCode": 26000008,
   "versionName": "9.5.0.600013",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000007/AMap-9.5.0.600013-26000007.apk",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000008/AMap-9.5.0.600013-26000008.apk",
   "sizeBytes": 155189296,
-  "md5": "2fb3b881cc2fc4556b284730c3fb789d",
-  "sha256": "a2dcd0350a0bc874f13854eb4b67a13c46f76114b526e3200c4c874b7b7d27ad",
+  "md5": "a4cd0c9e1ef512d2944f749e8c0170bd",
+  "sha256": "178b180b00363601e54874cb59e3fa1f6a581224ee6c367b7f3854d7c906bf66",
   "force": false,
-  "releaseNotes": "高德地图车机版 9.5.0.600013：将副屏导航小卡片和道路指引整体等比缩小约 10%，保持地图尺寸不变。转向箭头直接复用主屏 navistate 资源并保持原始宽高比，左右转、左右前方、掉头和灰色虚线分支同步主屏样式；严格复用主屏导航协议中的推荐车道标记和九宫格高亮资源，主屏未下发推荐车道时副屏不显示高亮。保留原飞屏地图、开机启动配置和 amap 更新入口，升级包继续使用与 7.5 正式版相同的签名证书。"
+  "releaseNotes": "高德地图车机版 9.5.0.600013：将副屏导航小卡片和道路指引整体等比缩小约 10%，保持地图尺寸不变。转向箭头直接复用主屏 navistate 资源并保持原始宽高比，过滤回调位图中的灰色阴影伪边，修正左右前方箭头拼接；左右转、左右前方、掉头和灰色虚线分支同步主屏样式。车道高亮严格复用主屏导航协议中的 `LaneInfo.recommend[]` 和九宫格资源，主屏未下发推荐车道时副屏不显示高亮。保留原飞屏地图、开机启动配置和 amap 更新入口，升级包继续使用与 7.5 正式版相同的签名证书。"
 }
