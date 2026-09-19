@@ -1,11 +1,11 @@
 {
   "appId": "amap",
-  "versionCode": 26000011,
+  "versionCode": 26000012,
   "versionName": "9.5.0.600013",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000011/AMap-9.5.0.600013-26000011.apk",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000012/AMap-9.5.0.600013-26000012.apk",
   "sizeBytes": 155189296,
-  "md5": "dac8161db5fb21f817e7d1c8973d7166",
-  "sha256": "3bbef6691a349af5f27095a1e8ceaba9c96bdc8776cc12f8883165159a6df75b",
+  "md5": "05b5e9f80386e22cd425c7ba93421968",
+  "sha256": "9acb298271f47d4f787352cde739a823860b9cae7bb00ad400179fa5e7cd811b",
   "force": false,
-  "releaseNotes": "高德地图车机版 9.5.0.600013：副屏导航小卡片优先复用地图小悬浮窗同一份导航协议 `onlineIcon` 位图和尺寸，保留主屏箭头轮廓、灰色分支和抗锯齿；道路名称按主屏居中布局，推荐车道背景直接复用主屏 Drawable。巡航副屏道路指引保持蓝色并去除透明度，整体单独放大 10%，导航卡片尺寸不变。"
+  "releaseNotes": "高德地图车机版 9.5.0.600013：副屏导航小卡片优先复用地图小悬浮窗同一份导航协议 `onlineIcon` 位图和尺寸，保留主屏箭头轮廓、灰色分支和抗锯齿；道路名称按主屏居中布局，推荐车道背景直接复用主屏 Drawable。巡航副屏道路指引保持蓝色并去除透明度，整体单独放大 10%，导航卡片尺寸不变。完成副屏地图/独立 UI 参数核验和 OTA 发布校验。"
 }
