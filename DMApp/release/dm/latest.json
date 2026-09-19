@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301254,
-  "versionName": "3.0.254",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.254-301254/DMApp-3.0.254-301254.apk",
-  "sizeBytes": 144970679,
-  "md5": "433c3f684ddf1f778fe439f21fa75948",
-  "sha256": "6685cdb303ee6475a0398de3b1150de7422245008252d50e322e91a4c0c066ab",
+  "versionCode": 301255,
+  "versionName": "3.0.255",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.255-301255/DMApp-3.0.255-301255.apk",
+  "sizeBytes": 144958391,
+  "md5": "850e5bce9ba8ce80d8a479dc92535e7e",
+  "sha256": "be33365cd4e7fad8835b77c1da17b5ef6ea96511cfa4e1d1b5fbdc7de6968117",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.254\n\n## 熄火网络与桌面稳定性\n\n- 远程控制连接在 Wi-Fi/蜂窝切换时优先使用当前 Android 网络的 DNS 和 Socket；网络路由不可用时仍保留系统默认连接路径与持续重试。网络从未验证转为已验证时立即唤醒待重试连接，日志同时记录网络类型、验证状态和传输失败阶段。\n- 项目端点的诊断超时从 2 秒延长至有界的 5 秒，减少蜂窝刚切换时的误判；真实连接是否成功仍由 WebSocket 握手判定。\n- 开机主屏任务和七个画中画自动启动入口先等待 d_service Binder、已启用的无障碍及上下栏稳定，保留用户配置的延迟并错峰启动。手动打开应用的入口不受此门槛影响。\n- 修复列表创建时依赖可能为空的全局 Activity 导致的 `LayoutInflater.from(null)` 崩溃；无障碍同一轮持续故障最多执行一次软重绑，只有连续稳定恢复后才解除限制。\n\n## 验证边界\n\n- `:canfeature:check`、目标版本 APK 回编译及 16 KiB 对齐检查通过；正式包由 tag 流水线签名、发布并回读校验。\n- 小米手机上调试签名覆盖安装后桌面正常显示；双 UID mock 的 UID 2000 后台通过当前网络完成 TLS/远程握手，Wi-Fi 断开后恢复连接。手机移动数据处于关闭状态，无法据此验证蜂窝切换。\n- 新车机日志证实原有 ACC ON 背光恢复路径已成功：普通 OEM 调用后固件读数仍为 0，双参数 `TurnBacklightOnWithLock` 后读数变为 1；本版保留该成功路径。比亚迪实车熄火蜂窝切换、开机自启动和无障碍稳定性仍需升级后实测。"
+  "releaseNotes": "# DMApp 3.0.255\n\n## 远程连接\n\n- 远程 Agent 每次重试直接使用系统默认网络发起 DNS、TCP、TLS 和 WebSocket 连接；不再等待 Android 网络验证状态，也不在连接前单独探测端点。\n- 移除网络变化观察器和独立 HTTP 可达性探测。连接失败仍沿用原有的 1、2、5、10、30、60 秒退避重试，配置变更仍可唤醒待重试连接。\n- 熄火期间保留有界的 `requestNetwork` 网络保活租约，但其状态只用于保活诊断，不再决定远程连接是否可以尝试。连接日志以真实 Socket 结果为准。\n\n## 验证边界\n\n- `:canfeature:check`、版本化 APK 回编译和网络链路相关测试通过；正式签名与发布由 tag 流水线完成。\n- 小米手机双 UID 模拟验证：联网可完成 TLS/远程握手；断网后按原有退避重试，恢复 Wi-Fi 后重新连接。测试手机的移动数据关闭，不能据此确认比亚迪车机的蜂窝网络行为。"
 }
