@@ -1,11 +1,11 @@
 {
   "appId": "amap",
-  "versionCode": 26000003,
+  "versionCode": 26000005,
   "versionName": "9.5.0.600013",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000003/AMap-9.5.0.600013-26000003.apk",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000005/AMap-9.5.0.600013-26000005.apk",
   "sizeBytes": 155189296,
-  "md5": "8aff3ef6a3c1bdd5a8815af975f4cba4",
-  "sha256": "e60b0d377f69224878003e720e12e95cfcd58760fd266c74ae8a748da6fbd11c",
+  "md5": "f1723d4279c31ed2b4a91938008a0b5b",
+  "sha256": "388d3ee7748962698d359dc227e345d2dfc3a2b61a7409348020cd6e16bbdc65",
   "force": false,
-  "releaseNotes": "高德地图车机版 9.5.0.600013：统一宋 PLUS 副屏导航小卡片底栏与上部的背景、文字颜色，并将卡片和车道指引接成外侧圆角的整体。区分左右转与左右前方，补齐路口非通行方向虚线和推荐车道原包高亮；修正“随后”第二路口的距离及显示时机。保留原飞屏地图、开机启动配置和 amap 更新入口，升级包继续使用与 7.5 正式版相同的签名证书。"
+  "releaseNotes": "高德地图车机版 9.5.0.600013：将副屏导航小卡片和道路指引整体等比缩小约 10%，保持地图尺寸不变。优化左右前方斜向箭头及灰色非通行分支的形状、分叉位置，并严格复用主屏导航协议中的推荐车道标记和九宫格高亮资源；主屏未下发推荐车道时副屏不显示高亮。保留原飞屏地图、开机启动配置和 amap 更新入口，升级包继续使用与 7.5 正式版相同的签名证书。"
 }
