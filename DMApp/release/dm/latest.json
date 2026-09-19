@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301255,
-  "versionName": "3.0.255",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.255-301255/DMApp-3.0.255-301255.apk",
+  "versionCode": 301256,
+  "versionName": "3.0.256",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.256-301256/DMApp-3.0.256-301256.apk",
   "sizeBytes": 144958391,
-  "md5": "850e5bce9ba8ce80d8a479dc92535e7e",
-  "sha256": "be33365cd4e7fad8835b77c1da17b5ef6ea96511cfa4e1d1b5fbdc7de6968117",
+  "md5": "5b58a3a75c550d61b37469daac4dfa08",
+  "sha256": "f4aab5782076c0de3ce9ad8d516d70c4acfa8e09d965f1f30010b49295d6375d",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.255\n\n## 远程连接\n\n- 远程 Agent 每次重试直接使用系统默认网络发起 DNS、TCP、TLS 和 WebSocket 连接；不再等待 Android 网络验证状态，也不在连接前单独探测端点。\n- 移除网络变化观察器和独立 HTTP 可达性探测。连接失败仍沿用原有的 1、2、5、10、30、60 秒退避重试，配置变更仍可唤醒待重试连接。\n- 熄火期间保留有界的 `requestNetwork` 网络保活租约，但其状态只用于保活诊断，不再决定远程连接是否可以尝试。连接日志以真实 Socket 结果为准。\n\n## 验证边界\n\n- `:canfeature:check`、版本化 APK 回编译和网络链路相关测试通过；正式签名与发布由 tag 流水线完成。\n- 小米手机双 UID 模拟验证：联网可完成 TLS/远程握手；断网后按原有退避重试，恢复 Wi-Fi 后重新连接。测试手机的移动数据关闭，不能据此确认比亚迪车机的蜂窝网络行为。"
+  "releaseNotes": "# DMApp 3.0.256\n\n## 蜂窝网络与日志优化\n\n- 复用 d_service 已申请到的 Android `Network`，远程 WebSocket 的 DNS、SocketFactory 和 TCP 连接优先绑定该网络；蜂窝网络不是系统默认路由时仍可直接连接。\n- 没有专用 Network 时使用系统默认 Socket；连接前不增加 HTTP、Ping 或网络可达性探测，失败继续按 1、2、5、10、30、60 秒退避重试。\n- 删除远程连接未建立时每 10 秒一次的心跳跳过日志、网络保活成功续租重复日志和每次网络回调重复埋点；保留连接尝试、传输失败阶段、WebSocket 握手成功、重试失败和最终清理日志。\n- 保留 d_service 单一网络租约和 ACC-on 清理流程，不创建第二套网络服务或远程通道。\n\n## 验证边界\n\n- `:canfeature:check`、远程连接契约、重连策略、网络租约策略和网络重试策略通过。\n- 小米双 UID 模拟可以验证专用 Network 路由接口和默认路由回退，但不能替代比亚迪车机关闭 Wi-Fi 后的真实蜂窝网络验收；升级后需重点观察 `route=requested_network`、TCP/TLS 阶段和 WebSocket 握手结果。"
 }
