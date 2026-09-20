@@ -4,8 +4,8 @@
   "versionName": "3.0.257",
   "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.257-301257/DMApp-3.0.257-301257.apk",
   "sizeBytes": 144958391,
-  "md5": "f017a1bfa51d6687252eb55fea11a9ea",
-  "sha256": "b5a6952587e2a6ff3c4fe4f7172dd9d44852ea76ec14aeb1667efcd9bc115c47",
+  "md5": "964d84a92203421217cbcae26f551984",
+  "sha256": "73a85141ba2dad0e3c02364407c2ec310afca7794d5cfc8615e97d85da572403",
   "force": false,
   "releaseNotes": "# DMApp 3.0.257\n\n## 蜂窝网络路由竞态修复\n\n- 在真正创建远程 Socket 前重新读取 d_service 当前持有的请求 `Network`，避免蜂窝网络刚建立时连接线程仍使用旧的默认路由。\n- 连接日志将明确区分 `explicit_network` 与 `system_default`；仍不增加独立网络探测，失败继续按既有退避重试。\n\n## 验证边界\n\n- 基于 3.0.256 的完整测试、版本化构建和小米双 UID 回归继续执行。\n- 小米测试只能证明 d_service 可以使用显式 Network 路由并完成 TLS/WebSocket；最终仍需车机关闭 Wi-Fi 后验证真实蜂窝链路。"
 }
