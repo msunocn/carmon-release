@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301261,
-  "versionName": "3.0.261",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.261-301261/DMApp-3.0.261-301261.apk",
+  "versionCode": 301262,
+  "versionName": "3.0.262",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.262-301262/DMApp-3.0.262-301262.apk",
   "sizeBytes": 144966583,
-  "md5": "72855edafbd3ecfd06eb89379ef62d66",
-  "sha256": "70d7ba9431a1f7be79d27a323d5e6d812eab12af18be35918cdf8c4bdaa7617c",
+  "md5": "8db6bb8f599e773e344bccea8e9375b7",
+  "sha256": "76d0198382a4f2e6cbb7d6caa4d140c88efb7a67e69acc39b6c4be21b83aa89b",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.261 / 301261\n\n## 熄火录像关键链路\n\n- 将录像启动、存储重试、分钟健康检查和 ACC ON 封盘迁入独立 `critical` 通道；全量诊断快照或 OEM getter 卡住时，不再阻塞 +20 秒录像启动。\n- MCU/Wi-Fi/外置存储恢复迁入独立 `power` 通道；详细状态采样保留在 `diagnostic` 通道，三条队列互不串行等待。\n- 新增 `event_recording_scheduler` 与 power-lane 里程碑，能够直接区分“定时任务未执行”“存储等待”“AVM 启动失败”和“事件未命中”。\n\n## 蜂窝远程链路\n\n- 由普通 App UID 读取 active/candidate/requested Android `Network`，并使用对应 Network 完成 DNS 与 TCP；解决 UID 2000 只能观察蜂窝网络、却无法可靠访问公网的问题。\n- d_service 继续独占 TLS/WebSocket、VIN、命令仲裁、AVM 和车控权限；App UID 只通过随机令牌保护的 loopback 桥转发原始 TCP，不产生第二套 Agent。\n- 上游网络按单路三秒、总计八秒有界切换，桥接回复保留额外三秒错误回传窗口；Wi-Fi 残留路由不会耗尽整次蜂窝重试。\n\n## 验证\n\n- VPS 最近五份归档已校验哈希和 ZIP 完整性，并完成会话级去重审计。\n- `:canfeature:check` 112 项任务全部通过。\n- 3.0.261 完整 apktool + `classes3.dex/classes4.dex` 候选构建、版本注入、模型/JNI 打包和 16 KiB 对齐通过。\n- 蜂窝网络、BYD ACC、AVM 和 USB/SD 熄火恢复仍须在目标 665 车机关闭 Wi-Fi 后完成最终实车确认。"
+  "releaseNotes": "# DMApp 3.0.262 / 301262\n\n## 蜂窝远程连接\n\n- d_service 的公网 TCP 改为必须经过普通 App UID 的本机网络桥；不再回退到 UID 2000 直连。\n- App UID 继续使用 Android 实际 `Network` 完成逐网络 DNS 与 TCP，d_service 仍独占 TLS、WebSocket、VIN、远程命令和媒体状态。\n- 桥尚未注册或暂时失败时立即结束当次尝试，由既有 1 秒起步、最长 60 秒的无限重试继续；Binder 注册成功会主动唤醒重试，避免在无效蜂窝直连上等待完整超时。\n- 修复桥注册恰好发生在第一次连接期间时，Wi-Fi 直连可能永久留在错误 UID、蜂窝则长时间卡住的启动竞态。\n\n## 熄火录像\n\n- 保留 3.0.261 的三通道隔离：录像关键任务、OEM/存储保活和详细诊断互不阻塞。\n- 小米 2x2 Mock 实测 ACC OFF 后 20 秒调度误差 20 ms，成功启动 MediaCodec/MediaMuxer、持续取帧、执行 OpenCV/模型分析，并在 ACC ON 中断时封盘出 36.857 秒完整 MP4；Android `MediaExtractor` 验证轨道与样本有效。\n- 手机同 UID Mock 的附属进程扫描仅属于测试架构差异；真车 Camera360、检查点与恢复扫描都在唯一 d_service 进程，由活动 reservation 集合隔离。\n\n## 验证边界\n\n- `:canfeature:check` 112 项任务全部通过。\n- 小米手机证明 App UID 桥注册、WSS hello、ACC 调度、编码和中断封盘；不代替 UID 2000、BYD AVM、熄火供电和 USB/SD 实车验证。\n- 目标车机最终验收须关闭 Wi-Fi，并同时看到 `app_active_cellular`（或 `app_requested_cellular`）、`route=app_uid_loopback_bridge`、`socket_hello=success`；ACC OFF 后须看到关键调度、AVM 首帧和事件 MP4 原子提交。"
 }
