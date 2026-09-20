@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301259,
-  "versionName": "3.0.259",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.259-301259/DMApp-3.0.259-301259.apk",
+  "versionCode": 301260,
+  "versionName": "3.0.260",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.260-301260/DMApp-3.0.260-301260.apk",
   "sizeBytes": 144966583,
-  "md5": "8a8e3ee0f812c3fbf1dd4629ca9dd542",
-  "sha256": "43587c4bce835863299424b814ee1e3b91f03740fb74b9fbed8bc4472028a13b",
+  "md5": "1d35b2575bd9ff51a78266fc23088306",
+  "sha256": "c0daab8a958fc55758798898e72a9a1109a520de9f8828f14ec77800a3d73144",
   "force": false,
-  "releaseNotes": "# DM 3.0.259（301259）：对齐应用 UID 蜂窝网络链路\n\n## 远程连接\n\n- 保留 d_service 作为唯一远程 Agent、VIN、WebSocket、AVM、哨兵和存储所有者。\n- 应用进程启动一个仅绑定 `127.0.0.1` 的短连接桥接端口；端口与随机令牌只通过现有 `dy.byd.api` Binder 交给 d_service。\n- 应用 UID 按与 DM OTA 相同的系统默认网络建立出站 TCP，Wi‑Fi 可用时走 Wi‑Fi，Wi‑Fi 关闭时允许蜂窝网络接管。\n- d_service 只通过本地桥接传输原始 TCP，TLS 和 WebSocket 握手仍在 d_service 完成，不创建第二个远程 Agent 或第二条控制通道。\n- 应用 Binder 重连、d_service 重启、桥接 Binder 掉线和初次启动未就绪都会触发有限重试与连接唤醒。\n- 桥接不可用时保留原有直接网络路径作为启动期间的诊断回退；实际是否在线仍以 TCP/TLS/WebSocket 握手为准，不以 `VALIDATED` 作为成功结论。\n\n## 日志\n\n- 增加 `app_uid_network_bridge`、`app_bridge_connected` 和 `app_bridge_unavailable` 埋点。\n- 日志只记录 UID 路径、传输阶段和错误类型，不记录令牌、VIN 或业务 payload。\n\n## 验证边界\n\n- `:canfeature:check` 全量通过，包含远程 WebSocket、双 UID、Binder、网络重试、AVM、哨兵、存储和视频完整性回归。\n- 手机 Mock 可验证桥接注册、Binder 重连和本机 TCP 转发契约。\n- 真实车机最终验收需关闭 Wi‑Fi，观察 `app_uid_loopback_bridge`、`socket_connected` 与 `socket_hello=success`；这三项同时出现才算蜂窝远程链路成功。"
+  "releaseNotes": "# DM 3.0.260（301260）：修复大规模回放目录无法提交\n\n## 回放目录\n\n- 修复车机存在超过 500 个 MP4 时，目录扫描被标记为 `truncated`，导致校验快照永远无法提交、远程回放列表持续显示 busy/incomplete 的问题。\n- 回放目录上限提升到 1024 个条目，扫描文件和目录预算同步扩大；仍只发送有界元数据，封面和视频内容继续异步按需读取。\n- 保留完整校验、原子提交和录制文件不读全量字节的策略，避免影响熄火录制稳定性。\n\n## 远程链路验证\n\n- 3.0.259 已在最新车机日志中成功完成应用 UID 桥接和 WebSocket 握手。\n- 本版本继续保留该链路；真实蜂窝验收仍需在关闭 Wi‑Fi 后观察 `app_uid_loopback_bridge`、`socket_connected`、`socket_hello=success`。\n\n## 验证边界\n\n- 全量 `:canfeature:check` 通过。\n- 回放目录契约和远程端到端契约通过。"
 }
