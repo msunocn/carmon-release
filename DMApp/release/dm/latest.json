@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301260,
-  "versionName": "3.0.260",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.260-301260/DMApp-3.0.260-301260.apk",
+  "versionCode": 301261,
+  "versionName": "3.0.261",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.261-301261/DMApp-3.0.261-301261.apk",
   "sizeBytes": 144966583,
-  "md5": "1d35b2575bd9ff51a78266fc23088306",
-  "sha256": "c0daab8a958fc55758798898e72a9a1109a520de9f8828f14ec77800a3d73144",
+  "md5": "72855edafbd3ecfd06eb89379ef62d66",
+  "sha256": "70d7ba9431a1f7be79d27a323d5e6d812eab12af18be35918cdf8c4bdaa7617c",
   "force": false,
-  "releaseNotes": "# DM 3.0.260（301260）：修复大规模回放目录无法提交\n\n## 回放目录\n\n- 修复车机存在超过 500 个 MP4 时，目录扫描被标记为 `truncated`，导致校验快照永远无法提交、远程回放列表持续显示 busy/incomplete 的问题。\n- 回放目录上限提升到 1024 个条目，扫描文件和目录预算同步扩大；仍只发送有界元数据，封面和视频内容继续异步按需读取。\n- 保留完整校验、原子提交和录制文件不读全量字节的策略，避免影响熄火录制稳定性。\n\n## 远程链路验证\n\n- 3.0.259 已在最新车机日志中成功完成应用 UID 桥接和 WebSocket 握手。\n- 本版本继续保留该链路；真实蜂窝验收仍需在关闭 Wi‑Fi 后观察 `app_uid_loopback_bridge`、`socket_connected`、`socket_hello=success`。\n\n## 验证边界\n\n- 全量 `:canfeature:check` 通过。\n- 回放目录契约和远程端到端契约通过。"
+  "releaseNotes": "# DMApp 3.0.261 / 301261\n\n## 熄火录像关键链路\n\n- 将录像启动、存储重试、分钟健康检查和 ACC ON 封盘迁入独立 `critical` 通道；全量诊断快照或 OEM getter 卡住时，不再阻塞 +20 秒录像启动。\n- MCU/Wi-Fi/外置存储恢复迁入独立 `power` 通道；详细状态采样保留在 `diagnostic` 通道，三条队列互不串行等待。\n- 新增 `event_recording_scheduler` 与 power-lane 里程碑，能够直接区分“定时任务未执行”“存储等待”“AVM 启动失败”和“事件未命中”。\n\n## 蜂窝远程链路\n\n- 由普通 App UID 读取 active/candidate/requested Android `Network`，并使用对应 Network 完成 DNS 与 TCP；解决 UID 2000 只能观察蜂窝网络、却无法可靠访问公网的问题。\n- d_service 继续独占 TLS/WebSocket、VIN、命令仲裁、AVM 和车控权限；App UID 只通过随机令牌保护的 loopback 桥转发原始 TCP，不产生第二套 Agent。\n- 上游网络按单路三秒、总计八秒有界切换，桥接回复保留额外三秒错误回传窗口；Wi-Fi 残留路由不会耗尽整次蜂窝重试。\n\n## 验证\n\n- VPS 最近五份归档已校验哈希和 ZIP 完整性，并完成会话级去重审计。\n- `:canfeature:check` 112 项任务全部通过。\n- 3.0.261 完整 apktool + `classes3.dex/classes4.dex` 候选构建、版本注入、模型/JNI 打包和 16 KiB 对齐通过。\n- 蜂窝网络、BYD ACC、AVM 和 USB/SD 熄火恢复仍须在目标 665 车机关闭 Wi-Fi 后完成最终实车确认。"
 }
