@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301277,
-  "versionName": "3.0.277",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.277-301277/DMApp-3.0.277-301277.apk",
+  "versionCode": 301278,
+  "versionName": "3.0.278",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.278-301278/DMApp-3.0.278-301278.apk",
   "sizeBytes": 144978871,
-  "md5": "ac41dac8a425cc7536499eb246eb7fe8",
-  "sha256": "f4f2a3d7dde57f1333f2fb93e6dc6547833c4f7a2318b3661a02b23fe60652cc",
+  "md5": "19a08ff498fffabc81c22d7520beef6b",
+  "sha256": "99059a7ff479a9a63b2e1047ea902bd1a143f20ef14fb84910ee5bf8ac2b4312",
   "force": false,
-  "releaseNotes": "# DM 3.0.277（301277）：统一 App 直连并修复远程视频与日志上传\n\n## 修复内容\n\n- 远程控制连接统一由普通 App UID 直接完成 DNS、TCP、TLS 和 WebSocket，不再经过系统代理、HTTP CONNECT 或 HTTPS GET 轮询隧道。\n- 控制、实时视频、录像回放和日志上传共用同一个 App 网络所有权；`d_service` 只保留车控、摄像头和只读文件授权。\n- 增加私有 Binder 转交通道，消除 App 网络桥与 `d_service` 启动先后顺序造成的 `app_bridge_unavailable`。\n- 日志上传直接读取 Binder 授权的只读文件描述符，不再重新打开 `/proc/self/fd/*`，并保留 40 秒传输上限、取消和服务端确认校验。\n- 修复 WebRTC offer/answer 跨 Binder 时被 `trim()` 删除末尾 CRLF 的问题；Android 与 VPS 两端均只规范化 SDP 换行，不修改协议正文。\n- 删除客户端旧的轮询隧道、自定义路由 HTTP 客户端和代理 CONNECT 实现。\n\n## 验证结果\n\n- Android `:canfeature:check`：113 项任务通过。\n- Go 服务端：`go test ./...` 全部通过。\n- 小米手机双 UID 验证：UID 2000 模拟 `d_service` + 普通 App 网络桥，`socket_hello=success`，路由为 `app_uid_direct`。\n- 远程日志上传成功；VPS 数据库大小、SHA-256 与 ZIP 完整性校验一致。\n- 行车记录仪与 360 两种实时源均完成 SDP、ICE、H.264 编码和首个 RTP 到达 VPS，远程准备接口返回 200。\n\n## 实车验收边界\n\n手机验证确认软件协议、权限分工与网络/媒体链路，但不能替代比亚迪车机蜂窝 APN、AVM、熄火供电和 USB/SD 的实车验证。安装正式包后应分别在 Wi-Fi 与蜂窝网络下确认 `socket_hello=success`、`app_uid_direct`、实时首帧和日志上传。"
+  "releaseNotes": "# DM 3.0.278（301278）：修复手机桌面无响应与远程视频转交\n\n## 修复内容\n\n- 修复 MIUI 策略拒绝摄像头权限时，权限结果回调同步重复请求造成的主线程栈溢出、桌面连续崩溃和无响应。\n- 权限请求改为单次可见流程并异步推进；拒绝后不再自动循环弹窗，后续显式授权仍可启动手机 mock `d_service`。\n- 普通手机模式与正式双 UID 模式共用受保护的 Camera Surface 转交入口，修复 WebRTC 已迁入独立网络进程后，前摄与 360 等待 App-UID worker 超时的问题。\n- 普通手机模式复用现有 mock `d_service`，正式双 UID 模式继续使用按需短生命周期媒体 worker；两种模式均不创建第二个 Agent 或 Binder 业务所有者。\n- 普通手机模式仅在收到 PREPARE/START/STOP 请求时启动相机工作线程，空闲状态不保留无用相机线程。\n\n## 验证结果\n\n- Android `:canfeature:check`：113 项任务通过。\n- MIUI 强制固定拒绝 CAMERA 权限后，流程只请求一次并安全结束，DM 主进程保持存活，无新增栈溢出、崩溃或 ANR。\n- 小米手机普通模式：桌面再次唤起 7 ms；前摄 427 ms 启动并取得真实帧；360 509 ms 启动并输出 H.264 RTP；两个远程准备接口均返回 200。\n- 小米手机正式双 UID 模式：UID 2000 Agent 与普通 App 网络桥完成 `socket_hello=success`，前摄与 360 远程准备接口均返回 200。\n- 验证结束后已恢复普通手机模式，主 App、mock `d_service` 与独立网络桥三个预期进程均正常存活。\n\n## 实车验收边界\n\n本次修复针对手机权限流程和手机 Camera Surface 跨进程转交。手机验证不能替代比亚迪车机的 NormalCamera、AVM、蜂窝网络、熄火供电与 USB/SD 实车验收；正式包上车后仍需确认桌面启动、`socket_hello=success`、行车记录仪首帧和 360 首帧。"
 }
