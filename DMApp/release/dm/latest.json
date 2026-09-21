@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301267,
-  "versionName": "3.0.267",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.267-301267/DMApp-3.0.267-301267.apk",
+  "versionCode": 301268,
+  "versionName": "3.0.268",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.268-301268/DMApp-3.0.268-301268.apk",
   "sizeBytes": 144978871,
-  "md5": "c1d2ec650f40b629438b13a6bf2e231a",
-  "sha256": "8fed106af79115f934563104cb9dbc471767d1cd60b00f0370ac5cd8bd954c3f",
+  "md5": "4c0eca328ee34c7b848aef21c7927b94",
+  "sha256": "f8ae9e246d9ca01a78be39bce32fb263373c0446fb5d3591874b62f0f81b077d",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.267 / 301267\n\n## 车机蜂窝远程连接\n\n- 根据两份 3.0.266 真机归档确认：车机蜂窝 `Network` 可见且 validated，但未公开 APN HTTP 代理；因此 3.0.266 仍落到 `app_*_cellular_direct`，TLS 超时期间 VPS 没有收到请求，Wi-Fi 恢复后立即上线。\n- App UID 网络桥新增 HTTPS 轮询字节隧道。它使用与 DM 更新下载相同的 Android `HttpURLConnection`/APN 路径，仅在蜂窝原始 WSS 不可靠时承载既有的 d_service TLS/WebSocket 字节流。\n- 内层仍由 d_service 完成 `byd.msuno.cn` 的 TLS 主机名校验、WebSocket、VIN、命令和媒体仲裁；VPS 隧道只允许连接本机 `127.0.0.1:443`，使用随机会话 ID/令牌、64 KiB 分片、并发上限和 90 秒过期，不提供任意目标代理。\n- Wi-Fi 保持原始 WSS 快路径；蜂窝成功日志标记为 `app_*_cellular_*_https_poll_tunnel`，随后仍必须出现 `socket_hello=success`。\n- 保留 10 秒永久重试上限、独立 `:dm_network_bridge` 进程、升级后 d_service 换代和 3.0.266 的显式 APN CONNECT 回退。\n\n## 服务端\n\n- 增加仅 HTTPS 可访问的 `/device/v1/tcp-tunnel/*` 端点，目标由部署环境固定为回环 TLS 监听器；外部请求不能指定目标地址。\n- 服务端设备 hello 窗口保持 30 秒，网页、登录、配置、录像目录和 WebRTC 协议不变。\n\n## 验证边界\n\n- JVM/Android 编译、网络桥契约、HTTP CONNECT 边界、Go 隧道端到端字节回显和服务端全量测试均需通过。\n- 小米手机只能验证双进程、Binder、HTTPS 请求和无崩溃，不能代替 BYD 蜂窝/APN。\n- 最终真车标准：关闭 Wi-Fi 后出现 `route=app_*_cellular_*_https_poll_tunnel`、`socket_connected` 和 `socket_hello=success`；若失败，日志会区分隧道 HTTP 状态、上传/下拉阶段和原始直连阶段。"
+  "releaseNotes": "# DMApp 3.0.268 / 301268\n\n## 车停哪了网络链路对照\n\n- 以“车停哪了”2.3.0 实际 APK（包名 `com.hxintell.carfinder`）为依据核对，不以界面现象推断：其特权 `ProcessApplication` 直接创建 OkHttp `wss://`，失败按 5/30/60/120/300 秒退避。\n- OkHttp 默认先读取 `ProxySelector.getDefault()`，没有通过 `requestNetwork` 绑定控制连接，也没有在连接前要求 Android 网络探测通过。\n- DM 的 App-UID 网络桥改为同样的路由语义：先使用系统 ProxySelector（HTTP CONNECT/SOCKS），不再枚举、申请或绑定 Android Network；实际 WSS/HTTPS 连接结果是唯一可用性判断。\n- 对照应用关闭证书与主机名校验的做法没有采用；DM 继续保留系统 CA、SNI 与 HTTPS 主机名校验。\n\n## 蜂窝 GET-only 控制隧道\n\n- 3.0.267 真车日志确认新 HTTPS 隧道被选择，但 `/open` 空 POST 在蜂窝下等待至 deadline，VPS/Nginx 没有收到任何隧道请求；同一 App 的 DM/Amap 更新 GET 可正常到达。\n- 外层隧道的 open、push、pull、close 全部改为 GET，与车机已验证可用的更新检查请求形态对齐。\n- 上行只把每段最多 2 KiB 的内层 TLS 密文放入 `X-DM-Tunnel-Data` 请求头，使用 URL-safe base64；不放入 URL，也不记录到 Nginx access log。\n- 内层仍是 d_service 持有的 TLS/WSS、VIN、命令与媒体协议，不增加明文 WS、第二 Agent 或服务端配置副本。\n- 服务端继续固定转发到回环 `127.0.0.1:443`，保留随机会话凭据、64 KiB 下行、并发上限和 90 秒过期；POST 仅作为旧客户端兼容入口，3.0.268 不再使用。\n\n## 验收\n\n- 真车关闭 Wi-Fi 后，若系统代理可用，车端路由应为 `app_system_http_proxy_https_connect` 或 `app_system_socks_proxy`；否则应看到 VPS `device_https_tunnel stage=open result=success` 与车端 `app_platform_https_get_https_poll_tunnel`，随后必须出现 `socket_hello=success`。\n- 若 GET 仍无法到达，说明该蜂窝策略只允许特定更新路径/UA，而不是一般 HTTPS；新日志会在 open deadline 与服务端无 open 记录之间形成明确证据。"
 }
