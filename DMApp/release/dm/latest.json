@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301269,
-  "versionName": "3.0.269",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.269-301269/DMApp-3.0.269-301269.apk",
+  "versionCode": 301270,
+  "versionName": "3.0.270",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.270-301270/DMApp-3.0.270-301270.apk",
   "sizeBytes": 144978871,
-  "md5": "29e4e93a0b350528a8af8e24b91bf112",
-  "sha256": "1d8676c6c2b38efdc24da78d35560b945f769d886c71ceb9263a10382926ab4e",
+  "md5": "d4118565ce563b41e73f92737134a9f8",
+  "sha256": "65ecbae80753ca16444a1f9c0c2415b846568505c298dc2250e49c22bc517620",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.269 / 301269\n\n## 蜂窝 HTTPS 隧道断线恢复\n\n- 3.0.268 真车已通过蜂窝 GET-only 通道两次完成 `socket_hello=success`，并成功执行存储读取、录像目录同步、配置读取和日志上传；问题已从“无法联网”收敛为外层 HTTPS 请求偶发重置后的长时间离线。\n- GET 隧道新增上行序号与服务端确认。相同分片在响应丢失后可安全重试，不会把同一段 TLS 密文写入两次。\n- 下行新增序号、确认和服务端待确认缓存。响应丢失时重放同一分片，客户端只交付一次，避免 TLS 字节流缺失或重复。\n- 单次外层请求异常最多即时重试三次，不再立即销毁已经完成认证的内层 WSS 会话；持续失败仍关闭并进入原有永久重连。\n- 服务端保留 3.0.268 无序号 GET 兼容，部署服务端不会中断尚未升级的车机。\n- Nginx 部署模板保留既有高德 9.5 下载 include，并继续禁止记录携带加密分片的隧道访问日志。\n\n## 验收\n\n- 关闭 Wi-Fi 后应通过 `app_platform_https_get_https_poll_tunnel` 完成 `socket_hello=success`。\n- 连续观察至少 10 分钟，`last_heartbeat_at` 应持续推进；一次外层 GET 重置不能让设备离线。\n- 存储列表、哨兵配置读取、日志上传均须在同一蜂窝会话内完成。"
+  "releaseNotes": "# DMApp 3.0.270 / 301270\n\n## 蜂窝心跳容错窗口\n\n- 3.0.268 在 VPS 重启后的首个蜂窝会话中，第一条心跳实际延迟约 35 秒；旧服务端 35 秒会话租约和 45 秒 socket 读超时过于接近真实 APN 抖动上限。\n- 服务端会话租约与 WSS 读超时统一放宽到 90 秒，可覆盖两次 32 秒长轮询切换或短时蜂窝重传。\n- 控制命令自身仍保留 45 秒有效期，连接容错不会让过期的摄像头、车控或配置命令继续执行。\n- 继续包含 3.0.269 的上下行序号、确认、重放和三次原位请求重试。\n\n## 验收\n\n- 蜂窝连接建立后连续观察 10 分钟，心跳时间持续推进，外层请求抖动不应令网页离线。\n- 断网超过 90 秒后仍应判离线；恢复后自动重连并生成新会话。"
 }
