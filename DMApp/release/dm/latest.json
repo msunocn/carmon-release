@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301273,
-  "versionName": "3.0.273",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.273-301273/DMApp-3.0.273-301273.apk",
+  "versionCode": 301274,
+  "versionName": "3.0.274",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.274-301274/DMApp-3.0.274-301274.apk",
   "sizeBytes": 144982967,
-  "md5": "24b8fb8de0c764465884fca55e891fc7",
-  "sha256": "e2fea892ecc401d12f844cc2e2c69a24536b84a658843d7b19b4afb09702d535",
+  "md5": "1abc2c575290892a6468121614842803",
+  "sha256": "2f8a3da5493558a23b0c45f5ce0855ccb870296fb1abb6f0d4b5a9a5bb792b07",
   "force": false,
-  "releaseNotes": "# DM 3.0.273（301273）：事件回放迁移到普通 App\n\n- 事件 MP4 的解码、限帧、WebRTC、ICE/TURN 和播放生命周期全部由普通 App 后台进程执行。\n- d_service 仅按录像 ID 校验已完成文件，并通过 Binder 交付只读文件句柄；录像路径和视频字节不会复制进 Binder 数据包。\n- 删除旧的 d_service 低码率 MP4 转码缓存、Range 分段上传和对应 App HTTP 桥，避免重复解码、额外磁盘占用及 UID 2000 公网 I/O。\n- 服务器只认可 `webrtc-recording-v1` 回放协议，不再开放旧回放命令入口。\n- 手机双 UID 验证脚本不再 force-stop 整个应用；正式验证会独立保持普通 App 网络/回放后台，区分系统正常回收与 Android 强制停止语义。\n\n手机验证可覆盖双 UID、Binder、只读 FD、WebRTC 回放进程归属和普通 App 后台恢复。BYD AVM、NormalCamera、ACC OFF、USB/SD 与蜂窝网络仍以目标 665 车机升级后的日志为最终验收证据。"
+  "releaseNotes": "# DM 3.0.274（301274）：双 UID 恢复验收修正\n\n- 延续 3.0.273 的普通 App 事件回放架构：d_service 只提供录像 ID 校验与只读 FD，MP4 解码和 WebRTC 均在普通 App 后台。\n- 手机正式双 UID 验证不再把停止后的缓存摄像头进程误判成活动 owner；使用 Android 普通进程回收语义清理 App 进程，不设置 package stopped 状态。\n- 新装应用需要解除 stopped 状态时进入普通主页面，不再误用按需摄像头 bootstrap；随后只恢复独立网络/回放后台。\n- 已验证 d_service 保持原 PID 时，普通 App 网络/回放后台被系统回收后可自动得到新 PID，且包状态保持 `stopped=false`。\n\n目标 665 车机仍需在升级后验证蜂窝连接、真实事件回放、AVM/NormalCamera、ACC OFF 和 USB/SD。"
 }
