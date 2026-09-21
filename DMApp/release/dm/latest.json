@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301270,
-  "versionName": "3.0.270",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.270-301270/DMApp-3.0.270-301270.apk",
-  "sizeBytes": 144978871,
-  "md5": "d4118565ce563b41e73f92737134a9f8",
-  "sha256": "65ecbae80753ca16444a1f9c0c2415b846568505c298dc2250e49c22bc517620",
+  "versionCode": 301271,
+  "versionName": "3.0.271",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.271-301271/DMApp-3.0.271-301271.apk",
+  "sizeBytes": 145003447,
+  "md5": "8c5e063449af45280d501b6c80ace488",
+  "sha256": "83d8973283b046a362b67c7acdc1a5f97cc118d321c436cb8499cb213999e512",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.270 / 301270\n\n## 蜂窝心跳容错窗口\n\n- 3.0.268 在 VPS 重启后的首个蜂窝会话中，第一条心跳实际延迟约 35 秒；旧服务端 35 秒会话租约和 45 秒 socket 读超时过于接近真实 APN 抖动上限。\n- 服务端会话租约与 WSS 读超时统一放宽到 90 秒，可覆盖两次 32 秒长轮询切换或短时蜂窝重传。\n- 控制命令自身仍保留 45 秒有效期，连接容错不会让过期的摄像头、车控或配置命令继续执行。\n- 继续包含 3.0.269 的上下行序号、确认、重放和三次原位请求重试。\n\n## 验收\n\n- 蜂窝连接建立后连续观察 10 分钟，心跳时间持续推进，外层请求抖动不应令网页离线。\n- 断网超过 90 秒后仍应判离线；恢复后自动重连并生成新会话。"
+  "releaseNotes": "# DM 3.0.271（301271）：远程网络完整迁移到普通 App UID\n\n## 网络与进程边界\n\n- 独立 `:dm_network_bridge` 普通 App 后台统一承载 DNS、系统代理、GET-only 蜂窝隧道、TLS/WSS 帧、WebRTC/ICE/TURN、日志上传及录像 Range 传输；UID 2000 不再创建公网连接，也没有直连回退。\n- d_service 继续独占 ACC、车控、360 AVM、BYD NormalCamera、USB/SD、录像目录、日志采集、远程命令仲裁和唯一持久化配置，不产生第二套 Agent 或配置。\n- App 后台 Binder 死亡会立即结束失效媒体并唤醒既有重连监督器；d_service 只重启该后台服务，不启动桌面页面。\n\n## 实时视频、回放与日志\n\n- 360 仍由唯一 AVM owner 产生，只把 WebRTC 输入 Surface 通过 Binder 交给 d_service；视频帧不经过 Binder。\n- 行车记录仪仍使用 d_service 的 BYD NormalCamera，经 EGL 渲染到普通 App 的 WebRTC Surface，不回退 Android 标准摄像头。\n- 回放 MP4 和诊断 ZIP 由 d_service 校验后以只读 `ParcelFileDescriptor` 交给普通 App；FD 所有权一次转移并在失败、结束和重复清理时幂等关闭。\n- 日志和旧 Range POST 复用 App UID 的系统代理/GET-only HTTPS 隧道路由，服务器 ACK、SHA-256 与幂等规则保持不变。\n\n## 验证\n\n- `:canfeature:check` 全量回归及 App-UID 网络桥、WebSocket 消息、只读 FD 所有权专项测试通过。\n- 小米手机用于双进程、Binder、Camera Mock 和启动稳定性回归；它不能替代目标 665 车机的 BYD AVM、NormalCamera、蜂窝 APN、ACC OFF 与 USB/SD 验收。\n- 车机升级后应在关闭 Wi-Fi 的 ACC ON 与 ACC OFF 场景分别确认 `socket_hello=success`，并验证实时 360、行车记录仪、事件回放和最新日志上传。"
 }
