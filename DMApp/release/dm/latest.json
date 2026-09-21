@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301268,
-  "versionName": "3.0.268",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.268-301268/DMApp-3.0.268-301268.apk",
+  "versionCode": 301269,
+  "versionName": "3.0.269",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.269-301269/DMApp-3.0.269-301269.apk",
   "sizeBytes": 144978871,
-  "md5": "4c0eca328ee34c7b848aef21c7927b94",
-  "sha256": "f8ae9e246d9ca01a78be39bce32fb263373c0446fb5d3591874b62f0f81b077d",
+  "md5": "29e4e93a0b350528a8af8e24b91bf112",
+  "sha256": "1d8676c6c2b38efdc24da78d35560b945f769d886c71ceb9263a10382926ab4e",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.268 / 301268\n\n## 车停哪了网络链路对照\n\n- 以“车停哪了”2.3.0 实际 APK（包名 `com.hxintell.carfinder`）为依据核对，不以界面现象推断：其特权 `ProcessApplication` 直接创建 OkHttp `wss://`，失败按 5/30/60/120/300 秒退避。\n- OkHttp 默认先读取 `ProxySelector.getDefault()`，没有通过 `requestNetwork` 绑定控制连接，也没有在连接前要求 Android 网络探测通过。\n- DM 的 App-UID 网络桥改为同样的路由语义：先使用系统 ProxySelector（HTTP CONNECT/SOCKS），不再枚举、申请或绑定 Android Network；实际 WSS/HTTPS 连接结果是唯一可用性判断。\n- 对照应用关闭证书与主机名校验的做法没有采用；DM 继续保留系统 CA、SNI 与 HTTPS 主机名校验。\n\n## 蜂窝 GET-only 控制隧道\n\n- 3.0.267 真车日志确认新 HTTPS 隧道被选择，但 `/open` 空 POST 在蜂窝下等待至 deadline，VPS/Nginx 没有收到任何隧道请求；同一 App 的 DM/Amap 更新 GET 可正常到达。\n- 外层隧道的 open、push、pull、close 全部改为 GET，与车机已验证可用的更新检查请求形态对齐。\n- 上行只把每段最多 2 KiB 的内层 TLS 密文放入 `X-DM-Tunnel-Data` 请求头，使用 URL-safe base64；不放入 URL，也不记录到 Nginx access log。\n- 内层仍是 d_service 持有的 TLS/WSS、VIN、命令与媒体协议，不增加明文 WS、第二 Agent 或服务端配置副本。\n- 服务端继续固定转发到回环 `127.0.0.1:443`，保留随机会话凭据、64 KiB 下行、并发上限和 90 秒过期；POST 仅作为旧客户端兼容入口，3.0.268 不再使用。\n\n## 验收\n\n- 真车关闭 Wi-Fi 后，若系统代理可用，车端路由应为 `app_system_http_proxy_https_connect` 或 `app_system_socks_proxy`；否则应看到 VPS `device_https_tunnel stage=open result=success` 与车端 `app_platform_https_get_https_poll_tunnel`，随后必须出现 `socket_hello=success`。\n- 若 GET 仍无法到达，说明该蜂窝策略只允许特定更新路径/UA，而不是一般 HTTPS；新日志会在 open deadline 与服务端无 open 记录之间形成明确证据。"
+  "releaseNotes": "# DMApp 3.0.269 / 301269\n\n## 蜂窝 HTTPS 隧道断线恢复\n\n- 3.0.268 真车已通过蜂窝 GET-only 通道两次完成 `socket_hello=success`，并成功执行存储读取、录像目录同步、配置读取和日志上传；问题已从“无法联网”收敛为外层 HTTPS 请求偶发重置后的长时间离线。\n- GET 隧道新增上行序号与服务端确认。相同分片在响应丢失后可安全重试，不会把同一段 TLS 密文写入两次。\n- 下行新增序号、确认和服务端待确认缓存。响应丢失时重放同一分片，客户端只交付一次，避免 TLS 字节流缺失或重复。\n- 单次外层请求异常最多即时重试三次，不再立即销毁已经完成认证的内层 WSS 会话；持续失败仍关闭并进入原有永久重连。\n- 服务端保留 3.0.268 无序号 GET 兼容，部署服务端不会中断尚未升级的车机。\n- Nginx 部署模板保留既有高德 9.5 下载 include，并继续禁止记录携带加密分片的隧道访问日志。\n\n## 验收\n\n- 关闭 Wi-Fi 后应通过 `app_platform_https_get_https_poll_tunnel` 完成 `socket_hello=success`。\n- 连续观察至少 10 分钟，`last_heartbeat_at` 应持续推进；一次外层 GET 重置不能让设备离线。\n- 存储列表、哨兵配置读取、日志上传均须在同一蜂窝会话内完成。"
 }
