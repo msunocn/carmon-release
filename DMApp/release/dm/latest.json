@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301274,
-  "versionName": "3.0.274",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.274-301274/DMApp-3.0.274-301274.apk",
+  "versionCode": 301275,
+  "versionName": "3.0.275",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.275-301275/DMApp-3.0.275-301275.apk",
   "sizeBytes": 144982967,
-  "md5": "1abc2c575290892a6468121614842803",
-  "sha256": "2f8a3da5493558a23b0c45f5ce0855ccb870296fb1abb6f0d4b5a9a5bb792b07",
+  "md5": "1a74c226a04a21e75d8773b9f7b64743",
+  "sha256": "106f2c70a0a7696b1fddba83dcf9bdd71a0940a35a4f50c1bc00ea4304734420",
   "force": false,
-  "releaseNotes": "# DM 3.0.274（301274）：双 UID 恢复验收修正\n\n- 延续 3.0.273 的普通 App 事件回放架构：d_service 只提供录像 ID 校验与只读 FD，MP4 解码和 WebRTC 均在普通 App 后台。\n- 手机正式双 UID 验证不再把停止后的缓存摄像头进程误判成活动 owner；使用 Android 普通进程回收语义清理 App 进程，不设置 package stopped 状态。\n- 新装应用需要解除 stopped 状态时进入普通主页面，不再误用按需摄像头 bootstrap；随后只恢复独立网络/回放后台。\n- 已验证 d_service 保持原 PID 时，普通 App 网络/回放后台被系统回收后可自动得到新 PID，且包状态保持 `stopped=false`。\n\n目标 665 车机仍需在升级后验证蜂窝连接、真实事件回放、AVM/NormalCamera、ACC OFF 和 USB/SD。"
+  "releaseNotes": "# DM 3.0.275（301275）：普通 App 网络与回放后台可靠恢复\n\n- 普通 App 的独立网络/回放进程改为低优先级 `dataSync` 前台服务，继续承担蜂窝路由、TLS/WSS、WebRTC、日志上传和 MP4 回放解码。\n- d_service 的恢复命令改为 `start-foreground-service`；主 App 与网络后台被系统回收后，不再因 Android 后台启动限制出现 `app is in background uid null`。\n- d_service 仍只保留 ACC、BYD 电源/相机、哨兵录像、USB/SD、唯一配置、录像 ID 校验和只读 FD；没有恢复公网直连或 d_service 回放转码。\n- 用户主动强制停止 App 时不绕过系统语义；正常低内存回收、进程崩溃和系统重启可自动恢复远程后台。\n\n手机可验证后台启动限制、双 UID 和进程恢复。目标 665 车机升级后仍需验证蜂窝 `socket_hello=success`、真实回放首帧、ACC OFF 与 USB/SD。"
 }
