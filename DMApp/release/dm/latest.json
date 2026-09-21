@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301264,
-  "versionName": "3.0.264",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.264-301264/DMApp-3.0.264-301264.apk",
+  "versionCode": 301265,
+  "versionName": "3.0.265",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.265-301265/DMApp-3.0.265-301265.apk",
   "sizeBytes": 144974775,
-  "md5": "27c183b7c33d681d7c05c706710d2e8d",
-  "sha256": "6b42eec55507592a1d2dad208f939104cf51f475cc60731374794837adca1ede",
+  "md5": "1a5a21949d025f8c3528f3e911cb0b6d",
+  "sha256": "14eea6fee56c9ac521196ee83c1ac6cc8abece138a002066f1b84d3003205104",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.264 / 301264\n\n## 升级与远程连接\n\n- App UID 网络出口运行在独立 `:dm_network_bridge` 进程；桌面、无障碍或主界面进程异常退出时，不再同时切断 d_service 的蜂窝/Wi-Fi 远程连接。\n- d_service 发现网络桥 Binder 消失时，仅拉起这个轻量网络服务；桥会周期性幂等注册并接管重启后的 d_service。\n- APK 原位升级后自动给旧 app_process 一次安全封盘机会并换新。若首次请求正逢启动单飞或授权通道尚未就绪，会在 5/15/30 秒有界补试，避免新 APK 长期配旧后台，且不需要用户再次点击车控授权。\n\n## 回放与存储\n\n- 回放目录发现改为 d_service 轻量根目录枚举，不再递归统计 USB/SD 全部录像占用；734 个历史 MP4 不再阻塞 `recordings.sync` 根目录阶段。\n- 目录上限为 1024 条，每文件校验预算可完整落入 512 MiB 总预算；播放目标仍会重新校验 MP4。\n- 配额清理不再逐个重解析历史 MP4；存储清单发现占用超过配置上限时，在受限后台任务中按最旧顺序异步清理，不阻塞远程命令或事件录像。\n\n## 验证边界\n\n- `:canfeature:check` 及新增升级重试、独立网络进程、轻量目录和配额回归通过；正式候选包完成版本注入与 16 KiB 对齐。\n- 小米手机正式包验证已出现主进程、`:dm_mock_dservice` 与独立 `:dm_network_bridge` 三个进程，桥成功注册到后台；手机同 UID Mock 不替代 UID 2000 真车蜂窝与 AVM 验收。\n- 目标车机升级后应确认 d_service 版本与 APK 一致、`socket_hello=success`、`recordings.sync success`，并观察超额目录的 `configured_quota_sweep` 结果。"
+  "releaseNotes": "# DMApp 3.0.265 / 301265\n\n## 蜂窝与远程连接\n\n- 修复独立 `:dm_network_bridge` 进程收到系统配置变化时进入桌面/MMKV 回调并崩溃的问题；该进程现在只保留 App UID 的 Android 网络能力。\n- TCP/TLS 失败后的永久退避上限从 60 秒降到 10 秒。真实网络切换或短时运营商抖动后，不再让远程页面连续数分钟显示离线。\n- d_service 日志新增 App UID 桥的真实路由与结果：成功会记录 `app_active_cellular`、`app_requested_cellular`、`app_active_wifi` 等，失败会记录安全的路由阶段和异常类型，不包含 VIN、令牌或地址。\n- 保留 3.0.264 的独立网络进程、升级后 d_service 安全换代及 5/15/30 秒有界补试。\n\n## 回放与存储\n\n- 保留轻量录像根目录枚举、1024 条完整校验预算、历史 MP4 元数据配额清理与异步最旧优先删除。\n- USB/SD/内部 writer、AVM、录像编码和 AI 检测仍由唯一 d_service 持有，不迁入网络进程。\n\n## 验证边界\n\n- 最新车机归档 `log-1789952990254059715` 在 Wi-Fi 下于 09:09:34 完成桥接、TLS/WebSocket hello、配置读取与日志上传；该归档不能证明蜂窝连通。\n- 同一归档显示此前 TCP/TLS 失败被 30/60 秒退避放大；手机正式包同时复现网络桥配置回调崩溃。两项均在本版修复。\n- 下一次车机验收必须关闭 Wi-Fi，并同时看到桥路由为 cellular、`socket_connected` 与 `socket_hello=success`；只有这些证据才算蜂窝通过。"
 }
