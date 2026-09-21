@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301265,
-  "versionName": "3.0.265",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.265-301265/DMApp-3.0.265-301265.apk",
+  "versionCode": 301266,
+  "versionName": "3.0.266",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.266-301266/DMApp-3.0.266-301266.apk",
   "sizeBytes": 144974775,
-  "md5": "1a5a21949d025f8c3528f3e911cb0b6d",
-  "sha256": "14eea6fee56c9ac521196ee83c1ac6cc8abece138a002066f1b84d3003205104",
+  "md5": "967621f63e0d293f02e023257dc8f6b5",
+  "sha256": "1fe7d913e64dd441861a8b5c6adb8f3da4093377b9712a73d0bb144172ccc321",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.265 / 301265\n\n## 蜂窝与远程连接\n\n- 修复独立 `:dm_network_bridge` 进程收到系统配置变化时进入桌面/MMKV 回调并崩溃的问题；该进程现在只保留 App UID 的 Android 网络能力。\n- TCP/TLS 失败后的永久退避上限从 60 秒降到 10 秒。真实网络切换或短时运营商抖动后，不再让远程页面连续数分钟显示离线。\n- d_service 日志新增 App UID 桥的真实路由与结果：成功会记录 `app_active_cellular`、`app_requested_cellular`、`app_active_wifi` 等，失败会记录安全的路由阶段和异常类型，不包含 VIN、令牌或地址。\n- 保留 3.0.264 的独立网络进程、升级后 d_service 安全换代及 5/15/30 秒有界补试。\n\n## 回放与存储\n\n- 保留轻量录像根目录枚举、1024 条完整校验预算、历史 MP4 元数据配额清理与异步最旧优先删除。\n- USB/SD/内部 writer、AVM、录像编码和 AI 检测仍由唯一 d_service 持有，不迁入网络进程。\n\n## 验证边界\n\n- 最新车机归档 `log-1789952990254059715` 在 Wi-Fi 下于 09:09:34 完成桥接、TLS/WebSocket hello、配置读取与日志上传；该归档不能证明蜂窝连通。\n- 同一归档显示此前 TCP/TLS 失败被 30/60 秒退避放大；手机正式包同时复现网络桥配置回调崩溃。两项均在本版修复。\n- 下一次车机验收必须关闭 Wi-Fi，并同时看到桥路由为 cellular、`socket_connected` 与 `socket_hello=success`；只有这些证据才算蜂窝通过。"
+  "releaseNotes": "# DMApp 3.0.266 / 301266\n\n## 车机蜂窝远程连接\n\n- 车机无 Wi-Fi 时继续由独立 App UID 网络桥持有蜂窝 Socket，d_service 保留 VIN、命令、TLS/WSS 和媒体控制权。\n- 若蜂窝 LinkProperties 明确提供 APN HTTP 代理，优先通过该代理建立 HTTPS CONNECT 隧道；TLS 仍由 d_service 对 `byd.msuno.cn` 做端到端证书和主机名校验，不降级为明文 WS。\n- APN 代理不可用或拒绝 CONNECT 时，继续尝试同一蜂窝 Network 的直接 Socket；日志会区分 `_apn_https_connect`、`_direct`、代理拒绝、TCP、TLS 和 WebSocket Upgrade 阶段。\n- 蜂窝 TLS/HTTP 101 等待由 10 秒调整为 20 秒，服务端未认证 hello 窗口同步由 15 秒调整为 30 秒；永久重试仍最多间隔 10 秒。\n- 保留 3.0.265 的网络桥配置回调崩溃修复、独立进程及升级后 d_service 自动换代。\n\n## 回放与哨兵\n\n- 保留轻量回放目录、1024 条校验预算、USB 配额异步清理及事件 MP4 原子发布。\n- 网络代理只处理控制通道的原始 TLS 隧道，不接触 AVM、录像文件、AI 检测或 d_service 唯一配置。\n\n## 验证边界\n\n- 3.0.265 最新日志确认蜂窝路由为 `app_requested_cellular`：一次停在 TLS，一次已让 VPS 完成 WebSocket Upgrade，但车端在 10 秒内未收到 HTTP 101；Wi-Fi 恢复后立即成功。\n- Android/JVM 回归覆盖 CONNECT 注入防护、严格 HTTP 200、响应头边界、APN 代理与直接回退；Go 服务全量测试通过。\n- 目标车机关闭 Wi-Fi 后，成功标准为路由 `app_*_cellular_apn_https_connect` 或 `app_*_cellular_direct`，随后 `socket_hello=success`。若仍失败，新日志会明确代理是否存在及失败阶段。"
 }
