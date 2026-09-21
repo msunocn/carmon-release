@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301266,
-  "versionName": "3.0.266",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.266-301266/DMApp-3.0.266-301266.apk",
-  "sizeBytes": 144974775,
-  "md5": "967621f63e0d293f02e023257dc8f6b5",
-  "sha256": "1fe7d913e64dd441861a8b5c6adb8f3da4093377b9712a73d0bb144172ccc321",
+  "versionCode": 301267,
+  "versionName": "3.0.267",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.267-301267/DMApp-3.0.267-301267.apk",
+  "sizeBytes": 144978871,
+  "md5": "c1d2ec650f40b629438b13a6bf2e231a",
+  "sha256": "8fed106af79115f934563104cb9dbc471767d1cd60b00f0370ac5cd8bd954c3f",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.266 / 301266\n\n## 车机蜂窝远程连接\n\n- 车机无 Wi-Fi 时继续由独立 App UID 网络桥持有蜂窝 Socket，d_service 保留 VIN、命令、TLS/WSS 和媒体控制权。\n- 若蜂窝 LinkProperties 明确提供 APN HTTP 代理，优先通过该代理建立 HTTPS CONNECT 隧道；TLS 仍由 d_service 对 `byd.msuno.cn` 做端到端证书和主机名校验，不降级为明文 WS。\n- APN 代理不可用或拒绝 CONNECT 时，继续尝试同一蜂窝 Network 的直接 Socket；日志会区分 `_apn_https_connect`、`_direct`、代理拒绝、TCP、TLS 和 WebSocket Upgrade 阶段。\n- 蜂窝 TLS/HTTP 101 等待由 10 秒调整为 20 秒，服务端未认证 hello 窗口同步由 15 秒调整为 30 秒；永久重试仍最多间隔 10 秒。\n- 保留 3.0.265 的网络桥配置回调崩溃修复、独立进程及升级后 d_service 自动换代。\n\n## 回放与哨兵\n\n- 保留轻量回放目录、1024 条校验预算、USB 配额异步清理及事件 MP4 原子发布。\n- 网络代理只处理控制通道的原始 TLS 隧道，不接触 AVM、录像文件、AI 检测或 d_service 唯一配置。\n\n## 验证边界\n\n- 3.0.265 最新日志确认蜂窝路由为 `app_requested_cellular`：一次停在 TLS，一次已让 VPS 完成 WebSocket Upgrade，但车端在 10 秒内未收到 HTTP 101；Wi-Fi 恢复后立即成功。\n- Android/JVM 回归覆盖 CONNECT 注入防护、严格 HTTP 200、响应头边界、APN 代理与直接回退；Go 服务全量测试通过。\n- 目标车机关闭 Wi-Fi 后，成功标准为路由 `app_*_cellular_apn_https_connect` 或 `app_*_cellular_direct`，随后 `socket_hello=success`。若仍失败，新日志会明确代理是否存在及失败阶段。"
+  "releaseNotes": "# DMApp 3.0.267 / 301267\n\n## 车机蜂窝远程连接\n\n- 根据两份 3.0.266 真机归档确认：车机蜂窝 `Network` 可见且 validated，但未公开 APN HTTP 代理；因此 3.0.266 仍落到 `app_*_cellular_direct`，TLS 超时期间 VPS 没有收到请求，Wi-Fi 恢复后立即上线。\n- App UID 网络桥新增 HTTPS 轮询字节隧道。它使用与 DM 更新下载相同的 Android `HttpURLConnection`/APN 路径，仅在蜂窝原始 WSS 不可靠时承载既有的 d_service TLS/WebSocket 字节流。\n- 内层仍由 d_service 完成 `byd.msuno.cn` 的 TLS 主机名校验、WebSocket、VIN、命令和媒体仲裁；VPS 隧道只允许连接本机 `127.0.0.1:443`，使用随机会话 ID/令牌、64 KiB 分片、并发上限和 90 秒过期，不提供任意目标代理。\n- Wi-Fi 保持原始 WSS 快路径；蜂窝成功日志标记为 `app_*_cellular_*_https_poll_tunnel`，随后仍必须出现 `socket_hello=success`。\n- 保留 10 秒永久重试上限、独立 `:dm_network_bridge` 进程、升级后 d_service 换代和 3.0.266 的显式 APN CONNECT 回退。\n\n## 服务端\n\n- 增加仅 HTTPS 可访问的 `/device/v1/tcp-tunnel/*` 端点，目标由部署环境固定为回环 TLS 监听器；外部请求不能指定目标地址。\n- 服务端设备 hello 窗口保持 30 秒，网页、登录、配置、录像目录和 WebRTC 协议不变。\n\n## 验证边界\n\n- JVM/Android 编译、网络桥契约、HTTP CONNECT 边界、Go 隧道端到端字节回显和服务端全量测试均需通过。\n- 小米手机只能验证双进程、Binder、HTTPS 请求和无崩溃，不能代替 BYD 蜂窝/APN。\n- 最终真车标准：关闭 Wi-Fi 后出现 `route=app_*_cellular_*_https_poll_tunnel`、`socket_connected` 和 `socket_hello=success`；若失败，日志会区分隧道 HTTP 状态、上传/下拉阶段和原始直连阶段。"
 }
