@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301278,
-  "versionName": "3.0.278",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.278-301278/DMApp-3.0.278-301278.apk",
-  "sizeBytes": 144978871,
-  "md5": "19a08ff498fffabc81c22d7520beef6b",
-  "sha256": "99059a7ff479a9a63b2e1047ea902bd1a143f20ef14fb84910ee5bf8ac2b4312",
+  "versionCode": 301279,
+  "versionName": "3.0.279",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.279-301279/DMApp-3.0.279-301279.apk",
+  "sizeBytes": 144982967,
+  "md5": "4ebf6c4e0b018f171c2d5a8de9f51a65",
+  "sha256": "dc177d111696d1eefa552876eb719349680e0e1d77b441c6468a75d5ba14c32b",
   "force": false,
-  "releaseNotes": "# DM 3.0.278（301278）：修复手机桌面无响应与远程视频转交\n\n## 修复内容\n\n- 修复 MIUI 策略拒绝摄像头权限时，权限结果回调同步重复请求造成的主线程栈溢出、桌面连续崩溃和无响应。\n- 权限请求改为单次可见流程并异步推进；拒绝后不再自动循环弹窗，后续显式授权仍可启动手机 mock `d_service`。\n- 普通手机模式与正式双 UID 模式共用受保护的 Camera Surface 转交入口，修复 WebRTC 已迁入独立网络进程后，前摄与 360 等待 App-UID worker 超时的问题。\n- 普通手机模式复用现有 mock `d_service`，正式双 UID 模式继续使用按需短生命周期媒体 worker；两种模式均不创建第二个 Agent 或 Binder 业务所有者。\n- 普通手机模式仅在收到 PREPARE/START/STOP 请求时启动相机工作线程，空闲状态不保留无用相机线程。\n\n## 验证结果\n\n- Android `:canfeature:check`：113 项任务通过。\n- MIUI 强制固定拒绝 CAMERA 权限后，流程只请求一次并安全结束，DM 主进程保持存活，无新增栈溢出、崩溃或 ANR。\n- 小米手机普通模式：桌面再次唤起 7 ms；前摄 427 ms 启动并取得真实帧；360 509 ms 启动并输出 H.264 RTP；两个远程准备接口均返回 200。\n- 小米手机正式双 UID 模式：UID 2000 Agent 与普通 App 网络桥完成 `socket_hello=success`，前摄与 360 远程准备接口均返回 200。\n- 验证结束后已恢复普通手机模式，主 App、mock `d_service` 与独立网络桥三个预期进程均正常存活。\n\n## 实车验收边界\n\n本次修复针对手机权限流程和手机 Camera Surface 跨进程转交。手机验证不能替代比亚迪车机的 NormalCamera、AVM、蜂窝网络、熄火供电与 USB/SD 实车验收；正式包上车后仍需确认桌面启动、`socket_hello=success`、行车记录仪首帧和 360 首帧。"
+  "releaseNotes": "# DM 3.0.279（301279）：修复车机行车记录仪、蜂窝 APN 与后台多实例\n\n## 修复内容\n\n- 修复行车记录仪迁入普通 App UID WebRTC 进程后的错误 CAMERA 权限门。真实车机前摄继续由 UID 2000 的 d_service 调用 BYD `NormalCamera`，普通 App 仅接收 Surface，不再因与该路径无关的 Android Camera AppOp 在打开相机前失败。\n- 360 AVM、手机 Camera1/2 Mock 和真实车机 NormalCamera 的权限边界保持独立；手机标准相机仍严格要求用户授权，不扩大普通 App 权限。\n- 普通 App 网络桥恢复 Android `ProxySelector` 的系统代理/APN 路由，支持 HTTP CONNECT 和 SOCKS，再回退到普通 App UID 直连；未恢复 HTTPS GET/轮询隧道，也不按网络探测结果阻止真实连接尝试。\n- 日志上传改为遵循普通 App 的系统代理/APN 配置，不再强制 `NO_PROXY`；网络出口仍由普通 App UID 持有，d_service 不直接获取 INTERNET 权限。\n- 修复升级和授权重启期间旧 d_service 未退出、多个 Agent 使用同一 VIN 互相抢占的问题：停止流程先逐个验证所有候选均为 UID 2000 且进程名精确为 `d_service`，再统一退出；启动流程增加跨进程原子锁。\n- CoreService 在 Looper、Binder、远程 Agent 和车辆能力初始化前获取进程生命周期文件锁；并发启动的第二个 d_service 会直接退出，不会发布第二套 Binder、录像或远程会话。\n- 远程连接日志会记录实际采用的系统代理、SOCKS 或直连路由，便于区分 APN 路由失败、TLS 失败和服务器会话问题。\n\n## 验证结果\n\n- Android `:canfeature:check`：114 个任务通过；新增 APN CONNECT 边界、禁止 HTTPS 轮询兜底、NormalCamera Surface Binder 权限路径及 d_service 多实例回归。\n- Go 服务端 `go test ./...` 与 `go vet ./...` 全部通过。\n- `3.0.279/301279` APK 完成 apktool 融合、`classes3.dex` 注入和 16 KiB native page alignment 校验；包名、版本和最终 DEX 内容复核通过。\n- 小米手机非增量覆盖安装成功；主界面、普通 App、独立网络桥和 UID 2000 formal daemon 正常运行，无新增崩溃或 ANR。\n- 手机 UID 2000 formal daemon 重复启动测试始终只保留一个进程，锁文件记录的 PID/UID 与实际进程一致。\n\n## 实车验收边界\n\n手机和静态回归不能替代比亚迪车机的 NormalCamera 与蜂窝 APN。升级后需在关闭 Wi-Fi 的车机上确认系统/APN代理或直连路由、`socket_hello=success`、连接仅有一个 d_service PID；随后验证行车记录仪出现 `normal_camera_surface` 首帧和 H.264 RTP。360、USB/SD、熄火录像与 ACC 清理链路未改变，仍需随本次车机回归一并观察。"
 }
