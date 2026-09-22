@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301281,
-  "versionName": "3.0.281",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.281-301281/DMApp-3.0.281-301281.apk",
-  "sizeBytes": 144991159,
-  "md5": "4826b0eee16c83e3c3ee99107cd37486",
-  "sha256": "5f25a413e72a8dd4a293f42baa188b8647782cd2d102450cb5ca0d0456b45847",
+  "versionCode": 301282,
+  "versionName": "3.0.282",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.282-301282/DMApp-3.0.282-301282.apk",
+  "sizeBytes": 144995255,
+  "md5": "2dc2b641766554e8de13497ff453d727",
+  "sha256": "abd2aae3ec147f95f531676e976f45983bd69f1ca59f18d2fb95b33bf2119aa6",
   "force": false,
-  "releaseNotes": "# DM 3.0.281（301281）：修复行车记录仪零编码与蜂窝路由，完善本地哨兵配置\n\n## 修复内容\n\n- 根据 3.0.280 实车日志修复行车记录仪 H.264 零输出：BYD `NormalCamera`、Surface、WebRTC Peer 与首帧均已成功，但供应商 `SurfaceTexture` 时间戳冻结使 8 FPS 门控只保留第一帧。现在仅对 BYD 实时前摄使用单调时钟生成 PTS，360、录像回放和手机 Camera2 路径保持原逻辑。\n- 蜂窝连接改由普通 App UID 每次使用 Android 当前默认网络的 DNS 与 `SocketFactory`，并优先读取 `LinkProperties` 暴露的 APN HTTP 代理；没有可用专用路由时继续系统代理和默认直连。网络状态不再作为建立连接的前置门槛，也没有 HTTPS 轮询兜底。\n- 熄火哨兵本地页面统一为 DM 卡片式样，补齐事件录像、智能识别、模型复核、存储/网络/Wi-Fi 保持、灵敏度、前后录像时间、最小异动时间、录像质量、电池保护、单一存储目标和整数 GB 空间上限；全部通过同一 d_service 配置读写和回读确认。\n- 新增行车记录仪本地验证页，并保留 360 环视验证入口；电子后视镜调试页同步统一分组、选择器、状态和操作按钮样式。\n\n## 验证边界\n\n最新 `log-1790053197628205164` 已校验大小、SHA-256 与 ZIP 完整性。日志证明 3.0.280 的 Binder 修复生效：`normal_camera_surface_started`、首帧、ICE/Peer 连接均成功，唯一失败为 `frames_encoded=0`。本版本通过 Android 全量 114 项检查；手机用于验证页面、Mock 与生命周期，BYD 前摄连续编码和真实蜂窝链路仍以安装 3.0.281 后的车机日志为最终验收依据。"
+  "releaseNotes": "# DM 3.0.282（301282）：统一哨兵配置与远程架构，修复手机 Mock 视频链路\n\n## 修复与优化\n\n- 熄火哨兵本地配置、d_service 单一持久化配置和远程控制台字段完全对齐，补齐事件录像、智能识别、Tiny 复核、存储/网络/Wi-Fi 保持、录像质量、电池保护、识别模型及存储目标配置；远程写入继续采用稀疏补丁并以 d_service 回读作为唯一成功依据。\n- 明确后台进程边界：d_service 继续独占 ACC、BYD 车控、360 AVM、录像与配置；普通 App UID 的独立网络桥负责 DNS、APN 代理、TLS/WSS、WebRTC、日志上传和回放解码。网络桥 Service 改为非导出，仅保留 DUMP 权限保护的恢复入口。\n- 新增统一的网络桥、Agent、连接代际、媒体来源、首帧和 RTP 健康状态，远程诊断可直接区分控制链路、网络桥和视频链路故障。\n- 修复小米手机 `:dm_mock_dservice` 被错误转发到真车 UID 2000 Surface 桥的问题：同 UID Mock 直接使用 Camera2 和本地 MP4 解码；真实车机及正式双 UID 验收仍使用 App UID 媒体桥。\n- AndroidNetworkMonitor 保护条件收紧为仅 UID 2000 的 raw app_process；普通 App UID Mock 保留系统网络监听，提高手机回归时的 ICE 网络变化响应。\n- 远程 H5 重新整理基础设置、保持与恢复、高级参数和存储配置；320/480 px 移动端页面修复文字、选择器和卡片溢出，主页、监控/回放和“我的”保持统一紧凑布局。\n\n## 验证边界\n\nAndroid 全量 `:canfeature:check` 通过 114 个任务。小米 Mi 10 调试签名包完成主进程、Mock d_service、独立网络桥、WSS 握手、360/前摄 Camera2 首帧、ICE Connected、H.264 RTP、配置写入回读、存储与录像目录刷新、WebRTC 回放准备、日志上传及测试录像删除回归；远程 H5 在 320/480 px 下逐页检查无横向溢出。VPS Go 全量测试和线上 HTTPS/版本/设备重连验证通过。\n\n手机 Mock 与构建测试不能代替 665 车机实测。真实 BYD AVM、ACC 熄火周期、USB/SD 掉电恢复、屏幕电源域与蜂窝链路仍需安装本正式版本后以最新车机日志验收。"
 }
