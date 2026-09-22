@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301279,
-  "versionName": "3.0.279",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.279-301279/DMApp-3.0.279-301279.apk",
+  "versionCode": 301280,
+  "versionName": "3.0.280",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.280-301280/DMApp-3.0.280-301280.apk",
   "sizeBytes": 144982967,
-  "md5": "4ebf6c4e0b018f171c2d5a8de9f51a65",
-  "sha256": "dc177d111696d1eefa552876eb719349680e0e1d77b441c6468a75d5ba14c32b",
+  "md5": "7e19dc9a69f6ad21e22720671d155377",
+  "sha256": "5fc97bad4aac5ceb81922fc8d61c0d0bbc8fdb669fb7ccf405fed49845beb116",
   "force": false,
-  "releaseNotes": "# DM 3.0.279（301279）：修复车机行车记录仪、蜂窝 APN 与后台多实例\n\n## 修复内容\n\n- 修复行车记录仪迁入普通 App UID WebRTC 进程后的错误 CAMERA 权限门。真实车机前摄继续由 UID 2000 的 d_service 调用 BYD `NormalCamera`，普通 App 仅接收 Surface，不再因与该路径无关的 Android Camera AppOp 在打开相机前失败。\n- 360 AVM、手机 Camera1/2 Mock 和真实车机 NormalCamera 的权限边界保持独立；手机标准相机仍严格要求用户授权，不扩大普通 App 权限。\n- 普通 App 网络桥恢复 Android `ProxySelector` 的系统代理/APN 路由，支持 HTTP CONNECT 和 SOCKS，再回退到普通 App UID 直连；未恢复 HTTPS GET/轮询隧道，也不按网络探测结果阻止真实连接尝试。\n- 日志上传改为遵循普通 App 的系统代理/APN 配置，不再强制 `NO_PROXY`；网络出口仍由普通 App UID 持有，d_service 不直接获取 INTERNET 权限。\n- 修复升级和授权重启期间旧 d_service 未退出、多个 Agent 使用同一 VIN 互相抢占的问题：停止流程先逐个验证所有候选均为 UID 2000 且进程名精确为 `d_service`，再统一退出；启动流程增加跨进程原子锁。\n- CoreService 在 Looper、Binder、远程 Agent 和车辆能力初始化前获取进程生命周期文件锁；并发启动的第二个 d_service 会直接退出，不会发布第二套 Binder、录像或远程会话。\n- 远程连接日志会记录实际采用的系统代理、SOCKS 或直连路由，便于区分 APN 路由失败、TLS 失败和服务器会话问题。\n\n## 验证结果\n\n- Android `:canfeature:check`：114 个任务通过；新增 APN CONNECT 边界、禁止 HTTPS 轮询兜底、NormalCamera Surface Binder 权限路径及 d_service 多实例回归。\n- Go 服务端 `go test ./...` 与 `go vet ./...` 全部通过。\n- `3.0.279/301279` APK 完成 apktool 融合、`classes3.dex` 注入和 16 KiB native page alignment 校验；包名、版本和最终 DEX 内容复核通过。\n- 小米手机非增量覆盖安装成功；主界面、普通 App、独立网络桥和 UID 2000 formal daemon 正常运行，无新增崩溃或 ANR。\n- 手机 UID 2000 formal daemon 重复启动测试始终只保留一个进程，锁文件记录的 PID/UID 与实际进程一致。\n\n## 实车验收边界\n\n手机和静态回归不能替代比亚迪车机的 NormalCamera 与蜂窝 APN。升级后需在关闭 Wi-Fi 的车机上确认系统/APN代理或直连路由、`socket_hello=success`、连接仅有一个 d_service PID；随后验证行车记录仪出现 `normal_camera_surface` 首帧和 H.264 RTP。360、USB/SD、熄火录像与 ACC 清理链路未改变，仍需随本次车机回归一并观察。"
+  "releaseNotes": "# DM 3.0.280（301280）：接通车机行车记录仪 Surface Binder\n\n## 修复内容\n\n- 根据 3.0.279 实车日志修复行车记录仪 Binder 入口：前摄 1021/1022 启停交易已经有完整实现，但未加入 `Camera360Service.handleBinderTransaction()` 白名单，导致 Binder 在调用 BYD `NormalCamera` 前直接返回 `false`。\n- 现在前摄请求会进入 UID 2000 d_service，校验调用方后创建 `BydNormalCameraSurfaceSession`，普通 App 只持有 WebRTC Surface，车辆相机权限和生命周期仍由 d_service 独占。\n- 新增源码契约回归，要求前摄启停交易同时存在于入口白名单和实际处理分支，避免再次出现“实现存在但 Binder 永远不可达”。\n\n## 验证边界\n\n3.0.279 实车日志已经证明 CAMERA 权限门修复生效、`DmRemoteRoadVideoCapturer` 创建成功，并把唯一失败点定位为 `startRemoteRoadStream transact returned false`。本版本修复该入口遗漏；Android 114 项检查通过，`3.0.280/301280` 候选 APK 的最终字节码已确认 1021/1022 均进入处理入口，版本与 16 KiB 对齐校验通过。BYD `NormalCamera.open`、真实首帧和 RTP 仍以安装 3.0.280 后的新车机日志为最终验收依据。"
 }
