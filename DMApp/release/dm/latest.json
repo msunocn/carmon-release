@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301280,
-  "versionName": "3.0.280",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.280-301280/DMApp-3.0.280-301280.apk",
-  "sizeBytes": 144982967,
-  "md5": "7e19dc9a69f6ad21e22720671d155377",
-  "sha256": "5fc97bad4aac5ceb81922fc8d61c0d0bbc8fdb669fb7ccf405fed49845beb116",
+  "versionCode": 301281,
+  "versionName": "3.0.281",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.281-301281/DMApp-3.0.281-301281.apk",
+  "sizeBytes": 144991159,
+  "md5": "4826b0eee16c83e3c3ee99107cd37486",
+  "sha256": "5f25a413e72a8dd4a293f42baa188b8647782cd2d102450cb5ca0d0456b45847",
   "force": false,
-  "releaseNotes": "# DM 3.0.280（301280）：接通车机行车记录仪 Surface Binder\n\n## 修复内容\n\n- 根据 3.0.279 实车日志修复行车记录仪 Binder 入口：前摄 1021/1022 启停交易已经有完整实现，但未加入 `Camera360Service.handleBinderTransaction()` 白名单，导致 Binder 在调用 BYD `NormalCamera` 前直接返回 `false`。\n- 现在前摄请求会进入 UID 2000 d_service，校验调用方后创建 `BydNormalCameraSurfaceSession`，普通 App 只持有 WebRTC Surface，车辆相机权限和生命周期仍由 d_service 独占。\n- 新增源码契约回归，要求前摄启停交易同时存在于入口白名单和实际处理分支，避免再次出现“实现存在但 Binder 永远不可达”。\n\n## 验证边界\n\n3.0.279 实车日志已经证明 CAMERA 权限门修复生效、`DmRemoteRoadVideoCapturer` 创建成功，并把唯一失败点定位为 `startRemoteRoadStream transact returned false`。本版本修复该入口遗漏；Android 114 项检查通过，`3.0.280/301280` 候选 APK 的最终字节码已确认 1021/1022 均进入处理入口，版本与 16 KiB 对齐校验通过。BYD `NormalCamera.open`、真实首帧和 RTP 仍以安装 3.0.280 后的新车机日志为最终验收依据。"
+  "releaseNotes": "# DM 3.0.281（301281）：修复行车记录仪零编码与蜂窝路由，完善本地哨兵配置\n\n## 修复内容\n\n- 根据 3.0.280 实车日志修复行车记录仪 H.264 零输出：BYD `NormalCamera`、Surface、WebRTC Peer 与首帧均已成功，但供应商 `SurfaceTexture` 时间戳冻结使 8 FPS 门控只保留第一帧。现在仅对 BYD 实时前摄使用单调时钟生成 PTS，360、录像回放和手机 Camera2 路径保持原逻辑。\n- 蜂窝连接改由普通 App UID 每次使用 Android 当前默认网络的 DNS 与 `SocketFactory`，并优先读取 `LinkProperties` 暴露的 APN HTTP 代理；没有可用专用路由时继续系统代理和默认直连。网络状态不再作为建立连接的前置门槛，也没有 HTTPS 轮询兜底。\n- 熄火哨兵本地页面统一为 DM 卡片式样，补齐事件录像、智能识别、模型复核、存储/网络/Wi-Fi 保持、灵敏度、前后录像时间、最小异动时间、录像质量、电池保护、单一存储目标和整数 GB 空间上限；全部通过同一 d_service 配置读写和回读确认。\n- 新增行车记录仪本地验证页，并保留 360 环视验证入口；电子后视镜调试页同步统一分组、选择器、状态和操作按钮样式。\n\n## 验证边界\n\n最新 `log-1790053197628205164` 已校验大小、SHA-256 与 ZIP 完整性。日志证明 3.0.280 的 Binder 修复生效：`normal_camera_surface_started`、首帧、ICE/Peer 连接均成功，唯一失败为 `frames_encoded=0`。本版本通过 Android 全量 114 项检查；手机用于验证页面、Mock 与生命周期，BYD 前摄连续编码和真实蜂窝链路仍以安装 3.0.281 后的车机日志为最终验收依据。"
 }
