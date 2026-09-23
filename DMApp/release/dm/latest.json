@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301286,
-  "versionName": "3.0.286",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.286-301286/DMApp-3.0.286-301286.apk",
+  "versionCode": 301287,
+  "versionName": "3.0.287",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.287-301287/DMApp-3.0.287-301287.apk",
   "sizeBytes": 145163191,
-  "md5": "7d87d01a1fbb70d11155bca3c6376bdd",
-  "sha256": "e904ff6688ee09ff07c992af8179604e142104fdcabf8bd2d1fcc58afed990d1",
+  "md5": "205b782ba5682966867130a40c3bbe44",
+  "sha256": "078197637fc96422b416021bec0f8b9d9631bb0d9d73ec543e0f5d508cebb821",
   "force": false,
-  "releaseNotes": "# DM 3.0.286（301286）：完整 OkHttp WSS 发布链路\n\n## 修复与优化\n\n- 延续 3.0.285 的正式实现：远程控制由普通 App UID 中的 OkHttp 2.7.5 WebSocket\n  直接使用系统默认 `ProxySelector` 建立 WSS；不保留项目内原始 Socket/TLS/HTTP-101、\n  指定网络绑定、HTTPS 轮询或协议回退分支。\n- Go 服务端统一使用 Gorilla WebSocket v1.5.3 处理 RFC 6455。客户端消息分片重组、掩码、\n  Ping/Pong、关闭握手和 1 MiB 消息上限均由同一成熟协议栈负责，不再存在手写帧解析器。\n- 修复 3.0.285 标签流水线的离线依赖准备缺口。`okhttp-ws`、`okhttp`、`okio` 三个\n  JAR 现在均为显式依赖，由正式 CI 从 Maven Central 下载、逐项校验固定 SHA-256 后，\n  再通过本地 flat-dir 仓完成 `--offline` 构建；不依赖 runner 预热缓存。\n\n## 验证\n\n- Maven Central 新下载的三个固定版本 JAR 与本地已验证依赖 SHA-256 一致，ZIP/JAR\n  完整性及关键类检查通过。\n- Android `:canfeature:check` 覆盖真实 OkHttp WebSocket、系统 ProxySelector、客户端掩码、\n  32 KiB 分片消息及 App UID/d_service 有界回环传输。\n- Go 全量测试覆盖 OkHttp 风格分片文本与交错 Ping；H5 测试、Go vet、关键包 race 测试和\n  最终 APK 版本、签名、对齐、依赖注入由正式流水线复验。\n- 小米设备已验证普通 App UID 经公网 WSS 完成连接、hello、状态同步、存储列表与录像目录\n  同步；665 车机蜂窝最终验收仍以关闭 Wi-Fi 后的新日志为准。"
+  "releaseNotes": "# DM 3.0.287（301287）：单一 OkHttp WSS 控制协议\n\n## 修复与优化\n\n- 车机控制链只保留普通 App UID 中的 OkHttp 2.7.5 WebSocket，通过系统默认\n  `ProxySelector` 直接建立 WSS。网络失败只进入 `5s / 30s / 60s / 120s / 300s`\n  永久重连，不切换协议或创建第二条控制通道。\n- Go 服务端只保留 `/device/v1/socket` 的 Gorilla WebSocket v1.5.3 RFC 6455 实现；完整\n  支持 OkHttp 的分片消息、客户端掩码、控制帧交错、关闭握手和 1 MiB 消息上限。\n- 删除旧 `/device/v1/tcp-tunnel/*` HTTPS 轮询隧道的实现、测试、路由、systemd 环境变量\n  与 Nginx 特殊 location。服务端不再保留 WSS 之外的控制协议兼容分支。\n- 正式 CI 继续使用三个显式、固定版本和固定 SHA-256 的 `okhttp-ws`、`okhttp`、`okio`\n  JAR 完成离线构建，不依赖 runner 暖缓存。\n\n## 验证\n\n- Android `:canfeature:check`、Go 全量测试与 vet、关键 Go 包 race、H5 12 项状态回归通过。\n- OkHttp 三个 JAR 在独立空 Gradle 缓存中经 flat-dir 离线编译通过；最终 APK 再验证版本、\n  v3 签名、16 KiB 对齐和 classes3 依赖注入。\n- 小米正式双身份 Mock 通过公网 WSS 完成 hello、首心跳、`storage.list`、录像目录和封面同步，\n  VPS 持续心跳记录保持兼容在线。665 车机蜂窝仍需升级后在关闭 Wi-Fi 条件下最终验收。"
 }
