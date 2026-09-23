@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301292,
-  "versionName": "3.0.292",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.292-301292/DMApp-3.0.292-301292.apk",
+  "versionCode": 301293,
+  "versionName": "3.0.293",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.293-301293/DMApp-3.0.293-301293.apk",
   "sizeBytes": 145163191,
-  "md5": "29f6a571419e13ad92b3068798a3dc3e",
-  "sha256": "beb58dd7e32e980b02af3de65c0de0ddedd3a6400474e5d77c60826e86d78693",
+  "md5": "4fe533b38408902f54e6a30bc59eba07",
+  "sha256": "19e825cbde6feaa70779fa309d20f5cac1c305f552790fe8bf3609b9ff4b3725",
   "force": false,
-  "releaseNotes": "# DM 3.0.292（301292）：优化蜂窝网络远程连接\n\n## 修复\n\n- 将 d_service、App UID 网络桥接和 OkHttp WebSocket 的建连超时统一提高到 60 秒，覆盖物联卡/APN 冷启动和系统代理建立连接的耗时。\n- 保留桥接恢复后的即时重试，不绕过 UID 2000 的网络权限边界。\n- 连接尝试日志增加 `connect_timeout_ms`，便于区分网络慢、桥接退出和服务端拒绝。\n- 同时包含行车记录仪仅垂直翻转、保持左右方向的修复。\n\n## 验证\n\n- `:canfeature:check` 通过。\n- 覆盖 App UID 桥接、OkHttp WebSocket、蜂窝重试和道路相机方向回归。"
+  "releaseNotes": "# DMApp 3.0.293（301293）\n\n- 修复熄火哨兵在 USB/SD 短暂未就绪或写入超时期间的事件发布链路。\n- 事件 MP4 封盘失败时保留可恢复证据，支持短暂重试、定时恢复和配置的内部存储兜底。\n- 启动恢复不再删除完整但缺少事件标记的 `.mp4.part`，校验通过后转为可播放 MP4。\n- 修复初始 ACC_ON/系统重启后背光未恢复：执行 OEM 背光读回，并按 1 秒间隔最多重试 5 次。"
 }
