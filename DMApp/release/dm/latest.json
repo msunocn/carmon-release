@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301290,
-  "versionName": "3.0.290",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.290-301290/DMApp-3.0.290-301290.apk",
+  "versionCode": 301291,
+  "versionName": "3.0.291",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.291-301291/DMApp-3.0.291-301291.apk",
   "sizeBytes": 145163191,
-  "md5": "eddb4a666e879e1736f104641f89fbe6",
-  "sha256": "897413760493d949a412090f0b1716d4ef61b3c53269fda742801c50508da4ca",
+  "md5": "3c0bec6b99743d86eb8ff4f69cb38fa2",
+  "sha256": "b2455f7d8fe93b60823d29d5b28de9d25ecb162788e4001001569574fd5d22fe",
   "force": false,
-  "releaseNotes": "# DM 3.0.290（301290）：修复车机行车记录仪倒置画面\n\n## 修复\n\n- 修复 BYD 车机 NormalCamera 横屏 Surface 原始画面上下倒置的问题。\n- 对真实车机道路前摄输出显式应用 180° 旋转；手机 mock、竖屏视频和 360 环视保持原有方向策略。\n- 保留首帧方向诊断，记录上报旋转角度、最终输出角度、后端和缓冲尺寸，便于真机确认。\n\n## 验证\n\n- `:canfeature:check` 通过，114 个任务全部成功。\n- 覆盖 0°、90°、180°、270° 元数据及竖屏/手机 mock 回归场景。"
+  "releaseNotes": "# DM 3.0.291（301291）：修复行车记录仪左右镜像\n\n## 修复\n\n- 修复上一版 180° 纠正导致的行车记录仪左右镜像问题。\n- 真实车机道路前摄改为仅垂直翻转 I420 像素，保持左右方向不变，并将 WebRTC 旋转元数据归零。\n- 手机 mock、360 环视和竖屏视频保持原有处理逻辑。\n\n## 验证\n\n- `:canfeature:check` 通过，114 个任务全部成功。\n- 覆盖旋转元数据、横屏道路流、竖屏流和手机 mock 回归场景。"
 }
