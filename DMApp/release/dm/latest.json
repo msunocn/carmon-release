@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301291,
-  "versionName": "3.0.291",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.291-301291/DMApp-3.0.291-301291.apk",
+  "versionCode": 301292,
+  "versionName": "3.0.292",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.292-301292/DMApp-3.0.292-301292.apk",
   "sizeBytes": 145163191,
-  "md5": "3c0bec6b99743d86eb8ff4f69cb38fa2",
-  "sha256": "b2455f7d8fe93b60823d29d5b28de9d25ecb162788e4001001569574fd5d22fe",
+  "md5": "29f6a571419e13ad92b3068798a3dc3e",
+  "sha256": "beb58dd7e32e980b02af3de65c0de0ddedd3a6400474e5d77c60826e86d78693",
   "force": false,
-  "releaseNotes": "# DM 3.0.291（301291）：修复行车记录仪左右镜像\n\n## 修复\n\n- 修复上一版 180° 纠正导致的行车记录仪左右镜像问题。\n- 真实车机道路前摄改为仅垂直翻转 I420 像素，保持左右方向不变，并将 WebRTC 旋转元数据归零。\n- 手机 mock、360 环视和竖屏视频保持原有处理逻辑。\n\n## 验证\n\n- `:canfeature:check` 通过，114 个任务全部成功。\n- 覆盖旋转元数据、横屏道路流、竖屏流和手机 mock 回归场景。"
+  "releaseNotes": "# DM 3.0.292（301292）：优化蜂窝网络远程连接\n\n## 修复\n\n- 将 d_service、App UID 网络桥接和 OkHttp WebSocket 的建连超时统一提高到 60 秒，覆盖物联卡/APN 冷启动和系统代理建立连接的耗时。\n- 保留桥接恢复后的即时重试，不绕过 UID 2000 的网络权限边界。\n- 连接尝试日志增加 `connect_timeout_ms`，便于区分网络慢、桥接退出和服务端拒绝。\n- 同时包含行车记录仪仅垂直翻转、保持左右方向的修复。\n\n## 验证\n\n- `:canfeature:check` 通过。\n- 覆盖 App UID 桥接、OkHttp WebSocket、蜂窝重试和道路相机方向回归。"
 }
