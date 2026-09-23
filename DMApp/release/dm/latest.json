@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301287,
-  "versionName": "3.0.287",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.287-301287/DMApp-3.0.287-301287.apk",
-  "sizeBytes": 145163191,
-  "md5": "205b782ba5682966867130a40c3bbe44",
-  "sha256": "078197637fc96422b416021bec0f8b9d9631bb0d9d73ec543e0f5d508cebb821",
+  "versionCode": 301289,
+  "versionName": "3.0.289",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.289-301289/DMApp-3.0.289-301289.apk",
+  "sizeBytes": 145159095,
+  "md5": "36c5a480e2c10540867e99064d80a8a0",
+  "sha256": "37eeffd70d417f7ec8aa88b24f21b74a695eddc093facd19ff3922c6c48ec1c1",
   "force": false,
-  "releaseNotes": "# DM 3.0.287（301287）：单一 OkHttp WSS 控制协议\n\n## 修复与优化\n\n- 车机控制链只保留普通 App UID 中的 OkHttp 2.7.5 WebSocket，通过系统默认\n  `ProxySelector` 直接建立 WSS。网络失败只进入 `5s / 30s / 60s / 120s / 300s`\n  永久重连，不切换协议或创建第二条控制通道。\n- Go 服务端只保留 `/device/v1/socket` 的 Gorilla WebSocket v1.5.3 RFC 6455 实现；完整\n  支持 OkHttp 的分片消息、客户端掩码、控制帧交错、关闭握手和 1 MiB 消息上限。\n- 删除旧 `/device/v1/tcp-tunnel/*` HTTPS 轮询隧道的实现、测试、路由、systemd 环境变量\n  与 Nginx 特殊 location。服务端不再保留 WSS 之外的控制协议兼容分支。\n- 正式 CI 继续使用三个显式、固定版本和固定 SHA-256 的 `okhttp-ws`、`okhttp`、`okio`\n  JAR 完成离线构建，不依赖 runner 暖缓存。\n\n## 验证\n\n- Android `:canfeature:check`、Go 全量测试与 vet、关键 Go 包 race、H5 12 项状态回归通过。\n- OkHttp 三个 JAR 在独立空 Gradle 缓存中经 flat-dir 离线编译通过；最终 APK 再验证版本、\n  v3 签名、16 KiB 对齐和 classes3 依赖注入。\n- 小米正式双身份 Mock 通过公网 WSS 完成 hello、首心跳、`storage.list`、录像目录和封面同步，\n  VPS 持续心跳记录保持兼容在线。665 车机蜂窝仍需升级后在关闭 Wi-Fi 条件下最终验收。"
+  "releaseNotes": "# DM 3.0.289（301289）：修复行车记录仪画面方向\n\n## 修复\n\n- 修复固定横屏车机上行车记录仪画面被重复旋转、倒置的问题。\n- 对 90°、180°、270° 旋转元数据统一按车机横屏视频流归一化，避免浏览器端二次旋转。\n\n## 验证\n\n- `:canfeature:check` 通过。\n- 行车记录仪 90°、180°、270° 方向回归测试通过。"
 }
