@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301293,
-  "versionName": "3.0.293",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.293-301293/DMApp-3.0.293-301293.apk",
-  "sizeBytes": 145163191,
-  "md5": "4fe533b38408902f54e6a30bc59eba07",
-  "sha256": "19e825cbde6feaa70779fa309d20f5cac1c305f552790fe8bf3609b9ff4b3725",
+  "versionCode": 301294,
+  "versionName": "3.0.294",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.294-301294/DMApp-3.0.294-301294.apk",
+  "sizeBytes": 145159095,
+  "md5": "5491bcda63fe5e26109c1f4150b454b8",
+  "sha256": "cf3795c28111e3c728e0d285c992c257fa6b810e8d9ae2e978cad47aee984002",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.293（301293）\n\n- 修复熄火哨兵在 USB/SD 短暂未就绪或写入超时期间的事件发布链路。\n- 事件 MP4 封盘失败时保留可恢复证据，支持短暂重试、定时恢复和配置的内部存储兜底。\n- 启动恢复不再删除完整但缺少事件标记的 `.mp4.part`，校验通过后转为可播放 MP4。\n- 修复初始 ACC_ON/系统重启后背光未恢复：执行 OEM 背光读回，并按 1 秒间隔最多重试 5 次。"
+  "releaseNotes": "# DMApp 3.0.294（301294）\n\n- 熄火哨兵正式移除不受支持的 USB 5V `270022/284722` getter、setter 与重试状态机，不再调用或宣称物理 USB 供电保持。\n- d_service 使用独立 `DM-SentryMcuGuardian` 线程维护 200 秒有限 MCU/CAN 租约，并提前至 150 秒续租，避免录像、存储和网络队列延迟造成租约空窗。\n- 有限租约能力不可用时，每 60 秒读取 MCU 状态，仅在明确读到休眠时执行补唤醒；ACC ON、哨兵停止或电量安全门槛触发后停止守护。\n- 增加 MCU 守护模式、续租调度延迟和最大延迟诊断字段，便于实车确认持续保活状态。"
 }
