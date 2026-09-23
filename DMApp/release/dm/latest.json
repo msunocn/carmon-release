@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301289,
-  "versionName": "3.0.289",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.289-301289/DMApp-3.0.289-301289.apk",
-  "sizeBytes": 145159095,
-  "md5": "36c5a480e2c10540867e99064d80a8a0",
-  "sha256": "37eeffd70d417f7ec8aa88b24f21b74a695eddc093facd19ff3922c6c48ec1c1",
+  "versionCode": 301290,
+  "versionName": "3.0.290",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.290-301290/DMApp-3.0.290-301290.apk",
+  "sizeBytes": 145163191,
+  "md5": "eddb4a666e879e1736f104641f89fbe6",
+  "sha256": "897413760493d949a412090f0b1716d4ef61b3c53269fda742801c50508da4ca",
   "force": false,
-  "releaseNotes": "# DM 3.0.289（301289）：修复行车记录仪画面方向\n\n## 修复\n\n- 修复固定横屏车机上行车记录仪画面被重复旋转、倒置的问题。\n- 对 90°、180°、270° 旋转元数据统一按车机横屏视频流归一化，避免浏览器端二次旋转。\n\n## 验证\n\n- `:canfeature:check` 通过。\n- 行车记录仪 90°、180°、270° 方向回归测试通过。"
+  "releaseNotes": "# DM 3.0.290（301290）：修复车机行车记录仪倒置画面\n\n## 修复\n\n- 修复 BYD 车机 NormalCamera 横屏 Surface 原始画面上下倒置的问题。\n- 对真实车机道路前摄输出显式应用 180° 旋转；手机 mock、竖屏视频和 360 环视保持原有方向策略。\n- 保留首帧方向诊断，记录上报旋转角度、最终输出角度、后端和缓冲尺寸，便于真机确认。\n\n## 验证\n\n- `:canfeature:check` 通过，114 个任务全部成功。\n- 覆盖 0°、90°、180°、270° 元数据及竖屏/手机 mock 回归场景。"
 }
