@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301284,
-  "versionName": "3.0.284",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.284-301284/DMApp-3.0.284-301284.apk",
-  "sizeBytes": 144991159,
-  "md5": "b8a84d3555c175e01809a453c8325548",
-  "sha256": "a0275c816f16327f1932201c342ed63bc81b1071aff031a7bf824fa449709d9c",
+  "versionCode": 301286,
+  "versionName": "3.0.286",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.286-301286/DMApp-3.0.286-301286.apk",
+  "sizeBytes": 145163191,
+  "md5": "7d87d01a1fbb70d11155bca3c6376bdd",
+  "sha256": "e904ff6688ee09ff07c992af8179604e142104fdcabf8bd2d1fcc58afed990d1",
   "force": false,
-  "releaseNotes": "# DM 3.0.284（301284）：简化蜂窝网络链路，修复行车记录仪验证页与远程存储布局\n\n## 修复与优化\n\n- 远程控制网络收敛为普通 App UID 的系统默认网络：不再手工选择 Wi-Fi/蜂窝 `Network`，不再枚举 APN/系统代理或竞争多条连接路径；DNS、TCP、TLS/WSS 只执行一次真实连接，失败后交给既有 1/2/5/10 秒重连策略。日志上传继续直接使用标准 `URL.openConnection()`。\n- WebSocket 握手成功后立即发送首个心跳，并校验服务端心跳回执；连接静默超过安全窗口时只关闭当前 Socket 并重连，不重启 Launcher 或 d_service。\n- 服务端断线与重启不再用服务端时间覆盖车机最后心跳，远程页面可以区分“最近真实上报”与“服务端刚判定离线”。\n- 修复熄火哨兵配置页进入“行车记录仪验证”时的车机崩溃：黑色占位背景移到 `TextureView` 外层容器，避免目标 Android 框架抛出 `TextureView doesn't support displaying a background drawable`。\n- 远程存储位置改成紧凑的名称、状态徽标、可用/已用/上限和小型操作按钮布局，修复手机端长文本换行、按钮错位及列表高度过大的问题。\n- 删除不再使用的 APN HTTP CONNECT 隧道及对应测试，架构说明同步为普通 App 默认网络模型。\n\n## 验证边界\n\nAndroid `:canfeature:test`、VPS Go 全量测试、H5 JavaScript 语法检查和移动端 480 px 实际页面检查均通过。`3.0.284 / 301284` 的完整 APK 注入构建、TFLite/OpenCV/WebRTC 资源检查和 16 KiB 对齐验证通过。\n\n最新实车日志证明旧版本在蜂窝默认网络上连接超时、切换 Wi-Fi 后完成 `socket_hello=success`，并记录了行车记录仪验证页的确定性崩溃栈。本版本的蜂窝连接与行车记录仪页面修复仍需安装到 665 车机后验证；蜂窝验收必须关闭 Wi-Fi，并在新日志中同时看到普通 App 默认路由、`socket_connected`、`socket_hello=success` 和持续心跳。"
+  "releaseNotes": "# DM 3.0.286（301286）：完整 OkHttp WSS 发布链路\n\n## 修复与优化\n\n- 延续 3.0.285 的正式实现：远程控制由普通 App UID 中的 OkHttp 2.7.5 WebSocket\n  直接使用系统默认 `ProxySelector` 建立 WSS；不保留项目内原始 Socket/TLS/HTTP-101、\n  指定网络绑定、HTTPS 轮询或协议回退分支。\n- Go 服务端统一使用 Gorilla WebSocket v1.5.3 处理 RFC 6455。客户端消息分片重组、掩码、\n  Ping/Pong、关闭握手和 1 MiB 消息上限均由同一成熟协议栈负责，不再存在手写帧解析器。\n- 修复 3.0.285 标签流水线的离线依赖准备缺口。`okhttp-ws`、`okhttp`、`okio` 三个\n  JAR 现在均为显式依赖，由正式 CI 从 Maven Central 下载、逐项校验固定 SHA-256 后，\n  再通过本地 flat-dir 仓完成 `--offline` 构建；不依赖 runner 预热缓存。\n\n## 验证\n\n- Maven Central 新下载的三个固定版本 JAR 与本地已验证依赖 SHA-256 一致，ZIP/JAR\n  完整性及关键类检查通过。\n- Android `:canfeature:check` 覆盖真实 OkHttp WebSocket、系统 ProxySelector、客户端掩码、\n  32 KiB 分片消息及 App UID/d_service 有界回环传输。\n- Go 全量测试覆盖 OkHttp 风格分片文本与交错 Ping；H5 测试、Go vet、关键包 race 测试和\n  最终 APK 版本、签名、对齐、依赖注入由正式流水线复验。\n- 小米设备已验证普通 App UID 经公网 WSS 完成连接、hello、状态同步、存储列表与录像目录\n  同步；665 车机蜂窝最终验收仍以关闭 Wi-Fi 后的新日志为准。"
 }
