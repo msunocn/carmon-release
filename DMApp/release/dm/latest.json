@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301294,
-  "versionName": "3.0.294",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.294-301294/DMApp-3.0.294-301294.apk",
-  "sizeBytes": 145159095,
-  "md5": "5491bcda63fe5e26109c1f4150b454b8",
-  "sha256": "cf3795c28111e3c728e0d285c992c257fa6b810e8d9ae2e978cad47aee984002",
+  "versionCode": 301295,
+  "versionName": "3.0.295",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.295-301295/DMApp-3.0.295-301295.apk",
+  "sizeBytes": 145171383,
+  "md5": "5acc61a5da0a99cb32666ef99cbb4f96",
+  "sha256": "58ac285edb6378892abff858be5dc20b0c8325456c0a8195e084e8daf4546f02",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.294（301294）\n\n- 熄火哨兵正式移除不受支持的 USB 5V `270022/284722` getter、setter 与重试状态机，不再调用或宣称物理 USB 供电保持。\n- d_service 使用独立 `DM-SentryMcuGuardian` 线程维护 200 秒有限 MCU/CAN 租约，并提前至 150 秒续租，避免录像、存储和网络队列延迟造成租约空窗。\n- 有限租约能力不可用时，每 60 秒读取 MCU 状态，仅在明确读到休眠时执行补唤醒；ACC ON、哨兵停止或电量安全门槛触发后停止守护。\n- 增加 MCU 守护模式、续租调度延迟和最大延迟诊断字段，便于实车确认持续保活状态。"
+  "releaseNotes": "# DMApp 3.0.295（301295）\n\n- 熄火哨兵在事件 MP4 完整性校验、封盘和原子发布成功后，异步发送方糖 Server 酱微信通知；候选运动、静默片段和损坏/未发布文件不会触发通知。\n- d_service 持久化事件通知队列并按事件组去重，同一事件的多个 MP4 分段只通知一次；网络失败最多有界重试 4 次，不阻塞录像、AVM 或 ACC 状态机。\n- 公网请求由普通 App UID 网络桥使用系统默认网络与代理直接发送到方糖 HTTPS 接口，不经过 DM VPS，UID 2000 不直接建立公网连接。\n- 通知包含时间、目标类型、靠近/远离/横向经过等行为、录像时长与远程回放入口。当前封面不是公开 HTTPS 图片地址，默认不对外暴露图片。\n- 方糖为默认通知服务。SendKey 不进入 APK、Git、共享存储或日志；新增安全安装/配置脚本，将密钥以 `0600` 权限写入 d_service 私有目录。"
 }
