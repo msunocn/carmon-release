@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301295,
-  "versionName": "3.0.295",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.295-301295/DMApp-3.0.295-301295.apk",
-  "sizeBytes": 145171383,
-  "md5": "5acc61a5da0a99cb32666ef99cbb4f96",
-  "sha256": "58ac285edb6378892abff858be5dc20b0c8325456c0a8195e084e8daf4546f02",
+  "versionCode": 301296,
+  "versionName": "3.0.296",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.296-301296/DMApp-3.0.296-301296.apk",
+  "sizeBytes": 145175479,
+  "md5": "2f5c106cf78f35fe6a84371a46769614",
+  "sha256": "a553acb4389378e89aa67f0f791d1cb80e79ed4dfde93af9f7bcc1ccd9385ac6",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.295（301295）\n\n- 熄火哨兵在事件 MP4 完整性校验、封盘和原子发布成功后，异步发送方糖 Server 酱微信通知；候选运动、静默片段和损坏/未发布文件不会触发通知。\n- d_service 持久化事件通知队列并按事件组去重，同一事件的多个 MP4 分段只通知一次；网络失败最多有界重试 4 次，不阻塞录像、AVM 或 ACC 状态机。\n- 公网请求由普通 App UID 网络桥使用系统默认网络与代理直接发送到方糖 HTTPS 接口，不经过 DM VPS，UID 2000 不直接建立公网连接。\n- 通知包含时间、目标类型、靠近/远离/横向经过等行为、录像时长与远程回放入口。当前封面不是公开 HTTPS 图片地址，默认不对外暴露图片。\n- 方糖为默认通知服务。SendKey 不进入 APK、Git、共享存储或日志；新增安全安装/配置脚本，将密钥以 `0600` 权限写入 d_service 私有目录。"
+  "releaseNotes": "# DMApp 3.0.296（301296）\n\n- 车机“熄火哨兵”页面新增事件通知配置：微信通知开关、固定方糖 Server 酱服务、写入式 SendKey 输入和“已配置/未配置”状态。\n- 远程车辆控制页面增加同样的通知配置，SendKey 仅通过 TLS 命令临时透传给在线车机；VPS 不落库，审计日志只记录“密钥已更新”。\n- SendKey 仅保存在 d_service 私有 `0600` 配置文件中；车机 Binder、远程配置回读、状态上报和网页均只能获得布尔型“已配置”状态，不能取回明文。\n- 本地与远程配置共用同一 d_service 配置，留空保存会保留原密钥；通知服务默认选择方糖，首次启用只需填写一次 SendKey。\n- 延续 3.0.295 的完整 MP4 发布后车机直发通知、事件组去重和有界重试逻辑，通知失败不影响录像。"
 }
