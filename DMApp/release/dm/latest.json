@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301296,
-  "versionName": "3.0.296",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.296-301296/DMApp-3.0.296-301296.apk",
+  "versionCode": 301297,
+  "versionName": "3.0.297",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.297-301297/DMApp-3.0.297-301297.apk",
   "sizeBytes": 145175479,
-  "md5": "2f5c106cf78f35fe6a84371a46769614",
-  "sha256": "a553acb4389378e89aa67f0f791d1cb80e79ed4dfde93af9f7bcc1ccd9385ac6",
+  "md5": "fef535e65d8c054d0a7dc5c92e7baa15",
+  "sha256": "a4fb655c1f51fbdb874ea0327533bf07ab15bd578bcbd3c8ff7df0db157e1480",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.296（301296）\n\n- 车机“熄火哨兵”页面新增事件通知配置：微信通知开关、固定方糖 Server 酱服务、写入式 SendKey 输入和“已配置/未配置”状态。\n- 远程车辆控制页面增加同样的通知配置，SendKey 仅通过 TLS 命令临时透传给在线车机；VPS 不落库，审计日志只记录“密钥已更新”。\n- SendKey 仅保存在 d_service 私有 `0600` 配置文件中；车机 Binder、远程配置回读、状态上报和网页均只能获得布尔型“已配置”状态，不能取回明文。\n- 本地与远程配置共用同一 d_service 配置，留空保存会保留原密钥；通知服务默认选择方糖，首次启用只需填写一次 SendKey。\n- 延续 3.0.295 的完整 MP4 发布后车机直发通知、事件组去重和有界重试逻辑，通知失败不影响录像。"
+  "releaseNotes": "# DMApp 3.0.297（301297）\n\n- 熄火哨兵、电子后视镜、360 调试和投屏统一为 DM 设置同款的中间悬浮卡交互；页面不再接管状态栏和底部操作栏，外部区域轻遮罩并支持点击关闭。\n- 四个功能页共用一套随 DM 深浅模式变化的圆角、描边、分组、输入框、按钮和状态色，横屏卡片保留上下安全区，卡内内容独立滚动。\n- 修复浮动窗口内容未填满导致的横向偏移；所有页面显式使用全宽、全高内容根节点，手机 Mock 与车机横屏布局保持一致。\n- 车内温度新增原版 DM 使用的 `BYDAutoDeviceManager.getInstance(context).getInt(...)` 只读链路，优先读取过滤属性 `0x4EB06010`，再读取原始属性 `0x3D800030`。\n- 车内温度保留 BYDAutoManager、autoservice 和 Sensor 回退；首次未就绪时按 2 秒、5 秒、15 秒有界重试，并在诊断中分别记录各路径原始结果。\n- 所有车温读取继续使用真实 d_service UID/Context，不伪造包名、UID 或权限；设定温度和车外温度不会被错误显示为车内温度。"
 }
