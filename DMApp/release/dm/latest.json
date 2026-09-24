@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301297,
-  "versionName": "3.0.297",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.297-301297/DMApp-3.0.297-301297.apk",
+  "versionCode": 301299,
+  "versionName": "3.0.299",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.299-301299/DMApp-3.0.299-301299.apk",
   "sizeBytes": 145175479,
-  "md5": "fef535e65d8c054d0a7dc5c92e7baa15",
-  "sha256": "a4fb655c1f51fbdb874ea0327533bf07ab15bd578bcbd3c8ff7df0db157e1480",
+  "md5": "86e8818742bd86747aae3818f2a7c772",
+  "sha256": "fc6b7687f36c75b4db94ede847a25565c339723172d14e7a4342f02c827ab8ff",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.297（301297）\n\n- 熄火哨兵、电子后视镜、360 调试和投屏统一为 DM 设置同款的中间悬浮卡交互；页面不再接管状态栏和底部操作栏，外部区域轻遮罩并支持点击关闭。\n- 四个功能页共用一套随 DM 深浅模式变化的圆角、描边、分组、输入框、按钮和状态色，横屏卡片保留上下安全区，卡内内容独立滚动。\n- 修复浮动窗口内容未填满导致的横向偏移；所有页面显式使用全宽、全高内容根节点，手机 Mock 与车机横屏布局保持一致。\n- 车内温度新增原版 DM 使用的 `BYDAutoDeviceManager.getInstance(context).getInt(...)` 只读链路，优先读取过滤属性 `0x4EB06010`，再读取原始属性 `0x3D800030`。\n- 车内温度保留 BYDAutoManager、autoservice 和 Sensor 回退；首次未就绪时按 2 秒、5 秒、15 秒有界重试，并在诊断中分别记录各路径原始结果。\n- 所有车温读取继续使用真实 d_service UID/Context，不伪造包名、UID 或权限；设定温度和车外温度不会被错误显示为车内温度。"
+  "releaseNotes": "# DMApp 3.0.299（301299）\n\n- 熄火哨兵、电子后视镜和高级功能入口改为在 DM“通用设置”的中间内容区原位打开；保留左侧设置菜单、右侧版本信息、顶部状态栏和底部操作栏。\n- 高级功能中的 360 环视调试与副屏投放继续复用同一内容区，进入二级功能或返回时不改变页面边界，形成一致的设置页栈。\n- 功能页宽度严格对齐原设置弹窗 54% 主内容列，去掉悬浮遮罩、外部变暗和大圆角阴影，深浅模式均复用 DM 原生平面背景。\n- 熄火哨兵、电子后视镜、360 调试和投屏改为单列布局；横向内容一次完整展示，较长配置统一由外层页面纵向滚动。\n- 360 调试去掉嵌套滚动容器，四路画面、预览控制和鱼眼校准按顺序向下排列，避免窄内容区中的横向挤压和手势冲突。\n- 页面仍保持 `exported=false`，只能从 DM 内部入口打开；手机 Mock 已验证同区域二级切换、纵向滑动和返回行为。"
 }
