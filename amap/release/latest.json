@@ -1,11 +1,11 @@
 {
   "appId": "amap",
-  "versionCode": 26000023,
+  "versionCode": 26000024,
   "versionName": "9.5.0.600013",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000023/AMap-9.5.0.600013-26000023.apk",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000024/AMap-9.5.0.600013-26000024.apk",
   "sizeBytes": 155218249,
-  "md5": "430e9874c96644bf90b6a6344f8ae607",
-  "sha256": "dcdc1180b631800e6e8e7cb0efa51b59b85fe69f90253f0f8e78c7599a955e99",
+  "md5": "41cbe08db8a3e7bc9d10a8a8f68f9558",
+  "sha256": "d04d5437f889b72530b853ccb67e07a3bfe8322899085a34f86d7e10b0aa2d3e",
   "force": false,
-  "releaseNotes": "高德地图车机版 9.5.0.600013（26000023）：调整副屏导航、巡航及路口放大图组合卡的位置与比例。普通导航小卡片及其下方车道指引继续按 90% 缩放，导航与巡航配置起点统一为 UiLeft=138px、UiTop=200px；巡航蓝色背景仍随车道数量动态扩展，车道图标继续使用 9.5 原始资源并按卡片高度 92% 适配。路口放大图、上方导航头和底部到达信息作为一个组合卡整体缩小 12%，原生 Cross 区域调整为 138,247,343,254，完整组合范围约为 138,181.88,343,356.96，在 1920×720 副屏内上下居中。同步更新面板 SO 默认 Cross 矩形、配置读取、构建哈希和静态门禁。完成回编、精确 APK 内容门禁、63 项转向协议映射与 49 项离线图片资源校验；Mi 10 1920×720 虚拟副屏已动态验证普通导航加车道、导航加路口放大图，并通过覆盖方向、公交及未划线状态的协议矩阵验证巡航布局。宋 PLUS 冠军版异形仪表上的最终可视区域和真实道路协议仍需实车复验。"
+  "releaseNotes": "高德地图车机版 9.5.0.600013（26000024）：修复副屏导航卡、路口放大图与转向图同步。\n\n导航、巡航及路口放大图组合卡统一以最终可见卡片顶部为 UiTop=190px；Cross 原生图区域调整为 138,255,343,254，导航头取消重复底边绘制，去除蓝色区域横向接缝。\n\nCross 显隐改为观察主屏最终 GuideInfoExport::BroadcastNaviCrossStatus(type, visible)，移除旧 sendCrossMapState 和上游 Show/Hide 对副屏状态的写入，避免主屏已关闭而副屏残留路口放大图。\n\n第一、第二路口转向图统一以主屏最终结果为准：在线图复制主屏 RGBA，离线图优先使用同帧 GFrame resourceId；最终图片回调使用跨 UI worker 的最新主屏帧号，Java 通过新的 GuideState 快照原子发布 bitmap 与 resourceId，避免页面绘制混合前后帧而偶发左右前方反向。\n\n完成 APK 精确内容门禁、63 项转向协议映射、49 项离线资源与左右图片差异校验。Mi 10 1920×720 虚拟副屏验证 Cross 最终 true→false 清理、普通导航卡与右前方主副屏一致，设备安装包与本地构建 SHA-256 一致。左前方已通过同一主屏最终资源链和资源矩阵校验，但本轮模拟路线未形成有效副屏对比截图；宋 PLUS 冠军版异形仪表仍需实车复验。"
 }
