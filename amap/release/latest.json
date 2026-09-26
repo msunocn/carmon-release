@@ -1,11 +1,11 @@
 {
   "appId": "amap",
-  "versionCode": 26000024,
+  "versionCode": 26000025,
   "versionName": "9.5.0.600013",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000024/AMap-9.5.0.600013-26000024.apk",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000025/AMap-9.5.0.600013-26000025.apk",
   "sizeBytes": 155218249,
-  "md5": "41cbe08db8a3e7bc9d10a8a8f68f9558",
-  "sha256": "d04d5437f889b72530b853ccb67e07a3bfe8322899085a34f86d7e10b0aa2d3e",
+  "md5": "9742ec2fb44a57838d9074dc22c39c49",
+  "sha256": "1d1b2aaf84c2e95e2db8ecdcb5b02d3e2ab1ea11dddda106d5d3b6e8d5016446",
   "force": false,
-  "releaseNotes": "高德地图车机版 9.5.0.600013（26000024）：修复副屏导航卡、路口放大图与转向图同步。\n\n导航、巡航及路口放大图组合卡统一以最终可见卡片顶部为 UiTop=190px；Cross 原生图区域调整为 138,255,343,254，导航头取消重复底边绘制，去除蓝色区域横向接缝。\n\nCross 显隐改为观察主屏最终 GuideInfoExport::BroadcastNaviCrossStatus(type, visible)，移除旧 sendCrossMapState 和上游 Show/Hide 对副屏状态的写入，避免主屏已关闭而副屏残留路口放大图。\n\n第一、第二路口转向图统一以主屏最终结果为准：在线图复制主屏 RGBA，离线图优先使用同帧 GFrame resourceId；最终图片回调使用跨 UI worker 的最新主屏帧号，Java 通过新的 GuideState 快照原子发布 bitmap 与 resourceId，避免页面绘制混合前后帧而偶发左右前方反向。\n\n完成 APK 精确内容门禁、63 项转向协议映射、49 项离线资源与左右图片差异校验。Mi 10 1920×720 虚拟副屏验证 Cross 最终 true→false 清理、普通导航卡与右前方主副屏一致，设备安装包与本地构建 SHA-256 一致。左前方已通过同一主屏最终资源链和资源矩阵校验，但本轮模拟路线未形成有效副屏对比截图；宋 PLUS 冠军版异形仪表仍需实车复验。"
+  "releaseNotes": "高德地图车机版 9.5.0.600013（26000025）：重构并完善副屏导航、巡航 UI 同步。\n\n导航车道以主屏 HSL receiver 0 的完整方向数组为基底，等待 CLaneInfoComponent 最终项后整帧发布；方向图、箭头灰白、推荐高亮和扩展组合分别使用对应协议字段，修复推荐车道高亮、公交组合、未划线以及白色/灰色箭头偶发不一致。\n\n巡航内容使用主屏共享 LaneInfo，显隐由 CCruiseLaneInfoComponent 最终项控制。共享协议 Hide 与原生 Hide 都会立即关闭并清空副屏；延迟 Show 只能暂存内容，必须等新的主屏最终项才能恢复，修复主屏卡片已经隐藏而副屏仍残留的问题。\n\n导航小卡片的第一、第二路口转向图以主屏 GuideInfoCard 最终在线 RGBA 或离线 GFrame resourceId 为准，修正左右前方方向、图片大小、文字间距、到达时间主题和第二路口显隐。Cross 路口放大图与导航头统一为 350px 宽，显示时隐藏 Java 车道条和到达时间底栏，消失后恢复普通卡片。\n\nUiLeft/UiTop 统一表示可见卡片左上角，导航、巡航及 Cross 组合均使用 138,190；Cross 原生区域为 138,257,350,283。完成 32 组车道组合、5616 条协议矩阵、227 项车道资源、65 项转向协议和 49 项离线转向资源校验。Mi 10 的 1920×1080 虚拟副屏完成主副屏车道颜色、显示与隐藏回归，设备安装包和本地构建哈希一致；宋 PLUS 冠军版异形仪表仍需实车复验。"
 }
