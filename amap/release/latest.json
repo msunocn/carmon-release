@@ -1,11 +1,11 @@
 {
   "appId": "amap",
-  "versionCode": 26000031,
+  "versionCode": 26000032,
   "versionName": "9.5.0.600013",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000031/AMap-9.5.0.600013-26000031.apk",
-  "sizeBytes": 172585628,
-  "md5": "473af63bd67d80aa0bb0d9fe2d696cfd",
-  "sha256": "224b71bf5b7e4bd88e8a531ddbe44088f5b903c9b4b4728d4edc2b66a1f6079f",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/amap-v9.5.0.600013-26000032/AMap-9.5.0.600013-26000032.apk",
+  "sizeBytes": 172606108,
+  "md5": "8726ef9d4bbd44c1ed4e8c55c04712ec",
+  "sha256": "38b72413670e6ac106201504c6b5eb1ac034d8bb499f8710fea1af257e354dda",
   "force": false,
-  "releaseNotes": "高德地图车机版 9.5.0.600013（26000031）：修复主屏设置页个性化车标预览，宋 PLUS DM-i 冠军版车身改为天蓝色。\n\n地图只使用主屏时，也会初始化车标预览资源，使设置页显示宋车、奶龙敞篷跑车和飞船对应的图片。宋车设置页缩略图、近景与远景三维模型统一使用天蓝色车漆；保留车身几何、车窗、车轮、灯组及其他细节。奶龙、飞船、车速资源及副屏导航卡布局不变。"
+  "releaseNotes": "高德地图车机版 9.5.0.600013（26000032）：修正设置页个性化车标预览方向。\n\n根据原版设置页的车标取景方向，重新从三维模型渲染宋 PLUS DM-i 冠军版、奶龙敞篷跑车和飞船的选择缩略图。宋车和奶龙的车头改为朝右下；飞船的机头改为朝左上。新图片由模型实际几何渲染，不做镜像翻转，保留车身文字和左右细节。三维地图车模、颜色、大小和副屏布局不变。"
 }
