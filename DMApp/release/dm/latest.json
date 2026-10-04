@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301312,
-  "versionName": "3.0.312",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.312-301312/DMApp-3.0.312-301312.apk",
-  "sizeBytes": 145290167,
-  "md5": "7649c5d6a3520c80cedeea7e1c5bca46",
-  "sha256": "44f6cf42a041ad1c1ce5996e04b602c3eabc16633d38fcff5771542e2574c172",
+  "versionCode": 301313,
+  "versionName": "3.0.313",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.313-301313/DMApp-3.0.313-301313.apk",
+  "sizeBytes": 145302455,
+  "md5": "2142860f0f389218181b22aa2cb091d1",
+  "sha256": "ea9c83a5b4e9d27ba722e3cea2274395cf582b6305de9d7aade2246248a35801",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.312（301312）\n\n- 天气／胎压组合卡恢复原版布局和车外温度更新：不再额外绘制车内温度，也不再覆盖原版天气文字。\n- 未取得可信车内空气温度样本前，隐藏状态栏的车内温度显示及自定义选择项；底层只读诊断保留，不以车外温度或空调设定值冒充车内温度。\n- 投屏页面为服务连接增加超时重试和可见状态，图片、视频、网页失败时记录诊断原因；屏幕投放沿用系统授权流程。\n\n验证：`canfeature:check` 与正式签名流水线必须通过；本地 Android 29 隔离预览已确认主页和投屏页可启动、投屏服务能连接。隔离预览无副屏，不能证明四类内容在目标车机上完成投放；安装到手机后的天气卡片还需目视复核。"
+  "releaseNotes": "# DMApp 3.0.313（301313）\n\n- 系统设置增加“在线歌词”开关，默认关闭；复用原版设置行、背景、开关轨道和主题颜色。\n- 开启后，仅在音乐插件没有原歌词时，依次从 LRCLIB、网易云公开 HTTPS 接口获取同步歌词。严格匹配歌曲、歌手和已知时长，避免现场版、混音版误配。\n- 支持 MediaSession 与本地音乐的播放进度、暂停及前后跳转；原歌词始终优先。切歌、关闭开关或退出控制器会取消旧请求，并提供有界缓存和失败退避。\n- 补齐非比亚迪 Android 模拟器的双 UID 验收与 Binder 重连能力，仅明确开启正式双 UID mock 时生效；真实车机不进入 mock 恢复分支。\n\n验证：APK 回编译与 `canfeature:check` 通过，歌词解析、匹配、缓存和真实双源 HTTPS 测试共 45 项断言通过。API29 模拟器 30 项验收断言通过，验证普通 App 与 shell UID=2000 之间的真实远程 Binder，以及原 APK 音乐和设置入口，截图已目视确认；不以 App 内同 UID worker 替代底层服务。模拟器不证明真实 BYD 硬件、CAN、车辆工况或性能。\n\n正式 APK 仅由 tag 流水线签名、验证并发布至 GitHub 和 MinIO；不包含临时测试证书、验收代码或云代理配置。"
 }
