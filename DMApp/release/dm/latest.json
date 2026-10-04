@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301314,
-  "versionName": "3.0.314",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.314-301314/DMApp-3.0.314-301314.apk",
+  "versionCode": 301315,
+  "versionName": "3.0.315",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.315-301315/DMApp-3.0.315-301315.apk",
   "sizeBytes": 145302455,
-  "md5": "f3271701ae6cbcb9d5227f4b84d6905f",
-  "sha256": "c3138257a2b3ca61d4a238b4b3178388d87184fd8dab2da8115003824bba894f",
+  "md5": "6f8113b83a768e802bdd46298c388fd7",
+  "sha256": "5f524bda99273a55f086074e6db9a7dea1bbbb9d0e08ede4a8aa092dfa927e5d",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.314（301314）\n\n- 在线歌词增加酷狗来源，与 LRCLIB、网易云依次回退；严格校验歌曲名、歌手和时长，拒绝不同录音版本及无时间轴文本。\n- 修复在线歌词与歌曲标题反复交替：在线显示接管时抑制重复标题事件；同一行与播放状态未变化时不重新触发滚动显示。封面、歌手与播放控制正常更新。\n- 保留原蓝牙歌词格式的滚动标题区域，原生 DISPLAY_TITLE 歌词优先；设置开关、暂停、切歌和进度跳转继续使用既有适配。\n\nAPK 构建和完整 `canfeature:check` 通过；歌词测试 55 项离线断言、59 项含真实三源 HTTPS 断言通过。API29 模拟器 37 项验收通过，验证真实远程 Binder、普通 App 与 UID=2000 架构、原 APK 音乐与设置入口，设置截图已目视确认。详见 [本次交接](../handoffs/2026-10-04-online-lyrics-followup.md)。正式 APK 仅由不可变 tag 流水线签名，并验证 GitHub 与 MinIO 发布结果。"
+  "releaseNotes": "# DMApp 3.0.315（301315）\n\n- 兼容汽水音乐标题中的中文括号附加说明：例如 `晴天（附加说明）` 使用 `晴天` 查询在线歌词，降低标题注释造成的匹配失败。\n- 修复汽水纯标题和带说明标题的差异被误判为原生歌词、阻止在线回退的问题。播放器实际提供的蓝牙格式歌词仍优先。\n- 规则仅针对汽水音乐，保留其他播放器和英文括号中的版本标记；歌手与时长匹配、三源回退、默认关闭的原生设置开关保持既有行为。\n\n完整 APK 构建及 `canfeature:check` 通过；歌词 65 项离线断言、70 项含真实 HTTPS 断言通过。API29 模拟器 41 项验收通过，验证实际 APK 入口、普通 App 加 UID=2000 远程 Binder 架构，原生设置截图已确认。未安装真实汽水客户端，模拟器结果不代替实车验证。正式 APK 由不可变 tag 流水线签名并发布。"
 }
