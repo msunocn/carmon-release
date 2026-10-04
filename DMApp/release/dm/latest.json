@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301315,
-  "versionName": "3.0.315",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.315-301315/DMApp-3.0.315-301315.apk",
+  "versionCode": 301316,
+  "versionName": "3.0.316",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.316-301316/DMApp-3.0.316-301316.apk",
   "sizeBytes": 145302455,
-  "md5": "6f8113b83a768e802bdd46298c388fd7",
-  "sha256": "5f524bda99273a55f086074e6db9a7dea1bbbb9d0e08ede4a8aa092dfa927e5d",
+  "md5": "7c0d89ed3e1708a129b8849600a568b3",
+  "sha256": "63b03d9c54f10da7a421a404aa2696d17906382d4940da5c7feb676303b9354f",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.315（301315）\n\n- 兼容汽水音乐标题中的中文括号附加说明：例如 `晴天（附加说明）` 使用 `晴天` 查询在线歌词，降低标题注释造成的匹配失败。\n- 修复汽水纯标题和带说明标题的差异被误判为原生歌词、阻止在线回退的问题。播放器实际提供的蓝牙格式歌词仍优先。\n- 规则仅针对汽水音乐，保留其他播放器和英文括号中的版本标记；歌手与时长匹配、三源回退、默认关闭的原生设置开关保持既有行为。\n\n完整 APK 构建及 `canfeature:check` 通过；歌词 65 项离线断言、70 项含真实 HTTPS 断言通过。API29 模拟器 41 项验收通过，验证实际 APK 入口、普通 App 加 UID=2000 远程 Binder 架构，原生设置截图已确认。未安装真实汽水客户端，模拟器结果不代替实车验证。正式 APK 由不可变 tag 流水线签名并发布。"
+  "releaseNotes": "# DMApp 3.0.316（301316）\n\n- 汽水音乐标题适配同时去除中文括号、英文括号及其中附加说明，支持多段和混合嵌套；其它播放器的标题保持原有处理。\n- 修复在线歌词开关已开启却显示关闭颜色的问题。沿用原生主题蓝色/灰色滑块，重新打开设置和样式更新后同步实际开关状态。\n\n在旧版 3.0.315 复现已开启但仍显示灰色的缺陷。新版完整构建和 `canfeature:check` 通过，69 项离线歌词断言、74 项含真实 HTTPS 断言通过；API29 普通 App 加 UID=2000 远程 Binder 模拟器 45 项验收通过，原生蓝色开启滑块截图已确认。模拟器结果不代替真实汽水客户端或实车验收。正式包由不可变 tag 流水线签名和发布。"
 }
