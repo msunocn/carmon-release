@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301313,
-  "versionName": "3.0.313",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.313-301313/DMApp-3.0.313-301313.apk",
+  "versionCode": 301314,
+  "versionName": "3.0.314",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.314-301314/DMApp-3.0.314-301314.apk",
   "sizeBytes": 145302455,
-  "md5": "2142860f0f389218181b22aa2cb091d1",
-  "sha256": "ea9c83a5b4e9d27ba722e3cea2274395cf582b6305de9d7aade2246248a35801",
+  "md5": "f3271701ae6cbcb9d5227f4b84d6905f",
+  "sha256": "c3138257a2b3ca61d4a238b4b3178388d87184fd8dab2da8115003824bba894f",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.313（301313）\n\n- 系统设置增加“在线歌词”开关，默认关闭；复用原版设置行、背景、开关轨道和主题颜色。\n- 开启后，仅在音乐插件没有原歌词时，依次从 LRCLIB、网易云公开 HTTPS 接口获取同步歌词。严格匹配歌曲、歌手和已知时长，避免现场版、混音版误配。\n- 支持 MediaSession 与本地音乐的播放进度、暂停及前后跳转；原歌词始终优先。切歌、关闭开关或退出控制器会取消旧请求，并提供有界缓存和失败退避。\n- 补齐非比亚迪 Android 模拟器的双 UID 验收与 Binder 重连能力，仅明确开启正式双 UID mock 时生效；真实车机不进入 mock 恢复分支。\n\n验证：APK 回编译与 `canfeature:check` 通过，歌词解析、匹配、缓存和真实双源 HTTPS 测试共 45 项断言通过。API29 模拟器 30 项验收断言通过，验证普通 App 与 shell UID=2000 之间的真实远程 Binder，以及原 APK 音乐和设置入口，截图已目视确认；不以 App 内同 UID worker 替代底层服务。模拟器不证明真实 BYD 硬件、CAN、车辆工况或性能。\n\n正式 APK 仅由 tag 流水线签名、验证并发布至 GitHub 和 MinIO；不包含临时测试证书、验收代码或云代理配置。"
+  "releaseNotes": "# DMApp 3.0.314（301314）\n\n- 在线歌词增加酷狗来源，与 LRCLIB、网易云依次回退；严格校验歌曲名、歌手和时长，拒绝不同录音版本及无时间轴文本。\n- 修复在线歌词与歌曲标题反复交替：在线显示接管时抑制重复标题事件；同一行与播放状态未变化时不重新触发滚动显示。封面、歌手与播放控制正常更新。\n- 保留原蓝牙歌词格式的滚动标题区域，原生 DISPLAY_TITLE 歌词优先；设置开关、暂停、切歌和进度跳转继续使用既有适配。\n\nAPK 构建和完整 `canfeature:check` 通过；歌词测试 55 项离线断言、59 项含真实三源 HTTPS 断言通过。API29 模拟器 37 项验收通过，验证真实远程 Binder、普通 App 与 UID=2000 架构、原 APK 音乐与设置入口，设置截图已目视确认。详见 [本次交接](../handoffs/2026-10-04-online-lyrics-followup.md)。正式 APK 仅由不可变 tag 流水线签名，并验证 GitHub 与 MinIO 发布结果。"
 }
