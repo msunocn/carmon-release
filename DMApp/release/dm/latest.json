@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301316,
-  "versionName": "3.0.316",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.316-301316/DMApp-3.0.316-301316.apk",
-  "sizeBytes": 145302455,
-  "md5": "7c0d89ed3e1708a129b8849600a568b3",
-  "sha256": "63b03d9c54f10da7a421a404aa2696d17906382d4940da5c7feb676303b9354f",
+  "versionCode": 301317,
+  "versionName": "3.0.317",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.317-301317/DMApp-3.0.317-301317.apk",
+  "sizeBytes": 145306551,
+  "md5": "7de930f36e521000f2d16a8244f6df48",
+  "sha256": "27f7666fed1385e64dd48381a8bb50f63df21ae7561520500a01160d9a37c9fc",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.316（301316）\n\n- 汽水音乐标题适配同时去除中文括号、英文括号及其中附加说明，支持多段和混合嵌套；其它播放器的标题保持原有处理。\n- 修复在线歌词开关已开启却显示关闭颜色的问题。沿用原生主题蓝色/灰色滑块，重新打开设置和样式更新后同步实际开关状态。\n\n在旧版 3.0.315 复现已开启但仍显示灰色的缺陷。新版完整构建和 `canfeature:check` 通过，69 项离线歌词断言、74 项含真实 HTTPS 断言通过；API29 普通 App 加 UID=2000 远程 Binder 模拟器 45 项验收通过，原生蓝色开启滑块截图已确认。模拟器结果不代替真实汽水客户端或实车验收。正式包由不可变 tag 流水线签名和发布。"
+  "releaseNotes": "# DMApp 3.0.317（301317）\n\n- 修复后台任务满载时转到界面线程执行，导致操作卡顿的风险；使用有界后台接收容量。\n- 修复远程视频清理拥塞时拖住命令超时、断线恢复的问题；提前预留清理名额，重复停止只执行一次，真实清理结束前不启动新视频源。\n- 后视镜、车内温度和远程电量查询增加持续挂起证据，接入原有受次数和冷却时间限制的 d_service 恢复策略；保留相机关闭屏障，不用线程中断假装资源已解绑。\n- 温度 getter 超时后仍允许 Android 温度来源提供新值；电量 getter 超时或缓存过期显示不可用，迟到结果不覆盖状态。\n- 同步修复远程控制台 WebSocket 满队列时丢失终止通知的问题，避免会话消费者长期等待。该服务端改动须单独更新 VPS 服务，APK 更新不会自动部署服务端。\n- 修复冷启动/恢复时原 Window 内容容器缺失导致的界面崩溃，保持新内容容器 ID 和原有样式。\n- 修复非 BYD 双 UID 验收环境把本地兼容 Binder 当成服务端的路径；正式 mock 模式只接受真正 UID=2000 服务的网络注册确认。\n\n验收通过：主机构建与故障回归、Go race/vet、真实 APK 的 UID=2000 后台加普通 App 双 UID 验收、45 项歌词/样式/截图检查、网络进程崩溃后自动重连并稳定 65 秒。覆盖安装后只有一个 UID=2000 d_service，两个重复启动入口均被拦截，并持续稳定 30 秒。\n\n正式 APK 由不可变 tag 的 GitHub Actions 签名，并同步 GitHub 与 MinIO 更新清单。虚拟机和故障注入结果不代替 BYD 实车 HAL、厂商 getter 或蜂窝网络现场验收。"
 }
