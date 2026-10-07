@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301317,
-  "versionName": "3.0.317",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.317-301317/DMApp-3.0.317-301317.apk",
-  "sizeBytes": 145306551,
-  "md5": "7de930f36e521000f2d16a8244f6df48",
-  "sha256": "27f7666fed1385e64dd48381a8bb50f63df21ae7561520500a01160d9a37c9fc",
+  "versionCode": 301319,
+  "versionName": "3.0.319",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.319-301319/DMApp-3.0.319-301319.apk",
+  "sizeBytes": 147923895,
+  "md5": "ee2773a89afcb4df40983347095d7751",
+  "sha256": "02057214dc6ea97355a630dee006237781c3fe4c59f69e42610f19ce9d9d8fe0",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.317（301317）\n\n- 修复后台任务满载时转到界面线程执行，导致操作卡顿的风险；使用有界后台接收容量。\n- 修复远程视频清理拥塞时拖住命令超时、断线恢复的问题；提前预留清理名额，重复停止只执行一次，真实清理结束前不启动新视频源。\n- 后视镜、车内温度和远程电量查询增加持续挂起证据，接入原有受次数和冷却时间限制的 d_service 恢复策略；保留相机关闭屏障，不用线程中断假装资源已解绑。\n- 温度 getter 超时后仍允许 Android 温度来源提供新值；电量 getter 超时或缓存过期显示不可用，迟到结果不覆盖状态。\n- 同步修复远程控制台 WebSocket 满队列时丢失终止通知的问题，避免会话消费者长期等待。该服务端改动须单独更新 VPS 服务，APK 更新不会自动部署服务端。\n- 修复冷启动/恢复时原 Window 内容容器缺失导致的界面崩溃，保持新内容容器 ID 和原有样式。\n- 修复非 BYD 双 UID 验收环境把本地兼容 Binder 当成服务端的路径；正式 mock 模式只接受真正 UID=2000 服务的网络注册确认。\n\n验收通过：主机构建与故障回归、Go race/vet、真实 APK 的 UID=2000 后台加普通 App 双 UID 验收、45 项歌词/样式/截图检查、网络进程崩溃后自动重连并稳定 65 秒。覆盖安装后只有一个 UID=2000 d_service，两个重复启动入口均被拦截，并持续稳定 30 秒。\n\n正式 APK 由不可变 tag 的 GitHub Actions 签名，并同步 GitHub 与 MinIO 更新清单。虚拟机和故障注入结果不代替 BYD 实车 HAL、厂商 getter 或蜂窝网络现场验收。"
+  "releaseNotes": "# DMApp 3.0.319（301319）\n\n发布风险例外（2026-10-08）：用户要求在已有未完成实车验收条件下继续正式发布。本次不把手机 mock、Linux 内容一致性、VPS 健康检查或 VM 分项等同于 BYD 实车的 ACC/AVM/网络/副屏/权限与极暗夜间哨兵验收；完整同包 12 阶段 VM、实车至少 900 秒 ACC-off 和真实夜间视频仍未完成。\n\n- 非比亚迪手机/QEMU mock 的底部导航栏改为以屏幕底边定位，保持原 30dp 高度和按钮尺寸；BYD 窗口参数不变。手机 3.0.319 同包名、同证书覆盖安装成功，数据和首次安装时间保留，截图确认导航栏完整贴底。\n- 手机 mock 的已有录像目录读取不再依赖录制 mock 开关，开关关闭时不启动录制或摄像头。用户在开关关闭、手机覆盖升级后刷新远程目录，确认原有录像仍可播放；实体 BYD 不进入此私有目录分支。\n- 远程 H5 将 Agent 返回的 `recording unavailable` 正确提示为录像文件当前不可用/需刷新目录，而不是泛称“MP4 回放未完成”。此前报错的实际原因是 VPS 保留旧目录、手机录制 mock 开关关闭导致私有录像根不可发现，并非已证实 MP4 损坏。\n- `:canfeature:check`、未签名 APK 构建、Go 服务端单测、14 项 Node H5 测试通过。Linux 候选工作流 [#4](https://github.com/msunocn/dm/actions/runs/37651102785) 成功；其 1866 个非签名 APK 文件与本地构建、手机同签名覆盖包、VM 核心内容逐项一致。接受基线只锁定字节，不宣称物理验收通过。手机包使用与当前手机安装包相同的本地测试证书；CI 正式签名包并未在该手机上覆盖安装。\n- VPS 服务端/H5 3.0.319 已部署并完成回滚预演、公网版本和稳定性读回；详见 [部署证据](../evidence/2026-10-08-vps-server-319.md)。最低兼容 APK 码仍为 301287。\n\n3.0.318 的 tag 流水线因 Mac 基线与 Linux DEX 不一致而失败，未发布新的正式 APK；该不可变 tag 不改写。3.0.319 使用 Linux 成功构建的非签名内容清单和固定 Android Build Tools 35.0.0 重新建立发布基线。"
 }
