@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301319,
-  "versionName": "3.0.319",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.319-301319/DMApp-3.0.319-301319.apk",
-  "sizeBytes": 147923895,
-  "md5": "ee2773a89afcb4df40983347095d7751",
-  "sha256": "02057214dc6ea97355a630dee006237781c3fe4c59f69e42610f19ce9d9d8fe0",
+  "versionCode": 301320,
+  "versionName": "3.0.320",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.320-301320/DMApp-3.0.320-301320.apk",
+  "sizeBytes": 147944375,
+  "md5": "9987f0a3d55cac9cc8884d5c6bbf9c58",
+  "sha256": "710ebeed0d77d56f7617cd654b201cf592d70af8075d7301e702645eb2ec7c63",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.319（301319）\n\n发布风险例外（2026-10-08）：用户要求在已有未完成实车验收条件下继续正式发布。本次不把手机 mock、Linux 内容一致性、VPS 健康检查或 VM 分项等同于 BYD 实车的 ACC/AVM/网络/副屏/权限与极暗夜间哨兵验收；完整同包 12 阶段 VM、实车至少 900 秒 ACC-off 和真实夜间视频仍未完成。\n\n- 非比亚迪手机/QEMU mock 的底部导航栏改为以屏幕底边定位，保持原 30dp 高度和按钮尺寸；BYD 窗口参数不变。手机 3.0.319 同包名、同证书覆盖安装成功，数据和首次安装时间保留，截图确认导航栏完整贴底。\n- 手机 mock 的已有录像目录读取不再依赖录制 mock 开关，开关关闭时不启动录制或摄像头。用户在开关关闭、手机覆盖升级后刷新远程目录，确认原有录像仍可播放；实体 BYD 不进入此私有目录分支。\n- 远程 H5 将 Agent 返回的 `recording unavailable` 正确提示为录像文件当前不可用/需刷新目录，而不是泛称“MP4 回放未完成”。此前报错的实际原因是 VPS 保留旧目录、手机录制 mock 开关关闭导致私有录像根不可发现，并非已证实 MP4 损坏。\n- `:canfeature:check`、未签名 APK 构建、Go 服务端单测、14 项 Node H5 测试通过。Linux 候选工作流 [#4](https://github.com/msunocn/dm/actions/runs/37651102785) 成功；其 1866 个非签名 APK 文件与本地构建、手机同签名覆盖包、VM 核心内容逐项一致。接受基线只锁定字节，不宣称物理验收通过。手机包使用与当前手机安装包相同的本地测试证书；CI 正式签名包并未在该手机上覆盖安装。\n- VPS 服务端/H5 3.0.319 已部署并完成回滚预演、公网版本和稳定性读回；详见 [部署证据](../evidence/2026-10-08-vps-server-319.md)。最低兼容 APK 码仍为 301287。\n\n3.0.318 的 tag 流水线因 Mac 基线与 Linux DEX 不一致而失败，未发布新的正式 APK；该不可变 tag 不改写。3.0.319 使用 Linux 成功构建的非签名内容清单和固定 Android Build Tools 35.0.0 重新建立发布基线。"
+  "releaseNotes": "# DMApp 3.0.320（301320）\n\n发布风险例外（2026-10-09）：用户要求先发布正式升级包，再在自己的比亚迪车机上验收。\n本次本地/手机验证不等于整车验收；真实 ACC-off 后热点与 DNS 恢复、远程控制在线、\n夜间哨兵录像、持续功耗、AVM 与副屏表现仍需在车上确认。\n\n- 熄火哨兵按实测 SOC 分级：SOC≤10% 停止录像与远程连接；10%<SOC≤20% 暂停\n  摄像/录像与 OEM 电源、存储操作，仅保留独立公共网络请求供远程控制重连，并每小时\n  只读复查 SOC。SOC>20% 后重新做安全检查才恢复完整哨兵；配置的更高录像电量\n  门槛仍生效。DNS 失败后补充不含地址、SSID、VIN 和令牌的 App-UID 网络快照，\n  以便实车日志区分断网与解析故障；不写死 IP，也不绕过 TLS。\n- Wi-Fi 高性能锁改为有远程视频需求时按需持有；对近期已确认唤醒的 MCU 状态读取\n  做短窗口合并，避免重复 getter。是否降低整车能耗仍待熄火实测。\n- 非比亚迪手机 Mock 使用后摄单路画面 GPU 分发为四格 360 预览，行车记录仪预览\n  使用前摄；BYD 车机的 AVM 与 NormalCamera 路径不变。正式双 UID Mock 的低 SOC\n  控制入口补齐参数校验，并在物理手机有旧 shell 配置时拒绝非隔离测试。\n- 通用网络歌词开启时优先查询 LrcApi，再按原有顺序回退其他歌词源；媒体自带歌词\n  仍优先。\n\n已通过 `:canfeature:check`、正式发布前置门禁测试、Go 服务端测试和 14 项网页测试。\n同包名 3.0.320 本地同签名候选在小米手机覆盖安装，应用数据保留；双 UID Mock\n验证了 13%/20% 仅远程网络、21% 复查恢复、10% 终止和 ACC-on 资源释放。\n发现本机默认 D8 37 与 CI 的 D8 35 生成不同 DEX 后，已使用官方 Build Tools\n35.0.0 重建并再次覆盖安装；该手机候选的 1866 个非签名文件与成功的 Linux 候选\n清单全部一致。安装包 SHA-256 为\n`063f6e10c42d20ed49642efe98d549b05cba05aef623be49277d019badde821a`；\n手机原包数据/首次安装时间保留，冷启动、独立 d_service 与远程 hello 成功，未见本轮\n目标进程崩溃。完整同包 12 阶段 VM 与整车验收仍未完成。\n[手机与日志证据](../validation/2026-10-09-low-soc-remote-link-audit.md)。\n手机候选并非 CI 正式证书签名包；正式签名包仍需车机安装与验证。\n\nLinux 候选内容清单由成功的 [构建 #5](https://github.com/msunocn/dm/actions/runs/37820475523)\n产生；1866 项接受基线只核对 APK 非签名文件字节，不声称物理验收通过。\n\nVPS 仍运行 3.0.319 服务端/H5，协议 `dm-remote-v2`，最低兼容 APK 码 301287。\n本次没有服务端或 H5 改动，不重启哨兵服务端；Android 3.0.320 可使用现有协议。"
 }
