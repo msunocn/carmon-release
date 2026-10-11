@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301320,
-  "versionName": "3.0.320",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.320-301320/DMApp-3.0.320-301320.apk",
-  "sizeBytes": 147944375,
-  "md5": "9987f0a3d55cac9cc8884d5c6bbf9c58",
-  "sha256": "710ebeed0d77d56f7617cd654b201cf592d70af8075d7301e702645eb2ec7c63",
+  "versionCode": 301321,
+  "versionName": "3.0.321",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.321-301321/DMApp-3.0.321-301321.apk",
+  "sizeBytes": 148042679,
+  "md5": "6d32f8c5e81f86d8922d77704258a6d1",
+  "sha256": "d4842ab954fd0b61f6696de89d548c1aace8ed907ce87f0a6debaccbe544327d",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.320（301320）\n\n发布风险例外（2026-10-09）：用户要求先发布正式升级包，再在自己的比亚迪车机上验收。\n本次本地/手机验证不等于整车验收；真实 ACC-off 后热点与 DNS 恢复、远程控制在线、\n夜间哨兵录像、持续功耗、AVM 与副屏表现仍需在车上确认。\n\n- 熄火哨兵按实测 SOC 分级：SOC≤10% 停止录像与远程连接；10%<SOC≤20% 暂停\n  摄像/录像与 OEM 电源、存储操作，仅保留独立公共网络请求供远程控制重连，并每小时\n  只读复查 SOC。SOC>20% 后重新做安全检查才恢复完整哨兵；配置的更高录像电量\n  门槛仍生效。DNS 失败后补充不含地址、SSID、VIN 和令牌的 App-UID 网络快照，\n  以便实车日志区分断网与解析故障；不写死 IP，也不绕过 TLS。\n- Wi-Fi 高性能锁改为有远程视频需求时按需持有；对近期已确认唤醒的 MCU 状态读取\n  做短窗口合并，避免重复 getter。是否降低整车能耗仍待熄火实测。\n- 非比亚迪手机 Mock 使用后摄单路画面 GPU 分发为四格 360 预览，行车记录仪预览\n  使用前摄；BYD 车机的 AVM 与 NormalCamera 路径不变。正式双 UID Mock 的低 SOC\n  控制入口补齐参数校验，并在物理手机有旧 shell 配置时拒绝非隔离测试。\n- 通用网络歌词开启时优先查询 LrcApi，再按原有顺序回退其他歌词源；媒体自带歌词\n  仍优先。\n\n已通过 `:canfeature:check`、正式发布前置门禁测试、Go 服务端测试和 14 项网页测试。\n同包名 3.0.320 本地同签名候选在小米手机覆盖安装，应用数据保留；双 UID Mock\n验证了 13%/20% 仅远程网络、21% 复查恢复、10% 终止和 ACC-on 资源释放。\n发现本机默认 D8 37 与 CI 的 D8 35 生成不同 DEX 后，已使用官方 Build Tools\n35.0.0 重建并再次覆盖安装；该手机候选的 1866 个非签名文件与成功的 Linux 候选\n清单全部一致。安装包 SHA-256 为\n`063f6e10c42d20ed49642efe98d549b05cba05aef623be49277d019badde821a`；\n手机原包数据/首次安装时间保留，冷启动、独立 d_service 与远程 hello 成功，未见本轮\n目标进程崩溃。完整同包 12 阶段 VM 与整车验收仍未完成。\n[手机与日志证据](../validation/2026-10-09-low-soc-remote-link-audit.md)。\n手机候选并非 CI 正式证书签名包；正式签名包仍需车机安装与验证。\n\nLinux 候选内容清单由成功的 [构建 #5](https://github.com/msunocn/dm/actions/runs/37820475523)\n产生；1866 项接受基线只核对 APK 非签名文件字节，不声称物理验收通过。\n\nVPS 仍运行 3.0.319 服务端/H5，协议 `dm-remote-v2`，最低兼容 APK 码 301287。\n本次没有服务端或 H5 改动，不重启哨兵服务端；Android 3.0.320 可使用现有协议。"
+  "releaseNotes": "# DMApp 3.0.321（301321）\n\n- 修复非比亚迪 mock 的应用启动、开机任务与画中画生命周期，重复 ready 不重复拉起；\n  mock 不再无意义自动重试 loopback ADB，手动授权及真实车机权限回读仍保留。\n- 改善 UI 状态回传、悬浮栏返回、360 单相机四格预览及投屏内容生命周期；\n  后摄用于 mock 360，前摄用于 mock 行车记录仪，真实 BYD 摄像头路径不变。\n- 修复网络歌词状态切换、原生优先和切歌清理；维持 LrcApi 优先及默认关闭开关。\n- 强化熄火哨兵状态、低 SOC 网络保持／录像暂停及定时恢复取证；不新增摄像头 Binder。\n- 优化升级安装与授权页面兜底、远程网络诊断、录像错误显示和网页配置交互。\n\n本地原包 check/build 191 tasks 成功；横屏 VM 关键业务与冷启动／去重、手机音乐／\n在线歌词／空调／录像回放和 SOC20→21 软件恢复已实测。Linux 候选\n[构建 #6](https://github.com/msunocn/dm/actions/runs/38124043226) 成功；其 1866 个\n非签名 entries 与已安装原包候选全部相同。测试使用同包名与既有测试证书，不是 QA 包，\n也不冒充正式证书安装验收。[详细记录](../validation/2026-10-11-r25-local-regression.md)。\n\n手机流畅性有掉帧，整车／665 功耗、农村极暗夜、真实一小时 SOC 定时、蜂窝／海外\n可达性、OEM 静默升级及私有硬件 release ACK 尚未实车验证；不声明这些已经通过。\n历史 SAF 返回现象本轮未复现，其根因仍未确定，新增阶段日志不是功能修复。\n\nVPS 服务端/H5 同步为 3.0.321，Linux amd64 CGO 构建与测试、隔离预检、数据库\nquick_check、公网资源／运行二进制及30秒稳定核验通过。协议仍 dm-remote-v2，\n最低兼容码保持301287；原程序和数据库回滚备份保留。APK 的正式证书与公开升级\n下载仍需 tag CI 后独立读回核验。"
 }
