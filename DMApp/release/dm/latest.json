@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301321,
-  "versionName": "3.0.321",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.321-301321/DMApp-3.0.321-301321.apk",
-  "sizeBytes": 148042679,
-  "md5": "6d32f8c5e81f86d8922d77704258a6d1",
-  "sha256": "d4842ab954fd0b61f6696de89d548c1aace8ed907ce87f0a6debaccbe544327d",
+  "versionCode": 301322,
+  "versionName": "3.0.322",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.322-301322/DMApp-3.0.322-301322.apk",
+  "sizeBytes": 148050871,
+  "md5": "a54442acbca03ca2667d095a9063b8ab",
+  "sha256": "3e7aadbafbb3e6d5e281d66906dc8bfb36ff1589e1d31ab0bbaa06e4d0279f52",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.321（301321）\n\n- 修复非比亚迪 mock 的应用启动、开机任务与画中画生命周期，重复 ready 不重复拉起；\n  mock 不再无意义自动重试 loopback ADB，手动授权及真实车机权限回读仍保留。\n- 改善 UI 状态回传、悬浮栏返回、360 单相机四格预览及投屏内容生命周期；\n  后摄用于 mock 360，前摄用于 mock 行车记录仪，真实 BYD 摄像头路径不变。\n- 修复网络歌词状态切换、原生优先和切歌清理；维持 LrcApi 优先及默认关闭开关。\n- 强化熄火哨兵状态、低 SOC 网络保持／录像暂停及定时恢复取证；不新增摄像头 Binder。\n- 优化升级安装与授权页面兜底、远程网络诊断、录像错误显示和网页配置交互。\n\n本地原包 check/build 191 tasks 成功；横屏 VM 关键业务与冷启动／去重、手机音乐／\n在线歌词／空调／录像回放和 SOC20→21 软件恢复已实测。Linux 候选\n[构建 #6](https://github.com/msunocn/dm/actions/runs/38124043226) 成功；其 1866 个\n非签名 entries 与已安装原包候选全部相同。测试使用同包名与既有测试证书，不是 QA 包，\n也不冒充正式证书安装验收。[详细记录](../validation/2026-10-11-r25-local-regression.md)。\n\n手机流畅性有掉帧，整车／665 功耗、农村极暗夜、真实一小时 SOC 定时、蜂窝／海外\n可达性、OEM 静默升级及私有硬件 release ACK 尚未实车验证；不声明这些已经通过。\n历史 SAF 返回现象本轮未复现，其根因仍未确定，新增阶段日志不是功能修复。\n\nVPS 服务端/H5 同步为 3.0.321，Linux amd64 CGO 构建与测试、隔离预检、数据库\nquick_check、公网资源／运行二进制及30秒稳定核验通过。协议仍 dm-remote-v2，\n最低兼容码保持301287；原程序和数据库回滚备份保留。APK 的正式证书与公开升级\n下载仍需 tag CI 后独立读回核验。"
+  "releaseNotes": "# DMApp 3.0.322（301322）\n\n- 修复启动后主界面正常响应、仅无障碍失联时触发三分钟整包重启的问题；\n  恢复执行前重新确认当前进程和故障状态，保留后台安全窗口与真实主线程卡死时的有限恢复。\n- App 网络桥每次重连使用独立连接池和调度资源；超时、取消或迟到回调清理所属连接，\n  不重启整个 App，不关闭其它健康连接，保留原有退避和 TLS 校验。\n- 修正 OEM SDK Context 的包名、UID 与 ContentResolver 归因，保留 OEM 资源；\n  SDK 初始化和 VIN 获取不再回退到不安全的原始 Context 或 null，避免缓存错误身份。\n\n模块全量自动检查、原包构建、日志同参数的前台重启回归、网络传输故障与资源清理测试、\nOEM 主机归因回归通过。Android 10 虚拟机实测同一进程在超时后下一次握手成功，\n并确认修复后的真实 resolver 归因。详细范围见\n[3.0.322 本地回归](../validation/2026-10-11-322-local-regression.md)。\nLinux 候选 [38129953715](https://github.com/msunocn/dm/actions/runs/38129953715)\n成功，1866 个非签名文件与本地已回归的候选包逐项一致；正式 tag 发布仍核验同一内容\n与既有正式证书，不用未签名诊断包替代升级文件。\n\n实车蜂窝链路、Gearbox/EPB 私有回调、665 整车功耗及正式包车机安装仍需车上验证。\n原生 Android 10 阻止未注册的 shell 应用线程查询 provider，因此虚拟机 resolver 归因\n验证不等于真实 CarSettings 查询验收。服务器协议和 H5 本次没有功能变化，保留兼容的\n3.0.321 服务；升级分发的正式 APK 和 latest 元数据由正式 tag 流水线更新。"
 }
