@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301322,
-  "versionName": "3.0.322",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.322-301322/DMApp-3.0.322-301322.apk",
-  "sizeBytes": 148050871,
-  "md5": "a54442acbca03ca2667d095a9063b8ab",
-  "sha256": "3e7aadbafbb3e6d5e281d66906dc8bfb36ff1589e1d31ab0bbaa06e4d0279f52",
+  "versionCode": 301323,
+  "versionName": "3.0.323",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.323-301323/DMApp-3.0.323-301323.apk",
+  "sizeBytes": 148054967,
+  "md5": "64a1b1cf809d31c609c6d47cfb0b29c6",
+  "sha256": "fbf7dae4ba72f2e122a0f158ecea377f88e9472d223969e02ace91a9ab21fc4c",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.322（301322）\n\n- 修复启动后主界面正常响应、仅无障碍失联时触发三分钟整包重启的问题；\n  恢复执行前重新确认当前进程和故障状态，保留后台安全窗口与真实主线程卡死时的有限恢复。\n- App 网络桥每次重连使用独立连接池和调度资源；超时、取消或迟到回调清理所属连接，\n  不重启整个 App，不关闭其它健康连接，保留原有退避和 TLS 校验。\n- 修正 OEM SDK Context 的包名、UID 与 ContentResolver 归因，保留 OEM 资源；\n  SDK 初始化和 VIN 获取不再回退到不安全的原始 Context 或 null，避免缓存错误身份。\n\n模块全量自动检查、原包构建、日志同参数的前台重启回归、网络传输故障与资源清理测试、\nOEM 主机归因回归通过。Android 10 虚拟机实测同一进程在超时后下一次握手成功，\n并确认修复后的真实 resolver 归因。详细范围见\n[3.0.322 本地回归](../validation/2026-10-11-322-local-regression.md)。\nLinux 候选 [38129953715](https://github.com/msunocn/dm/actions/runs/38129953715)\n成功，1866 个非签名文件与本地已回归的候选包逐项一致；正式 tag 发布仍核验同一内容\n与既有正式证书，不用未签名诊断包替代升级文件。\n\n实车蜂窝链路、Gearbox/EPB 私有回调、665 整车功耗及正式包车机安装仍需车上验证。\n原生 Android 10 阻止未注册的 shell 应用线程查询 provider，因此虚拟机 resolver 归因\n验证不等于真实 CarSettings 查询验收。服务器协议和 H5 本次没有功能变化，保留兼容的\n3.0.321 服务；升级分发的正式 APK 和 latest 元数据由正式 tag 流水线更新。"
+  "releaseNotes": "# DMApp 3.0.323（301323）\n\n- 修复无障碍未绑定时，仪表投屏、画中画和打开应用等启动任务被统一阻塞的问题。\n  启动任务按动作依赖等待，保留点火代际去重、授权窗口保护、熄火取消和副屏生命周期校验。\n- 自定义启动任务固定本次读取的动作配置，避免等待期间修改设置导致依赖判断与执行不一致；\n  等待期间关闭自启动开关时，不再打开应用。\n- 修正“跟随系统”的深色判断：只读取 Android 夜间模式位，兼容车机 CAR 类型，\n  覆盖开机读取、显示设置和系统配置切换。\n- 核验地图开机同步、深浅色切换和联动开关；高德使用原有日夜广播，腾讯保留原有联动入口，\n  关闭地图跟随时不发送联动指令，也不改写用户主题配置。\n\n本版通过本地模块检查、启动专项回归和实际 APK 指令核验；地图画面、正式包安装及\n实车冷启动仍需车上确认。本次不改变网络、服务器或录像逻辑，不重启健康服务。\n\nLinux 候选 [38214975210](https://github.com/msunocn/dm/actions/runs/38214975210)\n成功，1866 个非签名文件与本地已回归候选逐项一致；正式发布继续核验同一内容及既有证书。"
 }
