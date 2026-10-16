@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301337,
-  "versionName": "3.0.337",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.337-301337/DMApp-3.0.337-301337.apk",
+  "versionCode": 301338,
+  "versionName": "3.0.338",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.338-301338/DMApp-3.0.338-301338.apk",
   "sizeBytes": 148429887,
-  "md5": "370e633ec01d99d8b7dfb5dc0e5b05fc",
-  "sha256": "1786574694f7eb551db29b3ca6adee61edbff6d579bf68acb41b47170b9d1574",
+  "md5": "164d9b7ab57750b06da10062971f5679",
+  "sha256": "7503580c7bf5ca344dbbb18b1dccce15a800cd01b69dd4f08a1344f4064b0469",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.337（301337）\n\n- 优化开机及 ACC 恢复无障碍：立即检查，但不打断系统正在进行的正常绑定。\n- 恢复较长的软重绑撤下窗口，并读取系统实际绑定状态，避免把授权设置写回当成服务已连接。\n- 系统仍在绑定时不再反复触发同轮授权脉冲，保留真实连接检查及限频桌面重载兜底。\n- 补充主进程更换、系统解绑确认等诊断信息；正常运行不增加轮询，不改变界面、会员、歌词或远程协议。\n\n本次恢复逻辑不关闭熄火哨兵、不重启 d_service，也不占用开机任务执行通道。\nAndroid 10 固件真正卡住绑定状态时仍可能需要桌面重载；不能承诺所有异常均可无重载恢复。"
+  "releaseNotes": "# DMApp 3.0.338（301338）\n\n- 桌面默认状态栏按有效性显示车内温度：有效数值正常展示，不可用、错误码或非法数值自动隐藏，不再显示“车内 --”。\n- 有效数据恢复后自动重新显示，真实 0 ℃ 与非哨兵负温不会被误隐藏；保留原温度查询和回调链路。\n- 补齐非比亚迪手机 mock 的原状态栏温度映射，便于验证有效→无效→有效的完整回调。\n\n天气、空调设定温度、界面风格、无障碍恢复和熄火哨兵逻辑不变。"
 }
