@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301392,
-  "versionName": "3.0.392",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.392-301392/DMApp-3.0.392-301392.apk",
-  "sizeBytes": 206287368,
-  "md5": "3797a4b2a80156544b96416adf856a26",
-  "sha256": "89f9ff8dd307e659622bcd60d5bc5d04e1db41ddc1a8db5f28a8be08f1e0a057",
+  "versionCode": 301393,
+  "versionName": "3.0.393",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.393-301393/DMApp-3.0.393-301393.apk",
+  "sizeBytes": 206303752,
+  "md5": "1b70446158cb1b4bd6030244347f464a",
+  "sha256": "b24a3b2b14dcca1dd9087b45b2d5860c2c5492a2e51aaa1f9ba431597783d83f",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.392（301392）\n\n针对391实车日志中直接wakeUp正常返回但系统仍休眠、quickboot开启、原始USB/SD磁盘随即消失的问题，在已存在的重试次数和原截止内，增加一个正常WAKE_LOCK后备路径。仅当前shell调用者、旧平台、确认quickboot开启且仍休眠、所选介质缺失时启用；使用SCREEN_DIM_WAKE_LOCK与ACQUIRE_CAUSES_WAKEUP，按OEM既有唤醒详情契约使用ACC_ON标签，不改变调用UID或物理ACC。\n\n锁使用Android十秒超时，并受原操作截止限制；不循环续租，不增加唤醒次数，不增加SOC轮询。独立单飞、有界等待，过期／点火／配置取消后清理自己的令牌；阻塞和迟到结果不误报恢复，终止收口不掩盖未完成的清理。唤醒效果仍由新鲜框架观察及USB实际读写分别验证。保留391取消立即关背光和禁止null令牌全局释放的修复。\n\n正式tag工作流不再重复功能和策略回归套件，只重建已在本地验收的APK；保留真实tag/main来源、完整payload、固定C8证书、版本、对齐和两端发布读回核验。升级地址继续使用upgrade.msuno.cn。\n\n本版不更改无障碍、录像、网络、亿连SDK及界面配置。宿主和小米10验证不代表当前BYD固件的quickboot后备路径或USB持续供电已经通过，实车效果须以升级后真实结果确认。"
+  "releaseNotes": "# DMApp 3.0.393（301393）\n\n系统设置增加“远程调试”，沿用原有设置行样式。默认关闭，仅允许在车机本地开启；授权绑定当前车辆和本次车控服务，服务重启或账号配置变更后关闭，不从备份恢复，不提供远程开启接口。\n\n开启后，已正常登录且有当前车辆控制权限的 Codex 客户端可通过现有 WSS 执行完整、非交互 ADB Shell，支持管道、组合命令、重定向、配置修改及唤醒。使用原有 shell UID2000 权限，每条命令独立会话，默认10秒、上限30秒、输出16KiB。返回真实命令退出码、输出、超时、取消和清理状态。正常结束、超时、关闭开关及原连接取消后清理该会话内的普通子进程；清理无法确认时阻止新任务进入。配置写入及显式启动的独立系统服务不回滚。不开放新 ADB 端口。\n\n操作审计复用现有哨兵日志，仅记录动作和结果元数据，不写入命令参数或原始系统输出。Codex 客户端使用正常后台登录和短期 WSS 授权，不保存登录信息或自动重放命令。\n\n本版不改变哨兵唤醒、关背光、USB/SD存储、蜂窝连接或手机投屏策略。USB/SD与蜂窝供电恢复仍需实车诊断；车机离线时无法通过WSS实时下发命令。真实车机升级、开启开关并联网后的远程执行需单独确认，不能由本地或手机组件测试代替。"
 }
