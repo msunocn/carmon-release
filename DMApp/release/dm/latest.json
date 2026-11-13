@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301400,
-  "versionName": "3.0.400",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.400-301400/DMApp-3.0.400-301400.apk",
-  "sizeBytes": 207065691,
-  "md5": "d00dd6f4f71d7c9eb86c4775f0aa016f",
-  "sha256": "4a8b97d17b6d952a3cdbdc6143fbe41bd257b720bf39c74294c22d91b2dc2b93",
+  "versionCode": 301401,
+  "versionName": "3.0.401",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.401-301401/DMApp-3.0.401-301401.apk",
+  "sizeBytes": 207065868,
+  "md5": "f47586cf5eecf952e8f0fb7702976361",
+  "sha256": "bfa4e21474654be2ec9df4faafa94a8b75f771ccf52b2e3ba52c15139ba3dc7a",
   "force": false,
-  "releaseNotes": "# DM 3.0.400\n\n- 减少程序运行日志写入。删掉正常封面加载进度、无视频时的 Wi-Fi 空闲提示、重复健康心跳及已确认正常的重复分钟快照。\n- 批量写入已排队的普通日志。保留故障、状态变化、崩溃、详细诊断和熄火录像记录，录像证据继续独立刷盘。\n- 完整本地回归通过。小米 10 使用候选包内原样代码验证写入顺序、录像记录、健康日志去重和同步检查点。"
+  "releaseNotes": "# DM 3.0.401\n\n- 熄火哨兵眼睛显示时，覆盖顶部状态栏和底部导航栏，包括 DM 自己的浮层。撤下眼睛后恢复显示前的状态。\n- 显示期间临时使用 100% 窗口亮度。退出即撤销覆盖，保留原有亮度设置。\n- 修复部分车机绘制监控文字时的字体库崩溃，保留提示文字和动画。\n- 比亚迪实车受控验证，显示前、显示中和撤下后的背光读数为 0、255、0，车机在测试期间保持唤醒。"
 }
