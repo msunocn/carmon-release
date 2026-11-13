@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301399,
-  "versionName": "3.0.399",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.399-301399/DMApp-3.0.399-301399.apk",
-  "sizeBytes": 207061595,
-  "md5": "075233d2456af2b1af75f643cd6c8d5f",
-  "sha256": "0995343f2566fc159f2b32b8da00f40ec1a7389e09f6995c793b2067ec8beabb",
+  "versionCode": 301400,
+  "versionName": "3.0.400",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.400-301400/DMApp-3.0.400-301400.apk",
+  "sizeBytes": 207065691,
+  "md5": "d00dd6f4f71d7c9eb86c4775f0aa016f",
+  "sha256": "4a8b97d17b6d952a3cdbdc6143fbe41bd257b720bf39c74294c22d91b2dc2b93",
   "force": false,
-  "releaseNotes": "# DM 3.0.399\n\n- 优化熄火哨兵的待命图像分析。OpenCV 直接读取现有 RGBA 缓冲，减少逐帧内存拷贝。\n- 静止画面跳过重复光流计算，空前景跳过轮廓处理。保留原采样频率、识别阈值、录像帧率和事前缓存。\n- 本地完整回归通过。小米 10 原生 OpenCV 对比 32 组固定场景，逐帧检测结果一致。静止暗场分析线程 CPU 时间下降约 42%–49%。整车功耗待实测。"
+  "releaseNotes": "# DM 3.0.400\n\n- 减少程序运行日志写入。删掉正常封面加载进度、无视频时的 Wi-Fi 空闲提示、重复健康心跳及已确认正常的重复分钟快照。\n- 批量写入已排队的普通日志。保留故障、状态变化、崩溃、详细诊断和熄火录像记录，录像证据继续独立刷盘。\n- 完整本地回归通过。小米 10 使用候选包内原样代码验证写入顺序、录像记录、健康日志去重和同步检查点。"
 }
