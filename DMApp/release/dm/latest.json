@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301402,
-  "versionName": "3.0.402",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.402-301402/DMApp-3.0.402-301402.apk",
-  "sizeBytes": 207069964,
-  "md5": "e5962b7d460bed64cebfb49fcb9caf11",
-  "sha256": "ce8996484b63cea726ffc7da3409813ac8323122472e1223fa1d3e2a364b14cb",
+  "versionCode": 301404,
+  "versionName": "3.0.404",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.404-301404/DMApp-3.0.404-301404.apk",
+  "sizeBytes": 207078156,
+  "md5": "ecdfbc0d2d152c273a50a3ce53b80ad6",
+  "sha256": "28c23f706a2a432fe7d3bdf22eab7cdb2667c0767c7859df02876e8e5a804a6b",
   "force": false,
-  "releaseNotes": "# DM 3.0.402\n\n- H5 和微信小程序的实时监控新增流畅、标准、高清三档，默认标准，播放时可切换。\n- 高清档前摄最高 1280×720，360° 画面为 960×720，最高 12 帧/秒。录像回放独立。\n- 国内 VPS 给远程视频分配总计 1.5 Mbps 的会话带宽预算，高负载时显示提示。\n- 本地全量回归和小米 10 测试通过。此次实车画质按用户确认留待升级后验证。"
+  "releaseNotes": "# DM 3.0.404\n\n- 熄火哨兵按异动时间、摄像头和位置关联目标。录像列表、封面和事件通知展示匹配的移动物体。\n- 保留未能分类的异动录像。断电或 USB 重连恢复后缺少位置证据时显示通用异动。\n- 使用现有运动轮廓与目标轨迹完成关联，无需增加识别推理次数。\n- Android 全量回归通过。此次正式候选由干净目录构建，小米 10 同签覆盖升级和受控合成场景复验通过。"
 }
