@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301401,
-  "versionName": "3.0.401",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.401-301401/DMApp-3.0.401-301401.apk",
-  "sizeBytes": 207065868,
-  "md5": "f47586cf5eecf952e8f0fb7702976361",
-  "sha256": "bfa4e21474654be2ec9df4faafa94a8b75f771ccf52b2e3ba52c15139ba3dc7a",
+  "versionCode": 301402,
+  "versionName": "3.0.402",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.402-301402/DMApp-3.0.402-301402.apk",
+  "sizeBytes": 207069964,
+  "md5": "e5962b7d460bed64cebfb49fcb9caf11",
+  "sha256": "ce8996484b63cea726ffc7da3409813ac8323122472e1223fa1d3e2a364b14cb",
   "force": false,
-  "releaseNotes": "# DM 3.0.401\n\n- 熄火哨兵眼睛显示时，覆盖顶部状态栏和底部导航栏，包括 DM 自己的浮层。撤下眼睛后恢复显示前的状态。\n- 显示期间临时使用 100% 窗口亮度。退出即撤销覆盖，保留原有亮度设置。\n- 修复部分车机绘制监控文字时的字体库崩溃，保留提示文字和动画。\n- 比亚迪实车受控验证，显示前、显示中和撤下后的背光读数为 0、255、0，车机在测试期间保持唤醒。"
+  "releaseNotes": "# DM 3.0.402\n\n- H5 和微信小程序的实时监控新增流畅、标准、高清三档，默认标准，播放时可切换。\n- 高清档前摄最高 1280×720，360° 画面为 960×720，最高 12 帧/秒。录像回放独立。\n- 国内 VPS 给远程视频分配总计 1.5 Mbps 的会话带宽预算，高负载时显示提示。\n- 本地全量回归和小米 10 测试通过。此次实车画质按用户确认留待升级后验证。"
 }
