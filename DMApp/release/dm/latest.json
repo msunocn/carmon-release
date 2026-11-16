@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301406,
-  "versionName": "3.0.406",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.406-301406/DMApp-3.0.406-301406.apk",
-  "sizeBytes": 207102732,
-  "md5": "73afcbf597806e4be3e88c41521c1436",
-  "sha256": "9a6a78a6689141ed353a0d8dd9881cd94a52f32630e04861373844e3e483644d",
+  "versionCode": 301407,
+  "versionName": "3.0.407",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.407-301407/DMApp-3.0.407-301407.apk",
+  "sizeBytes": 207160076,
+  "md5": "e4f81aa7a36f7ca04d3576b0cf52a026",
+  "sha256": "5cb82daa14142d006694143bad84708f9ca89c9667285a6f6a720c34aa8d7137",
   "force": false,
-  "releaseNotes": "# DM 3.0.406\n\n- 点火时等待录像封盘和发布。后台补标签和生成封面从常规重启等待中移除，保留已发布录像和初始记录。\n- 熄火哨兵复用原有识别区域，减少背景建模的像素范围及靠近判断的图像复制。录像仍默认 15 FPS、8 Mbps。\n- 内部兜底录像有待迁移时按批回写已验证的 USB 或 SD。空目录降低巡查频率，存在活跃录像写入时优先保障录制。\n- 无人查看时每分钟检查一次目录版本。有新录像或正在查看时保持快速同步。"
+  "releaseNotes": "# DM 3.0.407\n\n- 系统设置新增「SSR 调试」开关，默认关闭。打开后在左侧进入调试页，查看摄像头估计的车道线和车辆。\n- 实车在点火且已有兼容道路前摄会话时取样。取样忙时跳过，离开页面或相机被其他功能占用时停止。\n- 渲染使用轻量 Canvas 和短插值。没有新数据时及时清除旧车道线和车辆。"
 }
