@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301404,
-  "versionName": "3.0.404",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.404-301404/DMApp-3.0.404-301404.apk",
-  "sizeBytes": 207078156,
-  "md5": "ecdfbc0d2d152c273a50a3ce53b80ad6",
-  "sha256": "28c23f706a2a432fe7d3bdf22eab7cdb2667c0767c7859df02876e8e5a804a6b",
+  "versionCode": 301405,
+  "versionName": "3.0.405",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.405-301405/DMApp-3.0.405-301405.apk",
+  "sizeBytes": 207082252,
+  "md5": "d328b812f1aca3911b12d8b0477ed706",
+  "sha256": "7bfe5134ade707e196e52f74fdc2f455eb2599af4abebafaebc88e77400ea906",
   "force": false,
-  "releaseNotes": "# DM 3.0.404\n\n- 熄火哨兵按异动时间、摄像头和位置关联目标。录像列表、封面和事件通知展示匹配的移动物体。\n- 保留未能分类的异动录像。断电或 USB 重连恢复后缺少位置证据时显示通用异动。\n- 使用现有运动轮廓与目标轨迹完成关联，无需增加识别推理次数。\n- Android 全量回归通过。此次正式候选由干净目录构建，小米 10 同签覆盖升级和受控合成场景复验通过。"
+  "releaseNotes": "# DM 3.0.405\n\n- 熄火哨兵减少重复图像处理。完全相同的帧继续更新背景模型，有像素变化则进入运动识别。旧式 AVM 录像识别复用已解码画面。\n- 待传日志为空时降低后台检查频率，仍保留主动上传和待处理日志的原有重试节奏。\n- H5 和微信小程序实时与回放均默认高清，可选流畅、标准和高清。播放中切换回放画质会从头播放当前录像。\n- 回放列表先显示目录。只对已验证录像按需读取缩略图，车机从已提交的 MP4 取帧，不阻塞列表。\n- 中继统一使用 1.5 Mbps 视频会话预算。小程序的高清回放缓冲随获准档位调整。"
 }
