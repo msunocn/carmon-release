@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301405,
-  "versionName": "3.0.405",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.405-301405/DMApp-3.0.405-301405.apk",
-  "sizeBytes": 207082252,
-  "md5": "d328b812f1aca3911b12d8b0477ed706",
-  "sha256": "7bfe5134ade707e196e52f74fdc2f455eb2599af4abebafaebc88e77400ea906",
+  "versionCode": 301406,
+  "versionName": "3.0.406",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.406-301406/DMApp-3.0.406-301406.apk",
+  "sizeBytes": 207102732,
+  "md5": "73afcbf597806e4be3e88c41521c1436",
+  "sha256": "9a6a78a6689141ed353a0d8dd9881cd94a52f32630e04861373844e3e483644d",
   "force": false,
-  "releaseNotes": "# DM 3.0.405\n\n- 熄火哨兵减少重复图像处理。完全相同的帧继续更新背景模型，有像素变化则进入运动识别。旧式 AVM 录像识别复用已解码画面。\n- 待传日志为空时降低后台检查频率，仍保留主动上传和待处理日志的原有重试节奏。\n- H5 和微信小程序实时与回放均默认高清，可选流畅、标准和高清。播放中切换回放画质会从头播放当前录像。\n- 回放列表先显示目录。只对已验证录像按需读取缩略图，车机从已提交的 MP4 取帧，不阻塞列表。\n- 中继统一使用 1.5 Mbps 视频会话预算。小程序的高清回放缓冲随获准档位调整。"
+  "releaseNotes": "# DM 3.0.406\n\n- 点火时等待录像封盘和发布。后台补标签和生成封面从常规重启等待中移除，保留已发布录像和初始记录。\n- 熄火哨兵复用原有识别区域，减少背景建模的像素范围及靠近判断的图像复制。录像仍默认 15 FPS、8 Mbps。\n- 内部兜底录像有待迁移时按批回写已验证的 USB 或 SD。空目录降低巡查频率，存在活跃录像写入时优先保障录制。\n- 无人查看时每分钟检查一次目录版本。有新录像或正在查看时保持快速同步。"
 }
