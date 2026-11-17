@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301407,
-  "versionName": "3.0.407",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.407-301407/DMApp-3.0.407-301407.apk",
-  "sizeBytes": 207160076,
-  "md5": "e4f81aa7a36f7ca04d3576b0cf52a026",
-  "sha256": "5cb82daa14142d006694143bad84708f9ca89c9667285a6f6a720c34aa8d7137",
+  "versionCode": 301408,
+  "versionName": "3.0.408",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.408-301408/DMApp-3.0.408-301408.apk",
+  "sizeBytes": 207164172,
+  "md5": "2ac5e292d5dc814e0b960fe87adc8518",
+  "sha256": "fc7190c7ef821a3ca372beb9a034f036260d26a4568093977e1ea6ca1585500c",
   "force": false,
-  "releaseNotes": "# DM 3.0.407\n\n- 系统设置新增「SSR 调试」开关，默认关闭。打开后在左侧进入调试页，查看摄像头估计的车道线和车辆。\n- 实车在点火且已有兼容道路前摄会话时取样。取样忙时跳过，离开页面或相机被其他功能占用时停止。\n- 渲染使用轻量 Canvas 和短插值。没有新数据时及时清除旧车道线和车辆。"
+  "releaseNotes": "# DM 3.0.408\n\n- SSR 页签常驻，右上角开关默认关闭。离开页签即可停止本地分析。\n- 点火后可在车机本地使用行车记录仪共享前摄，已有远程前摄会话时复用同一路画面。\n- 补充车道区域和前车标记，低置信度时简化显示。"
 }
