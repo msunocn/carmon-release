@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301408,
-  "versionName": "3.0.408",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.408-301408/DMApp-3.0.408-301408.apk",
-  "sizeBytes": 207164172,
-  "md5": "2ac5e292d5dc814e0b960fe87adc8518",
-  "sha256": "fc7190c7ef821a3ca372beb9a034f036260d26a4568093977e1ea6ca1585500c",
+  "versionCode": 301415,
+  "versionName": "3.0.415",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.415-301415/DMApp-3.0.415-301415.apk",
+  "sizeBytes": 334137074,
+  "md5": "7373f44eb57ff9afcf5b5916bbf94c1b",
+  "sha256": "9624875fcc9d99cd693f9fa239fba2eab31103142e9429819885c01203f81343",
   "force": false,
-  "releaseNotes": "# DM 3.0.408\n\n- SSR 页签常驻，右上角开关默认关闭。离开页签即可停止本地分析。\n- 点火后可在车机本地使用行车记录仪共享前摄，已有远程前摄会话时复用同一路画面。\n- 补充车道区域和前车标记，低置信度时简化显示。"
+  "releaseNotes": "# DM 3.0.415\n\n- SSR 改用 openpilot 前摄模型，渲染可信的车道线和前车位置。\n- 道路改为仪表风格斜俯视，日夜配色同步更新，自车和前车使用 SUV 车模。\n- 优化取帧与推理调度，短暂间断后可用新的相邻帧恢复，并保留共享视频优先级。"
 }
