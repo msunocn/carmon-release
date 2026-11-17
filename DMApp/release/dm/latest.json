@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301415,
-  "versionName": "3.0.415",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.415-301415/DMApp-3.0.415-301415.apk",
-  "sizeBytes": 334137074,
-  "md5": "7373f44eb57ff9afcf5b5916bbf94c1b",
-  "sha256": "9624875fcc9d99cd693f9fa239fba2eab31103142e9429819885c01203f81343",
+  "versionCode": 301416,
+  "versionName": "3.0.416",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.416-301416/DMApp-3.0.416-301416.apk",
+  "sizeBytes": 334149362,
+  "md5": "0fe9096f59c06c66ae7a8a8354e856d3",
+  "sha256": "895f3d4f08ab2ff67e09e51a0aa32d000097f288e4ce10955ee1293639506174",
   "force": false,
-  "releaseNotes": "# DM 3.0.415\n\n- SSR 改用 openpilot 前摄模型，渲染可信的车道线和前车位置。\n- 道路改为仪表风格斜俯视，日夜配色同步更新，自车和前车使用 SUV 车模。\n- 优化取帧与推理调度，短暂间断后可用新的相邻帧恢复，并保留共享视频优先级。"
+  "releaseNotes": "# DM 3.0.416\n\n- 修复道路 SSR 在较慢的车机上长时间停在「正在准备 openpilot」的问题。准备期间及时读取推理结果，推理开始时使用最新的连续前摄帧。\n- 画面延迟达到 400 毫秒时给出提示，达到 1 秒后清除旧画面。\n- 区分等待前摄画面、正在推理和结果过期，记录首帧及持续等待的耗时。\n- 左侧显示实时 SSR 和小轿车车模，右侧提供总开关及滑动标定。默认使用回放测试参数，已有标定可继续使用。\n- 已核验固件上，熄火哨兵在系统唤醒后 1 秒检查并按需关闭背光。"
 }
