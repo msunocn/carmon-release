@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301417,
-  "versionName": "3.0.417",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.417-301417/DMApp-3.0.417-301417.apk",
-  "sizeBytes": 330987256,
-  "md5": "c63a76c5820c12582eef48c1bd41d7f7",
-  "sha256": "e9973ab6e1eed4ec027ca4c8223e810bfb9935c19a55ae4c0fdaf89eb5e24151",
+  "versionCode": 301418,
+  "versionName": "3.0.418",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.418-301418/DMApp-3.0.418-301418.apk",
+  "sizeBytes": 330995448,
+  "md5": "d98b68cd8a18544d09062bbdc6a3d07c",
+  "sha256": "cc2f9c07af79796278dbad95414f5435670583bb11149adc08b381210d56427a",
   "force": false,
-  "releaseNotes": "# DM 3.0.417\n\n- SSR 使用单线程推理并降低内存池占用，复用匹配前摄帧的预处理结果。\n- 哨兵光流分析复用坐标缓冲，减少临时对象，识别规则及灵敏度沿用现有设置。\n- 六张素材改为无损 WebP，保留原始车型、哨兵显示和四套原生 ABI。\n- 小米 10 完成实时 SSR、连续及间断录像回放、6720 帧哨兵对照及图片逐像素验证。实车性能仍需复测。"
+  "releaseNotes": "# DM 3.0.418\n\n- 修复采样间隔变化使仍然有效的 SSR 推理结果被清空，保留原始采集时间及一秒失效限制。\n- 批量写入图像张量并优化历史缓冲搬移，减少 CPU 处理开销；精确张量与时序回归通过。\n- 车机 SSR 推理按实际核心分组调度，条件符合时启用双线程 XNNPACK；加速会话初始化失败时使用单线程 CPU。提速路径会增加运行中的 CPU 与内存占用。\n- 修复远程诊断清理超过一秒后命令永久忙碌，保留所属会话的真实清理证明。\n- 最终包通过小米10真实模型、持续 Camera2、EGL、开关退出和日夜渲染验收。665 已验证独立线程权限和少量合成输入性能；实车镜头准确率、最终实车画面与整车耗电未作通过声明。"
 }
