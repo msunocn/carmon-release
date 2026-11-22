@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301436,
-  "versionName": "3.0.436",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.436-301436/DMApp-3.0.436-301436.apk",
+  "versionCode": 301437,
+  "versionName": "3.0.437",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.437-301437/DMApp-3.0.437-301437.apk",
   "sizeBytes": 204362514,
-  "md5": "ca3736539e30eacc8c556eaa62eb5d1a",
-  "sha256": "1114ac4965485f2f1e5d7ab6d3a8156d9066e1a268dd31620941c5b7b5d1af5c",
+  "md5": "5631dffaeb17f4203c64b08a1dd198f3",
+  "sha256": "bba333be5691085d9ea320ef3428f557dc102836df71c61f3941b4106cb20adc",
   "force": false,
-  "releaseNotes": "# DM 3.0.436\n\n- 回放左侧日期菜单仅显示日期，去掉日期下方的录像段数，日期项高度同步收紧。\n- 保留右侧视频网格、首帧封面、视频时长，以及点击播放／长按操作；不改变后台录制与存储。"
+  "releaseNotes": "# DM 3.0.437\n\n- 行车录像水印仅显示真实有效信息：时间、车速、挡位、油门／刹车、转向与灯光、定位；未知、失效或过期项隐藏，不再显示成排的 --，不伪造关闭或零值。\n- 灯光只保留状态图标，开启绿色、确认关闭灰色；踏板保留实际百分比及踩下状态颜色。\n- 信息栏优先紧凑单行，窄画面自动分两行保持可读；复用最多1280×64的小纹理，不改摄像头源像素和录制帧率。\n- 水印在GPU合成时直接写进录像MP4，导出保留；兼容历史录像与原有五视角回放，不二次重编码。"
 }
