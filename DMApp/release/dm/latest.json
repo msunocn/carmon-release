@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301437,
-  "versionName": "3.0.437",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.437-301437/DMApp-3.0.437-301437.apk",
+  "versionCode": 301438,
+  "versionName": "3.0.438",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.438-301438/DMApp-3.0.438-301438.apk",
   "sizeBytes": 204362514,
-  "md5": "5631dffaeb17f4203c64b08a1dd198f3",
-  "sha256": "bba333be5691085d9ea320ef3428f557dc102836df71c61f3941b4106cb20adc",
+  "md5": "dd4c152e4683b0971c18a7a45784c92b",
+  "sha256": "9bb5768465fabe400827dfb73a60d6aa3d7f102815118ce6fae45ec99415ddc1",
   "force": false,
-  "releaseNotes": "# DM 3.0.437\n\n- 行车录像水印仅显示真实有效信息：时间、车速、挡位、油门／刹车、转向与灯光、定位；未知、失效或过期项隐藏，不再显示成排的 --，不伪造关闭或零值。\n- 灯光只保留状态图标，开启绿色、确认关闭灰色；踏板保留实际百分比及踩下状态颜色。\n- 信息栏优先紧凑单行，窄画面自动分两行保持可读；复用最多1280×64的小纹理，不改摄像头源像素和录制帧率。\n- 水印在GPU合成时直接写进录像MP4，导出保留；兼容历史录像与原有五视角回放，不二次重编码。"
+  "releaseNotes": "# DM 3.0.438\n\n- 修复保留 SQLite 配置后重新安装 DM，旧安装 UID／安装时间导致智能无障碍恢复和启动兜底都被拦截的问题。当前安装已获系统写设置权限时，按原智能恢复选择迁移恢复身份；真实无障碍连接也会同步当前身份。\n- 保留主动关闭、跨用户隔离、配置并发修改及原启动 30 秒截止检查；身份迁移只在启动、权限核验和真实连接事件执行。\n- 补充恢复配置身份、迁移依据和拦截原因日志，便于区分缺权限、旧配置身份和连接未就绪。"
 }
