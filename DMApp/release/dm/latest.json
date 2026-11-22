@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301435,
-  "versionName": "3.0.435",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.435-301435/DMApp-3.0.435-301435.apk",
+  "versionCode": 301436,
+  "versionName": "3.0.436",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.436-301436/DMApp-3.0.436-301436.apk",
   "sizeBytes": 204362514,
-  "md5": "465bea68a027a3c0e2b44ac3b97fecb7",
-  "sha256": "df932ba619b72159f7edb683325031ee5e3548d1cd126c8f858c2711d3914fcc",
+  "md5": "ca3736539e30eacc8c556eaa62eb5d1a",
+  "sha256": "1114ac4965485f2f1e5d7ab6d3a8156d9066e1a268dd31620941c5b7b5d1af5c",
   "force": false,
-  "releaseNotes": "# DM 3.0.435\n\n- 行车记录仪回放改为左侧日期菜单、右侧视频缩略图网格；进入时直接展示最近日期，点击日期在旁边切换视频。\n- 视频卡片采用16:9封面和紧凑时间／时长信息，列数随可用宽度调整；单击直接播放，长按显示播放、锁定操作。\n- 返回录像列表保留当前日期，返回按钮从列表直接回到预览。保留系统状态栏和DM底部菜单避让。\n- 沿用可见卡片首帧队列、单后台解码器及1MiB缓存，切换日期不重新查询目录，不影响后台录制。"
+  "releaseNotes": "# DM 3.0.436\n\n- 回放左侧日期菜单仅显示日期，去掉日期下方的录像段数，日期项高度同步收紧。\n- 保留右侧视频网格、首帧封面、视频时长，以及点击播放／长按操作；不改变后台录制与存储。"
 }
