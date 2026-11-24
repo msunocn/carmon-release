@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301444,
-  "versionName": "3.0.444",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.444-301444/DMApp-3.0.444-301444.apk",
-  "sizeBytes": 204485470,
-  "md5": "f5d060687fd7e73d121a2f64e65baa75",
-  "sha256": "47b303e648a77343ae8d73cd3c282d42e56d11743a2d8fd4176572a8c61e819c",
+  "versionCode": 301445,
+  "versionName": "3.0.445",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.445-301445/DMApp-3.0.445-301445.apk",
+  "sizeBytes": 204489566,
+  "md5": "d87021dbdf771e95ad09b4058660eed5",
+  "sha256": "bdd72886192534b2776aff33f367f58c34039a3bca870cb6f416f623acd01172",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.444\n\n- 手机与虚拟机的摄像头直接把画面交给录制 Surface，省去中间 EGL 的整帧复制。预览挂载一次传齐尺寸、视角和主题背景。\n- 桌面车模只在灯光、车门或素材实际变化时更新画面。电子后视镜在后台加载开关和位置，SQLite 写入锁等待时，转向信号处理和界面可以继续响应。\n- 行车记录仪以有效的雾灯开关回调更新主画面和录像水印。开启期间图标保持绿色，关闭后恢复灰色。\n- 分享和导出录像优先使用系统原生文件传输。系统不支持直接传输时沿用流式复制。\n\n## 验收\n\n- 本地完成全量回归。虚拟机走通深浅主题、正常入口、主摄和五向录像、后台继续录制、回放切镜头及分享，核对录像可解码、绿色雾灯保持和关闭后的灰色图标。\n- 录像验证使用虚拟机摄像头和软件编码。665 实车硬件录制、雾灯 CAN 信号和车机侧性能需在车辆上测量。"
+  "releaseNotes": "# DMApp 3.0.445\n\n- 熄火哨兵的阴影和前景判断共用有效帧差掩膜。轮廓处理直接读取检测区域的原生内存视图，省掉整幅掩膜复制。\n- 同一录像中，只有送入 CPU 模型的像素完全相同才复用推理结果。标签仍按当前时间、镜头与置信度计算，连续帧跟踪、录像触发和夜间阈值沿用原规则。\n\n## 公开素材验收\n\n对照上一正式版 3.0.444 的代码与 3.0.445 候选代码。五段 264 帧使用相同视频解码结果，四路异动、轮廓定位、事件时间与最终发布标签一致。极暗噪声、增益噪声和极暗移动目标也通过 Android 模拟器回归。\n\n| 素材 | 取样 |\n| --- | --- |\n| [Dur360BEV](https://github.com/Tom-E-Durham/Dur360BEV) | 白天 0–9.4 秒，双鱼眼投影为四个方向 |\n| [Insta360 Titan 夜间街景](https://www.insta360.com/us/product/insta360-titan) | 夜间 0–3 秒，球面视频投影为四个方向 |\n| [FAU CarparkA](https://www.lms.tf.fau.de/fish-eye-dataset/)、[机场路口](https://commons.wikimedia.org/wiki/File:Crosswalk_at_San_Jos%C3%A9_International_Airport_Consolidated_Rental_Car_Facility_exit.webm) 与[科隆夜间车流](https://commons.wikimedia.org/wiki/File:Cars_Passing_by_at_Night.webm) | 地库鱼眼连续帧与两段夜间视频拼接为 15 秒四栏素材 |\n| [科隆夜间车流](https://commons.wikimedia.org/wiki/File:Cars_Passing_by_at_Night.webm) | 0–15.4 秒的车灯、车辆经过与离开 |\n| [涩谷路口](https://commons.wikimedia.org/wiki/File:Shibuya_Crossing,_Tokyo,_Japan_(video).webm) | 20–30 秒密集人群与遮挡 |\n\n同进程交替运行 762 组计时帧，四路异动检测线程平均 CPU 耗时由 14.64 ms 降至 14.53 ms。整段视频的模型调用次数相同。另做 172 次逐像素相同输入对照，复用路径的中位耗时为 3.69 ms，完整推理为 100.13 ms。\n\n## 外部模型对照\n\n同一台 Android x86_64 模拟器以双线程处理相同的 172 张解码视角。表中时间包括模型缩放输入和返回检测框。\n\n| 方案 | 中位 | P95 |\n| --- | ---: | ---: |\n| EfficientDet‑Lite0 量化 320 | 100.13 ms | 122.78 ms |\n| [MobileNet V1 SSD 量化 300](https://github.com/tensorflow/examples/blob/master/lite/examples/object_detection/android/README.md) | 51.55 ms | 62.60 ms |\n| [NanoDet‑Plus‑m 416](https://github.com/RangiLyu/nanodet/blob/main/demo_ncnn/README.md) | 112.52 ms | 139.42 ms |\n\n三种模型均识别出夜间环视所抽取的三个时间点的近处行人。MobileNet SSD 更快，在密集人群中提出更多人体框，同时把远处装饰灯误判为人。本次沿用 EfficientDet‑Lite0。上述耗时来自模拟器，665 实车录制、耗电和实际夜间触发效果有待车辆测量。\n\n本地全量检查完成。两处旧测试夹具补齐推理复用与视图释放检查后复测通过，候选整包在 Android 模拟器通过启动和哨兵设置页渲染检查。"
 }
