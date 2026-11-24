@@ -1,11 +1,11 @@
 {
   "appId": "dm",
-  "versionCode": 301445,
-  "versionName": "3.0.445",
-  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.445-301445/DMApp-3.0.445-301445.apk",
-  "sizeBytes": 204489566,
-  "md5": "d87021dbdf771e95ad09b4058660eed5",
-  "sha256": "bdd72886192534b2776aff33f367f58c34039a3bca870cb6f416f623acd01172",
+  "versionCode": 301446,
+  "versionName": "3.0.446",
+  "apkUrl": "https://github.com/msunocn/carmon-release/releases/download/dm-v3.0.446-301446/DMApp-3.0.446-301446.apk",
+  "sizeBytes": 204522492,
+  "md5": "e2114b43a57ea30d3826101fa1096f2a",
+  "sha256": "189596800923289a83489cd8a488990b62121aae517acd1f21868a3be9258422",
   "force": false,
-  "releaseNotes": "# DMApp 3.0.445\n\n- 熄火哨兵的阴影和前景判断共用有效帧差掩膜。轮廓处理直接读取检测区域的原生内存视图，省掉整幅掩膜复制。\n- 同一录像中，只有送入 CPU 模型的像素完全相同才复用推理结果。标签仍按当前时间、镜头与置信度计算，连续帧跟踪、录像触发和夜间阈值沿用原规则。\n\n## 公开素材验收\n\n对照上一正式版 3.0.444 的代码与 3.0.445 候选代码。五段 264 帧使用相同视频解码结果，四路异动、轮廓定位、事件时间与最终发布标签一致。极暗噪声、增益噪声和极暗移动目标也通过 Android 模拟器回归。\n\n| 素材 | 取样 |\n| --- | --- |\n| [Dur360BEV](https://github.com/Tom-E-Durham/Dur360BEV) | 白天 0–9.4 秒，双鱼眼投影为四个方向 |\n| [Insta360 Titan 夜间街景](https://www.insta360.com/us/product/insta360-titan) | 夜间 0–3 秒，球面视频投影为四个方向 |\n| [FAU CarparkA](https://www.lms.tf.fau.de/fish-eye-dataset/)、[机场路口](https://commons.wikimedia.org/wiki/File:Crosswalk_at_San_Jos%C3%A9_International_Airport_Consolidated_Rental_Car_Facility_exit.webm) 与[科隆夜间车流](https://commons.wikimedia.org/wiki/File:Cars_Passing_by_at_Night.webm) | 地库鱼眼连续帧与两段夜间视频拼接为 15 秒四栏素材 |\n| [科隆夜间车流](https://commons.wikimedia.org/wiki/File:Cars_Passing_by_at_Night.webm) | 0–15.4 秒的车灯、车辆经过与离开 |\n| [涩谷路口](https://commons.wikimedia.org/wiki/File:Shibuya_Crossing,_Tokyo,_Japan_(video).webm) | 20–30 秒密集人群与遮挡 |\n\n同进程交替运行 762 组计时帧，四路异动检测线程平均 CPU 耗时由 14.64 ms 降至 14.53 ms。整段视频的模型调用次数相同。另做 172 次逐像素相同输入对照，复用路径的中位耗时为 3.69 ms，完整推理为 100.13 ms。\n\n## 外部模型对照\n\n同一台 Android x86_64 模拟器以双线程处理相同的 172 张解码视角。表中时间包括模型缩放输入和返回检测框。\n\n| 方案 | 中位 | P95 |\n| --- | ---: | ---: |\n| EfficientDet‑Lite0 量化 320 | 100.13 ms | 122.78 ms |\n| [MobileNet V1 SSD 量化 300](https://github.com/tensorflow/examples/blob/master/lite/examples/object_detection/android/README.md) | 51.55 ms | 62.60 ms |\n| [NanoDet‑Plus‑m 416](https://github.com/RangiLyu/nanodet/blob/main/demo_ncnn/README.md) | 112.52 ms | 139.42 ms |\n\n三种模型均识别出夜间环视所抽取的三个时间点的近处行人。MobileNet SSD 更快，在密集人群中提出更多人体框，同时把远处装饰灯误判为人。本次沿用 EfficientDet‑Lite0。上述耗时来自模拟器，665 实车录制、耗电和实际夜间触发效果有待车辆测量。\n\n本地全量检查完成。两处旧测试夹具补齐推理复用与视图释放检查后复测通过，候选整包在 Android 模拟器通过启动和哨兵设置页渲染检查。"
+  "releaseNotes": "# DMApp 3.0.446\n\n- 熄火哨兵按镜头复用上一帧的 OpenCV 光流金字塔。镜头尺寸或方向变化时重新建立，原生库不可用时继续使用标准 OpenCV 路径。\n- 四格和单路录像需要两种分析尺寸时，优先采用解码器直接缩放的画面。两次缩放都不支持时，同一时间点只读一次原帧，最多暂存 8 MiB，并在该样本结束时释放。\n- 靠近亮屏只维护人的轨迹。同一次录制中，像素完全相同的 CPU 模型输入可复用推理结果。事件录像仍检测车辆等原有目标。\n\n## 回归\n\nAndroid 模拟器回放 264 帧白天环视、夜间环视、车灯变化及密集人车素材。3.0.445 与本版的异动、识别区域、事件时间、标签和模型调用次数一致。极暗噪声和极暗移动目标回归通过。实拍片段见 [3.0.445 验收记录](dm-v3.0.445-301445.md)。\n\n| Android 模拟器对照 | 原路径 | 本版 |\n| --- | ---: | ---: |\n| 四路异动检测平均线程 CPU 时间，747 组交替采样 | 15.68 ms | 15.48 ms |\n| 四格双尺寸分析，强制缩放回退 | 373 ms | 202 ms |\n| 单路双尺寸分析，强制缩放回退 | 539 ms | 286 ms |\n\n实际 Android 解码器的两个缩放请求都被拒绝时，原帧读取从两次减到一次，两个分析尺寸的像素一致。只有一种尺寸回退时，仍使用解码器支持的另一个输出。原生缓存的形状变化、释放和库缺失回退，以及整包启动、哨兵设置页和实际 MP4 写入封盘通过验收。\n\n本地 `:canfeature:check` 完整执行。修正一个使用旧推理接口的亮屏测试夹具后，补测通过。上述时间来自 Android x86_64 模拟器，665 实车 CPU 与停车耗电仍需实测。"
 }
